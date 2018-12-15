@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20181215212910) do
     t.bigint "item_id"
     t.integer "quantity"
     t.integer "order_price"
-    t.integer "status"
+    t.boolean "fulfilled"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_order_items_on_item_id"

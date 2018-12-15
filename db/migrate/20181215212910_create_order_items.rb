@@ -5,7 +5,7 @@ class CreateOrderItems < ActiveRecord::Migration[5.1]
       t.references :item, foreign_key: true
       t.integer :quantity
       t.integer :order_price
-      t.integer :status
+      t.boolean :fulfilled
 
       t.timestamps
     end
