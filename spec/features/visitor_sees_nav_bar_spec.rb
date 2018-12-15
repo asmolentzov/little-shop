@@ -62,7 +62,7 @@ describe 'As a visitor to the app' do
       visit root_path
       
       within '#nav' do
-        click_on "Login"
+        click_on "Log In"
       end
       
       expect(current_path).to eq(login_path)
