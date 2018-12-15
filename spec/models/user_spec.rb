@@ -5,4 +5,6 @@ RSpec.describe User, type: :model do
     it { should have_many(:orders)}
     it { should have_many(:items)}
   end
+
+  
 end
