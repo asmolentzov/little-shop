@@ -298,12 +298,24 @@
         1,
         null,
         1,
+        1,
         2,
         2,
+        null,
+        null,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        null,
         null
       ],
       "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/order_item.rb": [
         1,
+        1,
+        null,
         1,
         1,
         null
@@ -365,6 +377,6 @@
         null
       ]
     },
-    "timestamp": 1544912646
+    "timestamp": 1544912848
   }
 }
