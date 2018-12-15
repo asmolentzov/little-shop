@@ -24,57 +24,41 @@ describe 'As a visitor to the app' do
     end
     it 'should direct to home page' do
       visit items_path
-      
       within '#nav' do
         click_on "Home"
       end
       
       expect(current_path).to eq(root_path)
-    end
-    it 'should direct to the items page' do
-      visit root_path
       
       within '#nav' do
         click_on "Items"
       end
       
       expect(current_path).to eq(items_path)
-    end
-    it 'should direct to the merchants page' do
-      visit root_path
       
       within '#nav' do
         click_on "Merchants"
       end
       
       expect(current_path).to eq(merchants_path)
-    end
-    it 'should direct to the cart page' do
-      visit root_path
       
       within '#nav' do
         click_on "Cart"
       end
       
       expect(current_path).to eq(cart_path)
-    end
-    it 'should direct to the login page' do
-      visit root_path
-      
+
       within '#nav' do
         click_on "Log In"
       end
       
       expect(current_path).to eq(login_path)
-    end
-    it 'should direct to the register page' do
-      visit root_path
       
       within '#nav' do
         click_on "Register"
       end
       
-      expect(current_path).to eq(new_user_path)
+      expect(current_path).to eq(registration_path)
     end
   end
 end
