@@ -3,4 +3,14 @@ Rails.application.routes.draw do
   
   root 'welcome#index'
   
+  get '/items', to: "items#index"
+  get '/merchants', to: "users#index"
+  get '/cart', to: "carts#show"
+  get '/login', to: "sessions#new"
+  get '/register', as: '/new_user', to: "users#new"
+  
+  
+  # resources :items, only: [:index]
+  # resources :merchants, only: [:index]
+  # resources :inventories, only: [:index]
 end
