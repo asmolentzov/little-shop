@@ -31,5 +31,14 @@ describe 'As a visitor to the app' do
       
       expect(current_path).to eq(root_path)
     end
+    it 'should direct to the items page' do
+      visit root_path
+      
+      within '#nav' do
+        click_on "Items"
+      end
+      
+      expect(current_path).to eq(items_path)
+    end
   end
 end
