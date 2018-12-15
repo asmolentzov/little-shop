@@ -60,5 +60,12 @@ describe 'As a visitor to the app' do
       
       expect(current_path).to eq(registration_path)
     end
+    it 'should see number of items in cart' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to have_content("Total Items in Cart: #{session[:total_items_in_cart]}")
+      end
+    end
   end
 end
