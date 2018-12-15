@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/bradleyniedt/turing/2module/projects/little-shop/spec/models/user_spec.rb": [
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/spec/models/order_spec.rb": [
         1,
         null,
         1,
@@ -268,8 +268,10 @@
         1,
         null
       ],
-      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/user.rb": [
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/order.rb": [
         1,
+        1,
+        null,
         1,
         1,
         null
@@ -279,17 +281,39 @@
         1,
         null
       ],
-      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/item.rb": [
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/spec/models/user_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        2,
+        2,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/user.rb": [
+        1,
         1,
         1,
         null
       ],
-      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/order.rb": [
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/item.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/bradleyniedt/turing/2module/projects/little-shop/app/models/order_item.rb": [
+        1,
         1,
         1,
         null
       ]
     },
-    "timestamp": 1544910481
+    "timestamp": 1544911220
   }
 }
