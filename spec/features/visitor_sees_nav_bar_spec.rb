@@ -22,5 +22,14 @@ describe 'As a visitor to the app' do
         expect(page).to have_link("Register")
       end
     end
+    it 'should direct to home page' do
+      visit items_path
+      
+      within '#nav' do
+        click_on "Home"
+      end
+      
+      expect(current_path).to eq(root_path)
+    end
   end
 end
