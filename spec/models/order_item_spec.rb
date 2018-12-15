@@ -11,6 +11,6 @@ RSpec.describe OrderItem, type: :model do
     it { should validate_presence_of(:item_id)}
     it { should validate_presence_of(:quantity)}
     it { should validate_presence_of(:order_price)}
-    it { should validate_presence_of(:status)}
+    it { should validate_presence_of(:fulfilled)}
   end
 end
