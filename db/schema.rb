@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20181215212910) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "image_link"
-    t.string "inventory"
+    t.integer "inventory"
     t.string "description"
     t.integer "current_price"
     t.boolean "enabled"
