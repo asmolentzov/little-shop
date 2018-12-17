@@ -7,7 +7,7 @@ describe 'as a visitor, when I visit /' do
 
       click_on 'Register'
 
-      expect(current_path).to eq(new_user_path)
+      expect(current_path).to eq(registration_path)
     end
     describe 'when I fill out the form and click submit' do
       it 'logs me in and takes me to my profile page' do
