@@ -64,7 +64,7 @@ describe 'As a visitor to the app' do
       visit root_path
       
       within "#nav" do
-        expect(page).to have_content("Total Items in Cart: #{session[:total_items_in_cart]}")
+        expect(page).to have_content("Total Items in Cart: 0") # THIS NEEDS TO RETURN METHOD VALUE
       end
     end
   end
