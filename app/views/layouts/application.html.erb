@@ -9,6 +9,15 @@
   </head>
 
   <body>
+    <div class="yield" id="nav">
+      <%= link_to "Home", root_path %>  
+      <%= link_to "Items", items_path %>  
+      <%= link_to "Merchants", merchants_path %>  
+      <%= link_to "Log In", login_path %>  
+      <%= link_to "Register", registration_path %>  
+      <%= link_to "Cart", cart_path %>  
+      Total Items in Cart: <%= 0 %>
+    </div>
     <%= yield %>
   </body>
 </html>
