@@ -2,7 +2,6 @@ require 'rails_helper'
 describe 'nav' do
   context 'as a registered user' do
     it 'sees a nav bar with the same of links as visitor' do
-      user = User.create(name: "user_1", password: "test", role: 0)
 
 
       visit items_path
@@ -44,7 +43,9 @@ describe 'nav' do
     end
 
     it 'sees a nav bar with user specific links' do
-      user = User.create(name: "user_1", password: "test", role: 0)
+      user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit root_path
 
@@ -65,7 +66,7 @@ describe 'nav' do
       end
 
       expect(current_path).to eq(root_path)
-  
+
     end
   end
 end
