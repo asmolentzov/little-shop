@@ -78,3 +78,5 @@ item_18 = Item.create(name: 'Franklin Monitor', user: user_10, inventory: 3,
 current_price: 27500, enabled: true, image_link: 'franklin-monitor.jpg', description: 'Good Quality Greenscreen and Moderate Cost')
 item_19 = Item.create(name: 'Advanced Data Modem', user: user_10, inventory: 435,
 current_price: 158500, enabled: true, image_link: 'data-modem.jpg', description: 'An incredible 110 Baud - Almost 1 byte every two seconds')
+item_20 = Item.create(name: 'Star-Cursor Professional Joystick', user: user_10, inventory: 16,
+current_price: 12495, enabled: true, image_link: 'starcursor-joystick.jpg', description: 'Increase Your Productivity - and Have Fun, Too!')
