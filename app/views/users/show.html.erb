@@ -1,8 +1,8 @@
-<%= @user.name %>
-<%= @user.street %>
-<%= @user.city %>
-<%= @user.state %>
-<%= @user.zip %>
-<%= @user.email %>
+<%= current_user.name %>
+<%= current_user.street %>
+<%= current_user.city %>
+<%= current_user.state %>
+<%= current_user.zip %>
+<%= current_user.email %>
 
-<%= link_to 'Edit Profile', user_path(@user), method: :update %>
+<%= link_to 'Edit Profile', user_path(current_user), method: :update %>

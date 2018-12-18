@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   get '/cart', to: "carts#show"
   get '/login', to: "sessions#new"
   get '/register', as: :registration, to: "users#new"
+  get '/profile', as: :profile, to: "users#show"
 
   resources :items, only: [:index]
   resources :users, as: :merchants, only: [:index]
-  resources :users, only: [:show, :update]
+  resources :users, only: [:update]
 end
