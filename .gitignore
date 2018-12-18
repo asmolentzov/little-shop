@@ -19,4 +19,5 @@
 /coverage
 
 .byebug_history
-coverage
+
+coverage/index.html

@@ -5,8 +5,8 @@ describe 'USER SHOW PAGE' do
     it 'shows user profile information' do
       user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
-
-      visit user_path(user_1)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+      visit profile_path(user_1)
 
       expect(page).to have_content(user_1.name)
       expect(page).to have_content(user_1.street)
