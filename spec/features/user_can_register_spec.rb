@@ -16,16 +16,16 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_name, with: "User One"
         fill_in :user_street, with: "Street One"
         fill_in :user_city, with: "City One"
+        fill_in :user_state, with: "State One"
         fill_in :user_zip, with: "ZIP1"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
-        click_on 'Register'
+        click_on 'Sign Up'
 
         user = User.all.last
 
-        expect(current_path).to eq(profile_path(user))
-        expect(current_user.name).to eq(user.name)
-        expect(flash[:success]).to match(/You are now registered and logged in.*/)
+        expect(current_path).to eq(profile_path)
+        expect(page).to have_content('You are now registered and logged in.')
       end
     end
   end

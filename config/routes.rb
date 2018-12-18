@@ -10,5 +10,5 @@ Rails.application.routes.draw do
 
   resources :items, only: [:index]
   resources :users, as: :merchants, only: [:index]
-  resources :users, only: [:update]
+  resources :users, only: [:create, :update]
 end
