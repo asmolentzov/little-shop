@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'as a visitor, when I visit /' do
   describe 'and I click on the register link' do
     it 'takes me to a page with a registration form' do
-      visit '/'
+      visit root_path
 
       click_on 'Register'
 

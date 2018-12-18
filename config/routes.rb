@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/profile/orders', to: "orders#index"
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
+  get '/dashboard', as: :dashboard, to: "users#show"
 
   resources :items, only: [:index]
   resources :users, only: [:create, :update]
