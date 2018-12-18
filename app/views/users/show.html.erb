@@ -1,3 +1,7 @@
+<% if flash[:success] %>
+  <%= flash[:success] %>
+<% end %>
+
 <%= current_user.name %>
 <%= current_user.street %>
 <%= current_user.city %>
@@ -5,4 +9,4 @@
 <%= current_user.zip %>
 <%= current_user.email %>
 
-<%= link_to 'Edit Profile', profile_path(current_user), method: :update %>
+<%= link_to 'Edit Profile', profile_path, method: :update %>
