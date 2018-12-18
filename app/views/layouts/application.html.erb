@@ -13,9 +13,11 @@
       <%= link_to "Home", root_path %>
       <%= link_to "Items", items_path %>
       <%= link_to "Merchants", merchants_path %>
-      <%= link_to "Log In", login_path %>
-      <%= link_to "Register", registration_path %>
       <%= link_to "Cart", cart_path %>
+      <% unless current_user %>
+        <%= link_to "Register", registration_path %>
+        <%= link_to "Log In", login_path %>
+      <% end %>
       <% if current_user  %>
         <%= link_to "Profile", user_path(current_user) %>
         <%= link_to "Orders", user_orders_path(current_user)%>
