@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
   resources :items, only: [:index]
   resources :users, only: [:create, :update]
-
+  
+  namespace :admin do
+    resources :users, only: [:index]
+  end
 
 end

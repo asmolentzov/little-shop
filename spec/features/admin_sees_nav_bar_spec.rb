@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'As an admin' do
   it 'allows admin users to see admin links' do
-    user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
+    admin = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
     
     visit items_path
     
@@ -30,13 +30,13 @@ describe 'As an admin' do
       click_link 'Profile'
     end
 
-    expect(current_path).to eq(profile_path(user))
+    expect(current_path).to eq(profile_path)
 
     within "#nav" do
       click_link 'Orders'
     end
 
-    expect(current_path).to eq(profile_orders_path(user))
+    expect(current_path).to eq(profile_orders_path)
 
     within "#nav" do
       click_link 'Log Out'
