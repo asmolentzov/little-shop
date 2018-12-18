@@ -10,7 +10,7 @@ describe 'As a visitor to the site' do
         
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         
         expect(current_path).to eq(profile_path)
       end
@@ -23,7 +23,7 @@ describe 'As a visitor to the site' do
         
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         
         expect(current_path).to eq(dashboard_path)
       end
@@ -36,7 +36,7 @@ describe 'As a visitor to the site' do
         
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         
         expect(current_path).to eq(root_path)
       end
