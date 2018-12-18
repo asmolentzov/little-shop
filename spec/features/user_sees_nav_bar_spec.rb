@@ -46,13 +46,13 @@ describe 'nav' do
         click_link 'Profile'
       end
 
-      expect(current_path).to eq(user_path(@user))
+      expect(current_path).to eq(profile_path(@user))
 
       within "#nav" do
         click_link 'Orders'
       end
 
-      expect(current_path).to eq(user_orders_path(@user))
+      expect(current_path).to eq(profile_orders_path(@user))
 
       within "#nav" do
         click_link 'Log Out'
