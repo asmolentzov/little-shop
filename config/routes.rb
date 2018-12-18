@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   get '/login', to: "sessions#new"
   get '/register', as: :registration, to: "users#new"
   get '/profile', as: :profile, to: "users#show"
+  get '/profile/orders', to: "orders#index"
+  delete '/logout', to: "sessions#destroy"
+  get '/merchants', as: :merchants, to: "users#index"
 
   resources :items, only: [:index]
-  resources :users, as: :merchants, only: [:index]
   resources :users, only: [:create, :update]
+
+
 end
