@@ -52,7 +52,7 @@ describe 'nav' do
         click_link 'Orders'
       end
 
-      expect(current_path).to eq(profile_orders_path(@user))
+      expect(current_path).to eq(profile_orders_path)
 
       within "#nav" do
         click_link 'Log Out'
