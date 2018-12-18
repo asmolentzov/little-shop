@@ -1,6 +1,13 @@
 require 'rails_helper'
 describe 'nav' do
   context 'as a registered user' do
+
+    before(:each) do
+      @user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    end
+
     it 'sees a nav bar with the same of links as visitor' do
 
 
@@ -28,24 +35,10 @@ describe 'nav' do
       end
 
       expect(current_path).to eq(cart_path)
-
-      within '#nav' do
-        click_on "Log In"
-      end
-
-      expect(current_path).to eq(login_path)
-
-      within '#nav' do
-        click_on "Register"
-      end
-
-      expect(current_path).to eq(registration_path)
     end
 
     it 'sees a nav bar with user specific links' do
-      user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit root_path
 
@@ -53,13 +46,13 @@ describe 'nav' do
         click_link 'Profile'
       end
 
-      expect(current_path).to eq(user_path(user))
+      expect(current_path).to eq(user_path(@user))
 
       within "#nav" do
         click_link 'Orders'
       end
 
-      expect(current_path).to eq(user_orders_path(user))
+      expect(current_path).to eq(user_orders_path(@user))
 
       within "#nav" do
         click_link 'Log Out'
@@ -71,9 +64,6 @@ describe 'nav' do
 
     it 'does not see visitor specific links' do
 
-      user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
-
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit root_path
 
@@ -85,14 +75,12 @@ describe 'nav' do
     end
 
     it 'sees text about logged in' do
-      user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit root_path
 
       within "#nav" do
-        expect(page).to have_content("Logged in as #{user.name}")
+        expect(page).to have_content("Logged in as #{@user.name}")
       end
 
     end
