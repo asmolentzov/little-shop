@@ -13,6 +13,7 @@ describe 'As a visitor to the site' do
         click_button 'Log In'
         
         expect(current_path).to eq(profile_path)
+        expect(page).to have_content("Logged In Successfully")
       end
     end
     context 'as a merchant user' do
@@ -26,6 +27,7 @@ describe 'As a visitor to the site' do
         click_button 'Log In'
         
         expect(current_path).to eq(dashboard_path)
+        expect(page).to have_content("Logged In Successfully")
       end
     end
     context 'as an admin user' do
@@ -39,6 +41,7 @@ describe 'As a visitor to the site' do
         click_button 'Log In'
         
         expect(current_path).to eq(root_path)
+        expect(page).to have_content("Logged In Successfully")
       end
     end
   end
