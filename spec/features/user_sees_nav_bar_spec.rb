@@ -83,5 +83,18 @@ describe 'nav' do
       end
 
     end
+
+    it 'sees text about logged in' do
+      user = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 0, enabled: true)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit root_path
+
+      within "#nav" do
+        expect(page).to have_content("Logged in as #{user.name}")
+      end
+
+    end
   end
 end
