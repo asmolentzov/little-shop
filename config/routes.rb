@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/cart', to: "carts#show"
   get '/login', to: "sessions#new"
   get '/register', as: :registration, to: "users#new"
+  delete '/logout', to: "sessions#destroy"
 
   resources :items, only: [:index]
   resources :users, as: :merchants, only: [:index]
