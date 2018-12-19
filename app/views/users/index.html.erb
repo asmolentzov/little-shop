@@ -1,10 +1,10 @@
-<% @users.each do |user| %>
-  <% if user.merchant? %>
+<% @merchants.each do |merchant| %>
+  <% if merchant.enabled == true %>
     <ul>
-      <li><%= user.name %></li>
-      <li><%= user.city %></li>
-      <li><%= user.state %></li>
-      <li><%= user.created_at %></li>
+      <li><%= merchant.name %></li>
+      <li><%= merchant.city %></li>
+      <li><%= merchant.state %></li>
+      <li><%= merchant.created_at %></li>
     </ul>
   <% end %>
 <% end %>
