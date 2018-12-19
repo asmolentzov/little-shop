@@ -79,12 +79,12 @@ describe 'USER SHOW PAGE' do
       user = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
         zip: old_zip, email: old_email, password: 'password1')
         
-        new_name = 'NEW NAME'
-        new_street = 'New Street'
-        new_city = 'NEW CITY'
-        new_state = 'New State'
-        new_zip = 'zip2'
-        new_email = 'email2@aol.com'
+      new_name = 'NEW NAME'
+      new_street = 'New Street'
+      new_city = 'NEW CITY'
+      new_state = 'New State'
+      new_zip = 'zip2'
+      new_email = 'email2@aol.com'
         
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       
@@ -112,6 +112,23 @@ describe 'USER SHOW PAGE' do
       expect(page).to_not have_content(old_state)
       expect(page).to_not have_content(old_zip)
       expect(page).to_not have_content(old_email)
+    end
+    it 'does not allow me to leave fields blank' do
+      user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
+        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+      
+      visit profile_edit_path
+      
+      fill_in :user_name, with: nil
+      click_button 'Submit'
+      
+      expect(page).to have_content('Required fields are missing')
+      expect(page).to have_content(user.name)
+      expect(page).to have_content(user.street)
+      expect(page).to have_content(user.city)
+      expect(page).to have_content(user.state)
+      expect(page).to have_content(user.zip)
+      expect(page).to have_content(user.email)
     end
   end
 end
