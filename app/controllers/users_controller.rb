@@ -23,6 +23,10 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  
+  def update
+    
+  end
 
   private
 
