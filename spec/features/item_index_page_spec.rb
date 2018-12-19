@@ -20,20 +20,25 @@ describe 'as a visitor' do
         visit items_path
 
         expect(page).to have_content(item_1.name)
+        expect(page).to have_link("#{item_1.name}", item_path(item_1))
         expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
         expect(page).to have_content(item_1.user.name)
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_content(item_1.current_price)
         expect(page).to_not have_content(item_2.name)
+        expect(page).to_not have_link("#{item_2.name}", item_path(item_2))
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.user.name)
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
         expect(page).to have_content(item_3.name)
+        expect(page).to have_link("#{item_3.name}", item_path(item_3))
         expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
         expect(page).to have_content(item_3.user.name)
         expect(page).to have_content(item_3.inventory)
         expect(page).to have_content(item_3.current_price)
+        find('#item-1-img').click
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as a merchant user' do
@@ -54,20 +59,25 @@ describe 'as a visitor' do
         visit items_path
 
         expect(page).to have_content(item_1.name)
+        expect(page).to have_link("#{item_1.name}", item_path(item_1))
         expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
         expect(page).to have_content(item_1.user.name)
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_content(item_1.current_price)
         expect(page).to_not have_content(item_2.name)
+        expect(page).to_not have_link("#{item_2.name}", item_path(item_2))
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.user.name)
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
         expect(page).to have_content(item_3.name)
+        expect(page).to have_link("#{item_3.name}", item_path(item_3))
         expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
         expect(page).to have_content(item_3.user.name)
         expect(page).to have_content(item_3.inventory)
         expect(page).to have_content(item_3.current_price)
+        find('#item-1-img').click
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as an admin user' do
@@ -88,20 +98,25 @@ describe 'as a visitor' do
         visit items_path
 
         expect(page).to have_content(item_1.name)
+        expect(page).to have_link("#{item_1.name}", item_path(item_1))
         expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
         expect(page).to have_content(item_1.user.name)
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_content(item_1.current_price)
         expect(page).to_not have_content(item_2.name)
+        expect(page).to_not have_link("#{item_2.name}", item_path(item_2))
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.user.name)
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
         expect(page).to have_content(item_3.name)
+        expect(page).to have_link("#{item_3.name}", item_path(item_3))
         expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
         expect(page).to have_content(item_3.user.name)
         expect(page).to have_content(item_3.inventory)
         expect(page).to have_content(item_3.current_price)
+        find('#item-1-img').click
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as a non-registered visitor' do
@@ -119,20 +134,25 @@ describe 'as a visitor' do
         visit items_path
 
         expect(page).to have_content(item_1.name)
+        expect(page).to have_link("#{item_1.name}", item_path(item_1))
         expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
         expect(page).to have_content(item_1.user.name)
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_content(item_1.current_price)
         expect(page).to_not have_content(item_2.name)
+        expect(page).to_not have_link("#{item_2.name}", item_path(item_2))
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.user.name)
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
         expect(page).to have_content(item_3.name)
+        expect(page).to have_link("#{item_3.name}", item_path(item_3))
         expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
         expect(page).to have_content(item_3.user.name)
         expect(page).to have_content(item_3.inventory)
         expect(page).to have_content(item_3.current_price)
+        find('#item-1-img').click
+        expect(current_path).to eq(item_path(item_1))
       end
     end
   end
