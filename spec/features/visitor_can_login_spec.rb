@@ -82,12 +82,12 @@ describe 'As a visitor to the site' do
     end
     context 'as a visitor' do
       it 'should not let me log in with invalid credentials' do
-        email = 'email1@aol.com'
-        password = 'pass'
+        user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1', zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+        wrong_password = 'pass'
         visit login_path
 
-        fill_in :email, with: email
-        fill_in :password, with: password
+        fill_in :email, with: user.email
+        fill_in :password, with: wrong_password
 
         expect(current_path).to eq(login_path)
         expect(page).to have_content('Credentials Incorrect')
