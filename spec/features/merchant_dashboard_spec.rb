@@ -20,6 +20,8 @@ describe 'as a merchant' do
       visit '/dashboard'
 
       expect(page).to have_link("My Items")
+      expect(page).to_not have_link("Edit Profile")
+
 
       click_on "My Items"
 
