@@ -1,7 +1,4 @@
   <%= form_for @user do |f| %>
-  <% if flash[:alert] %>
-  <%= flash[:alert] %>
-  <% end %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :street %>
