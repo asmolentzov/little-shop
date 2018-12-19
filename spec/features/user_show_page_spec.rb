@@ -115,17 +115,3 @@ describe 'USER SHOW PAGE' do
     end
   end
 end
-
-# As a registered user
-# When I visit my profile page
-# I see a link to edit my profile data
-# When I click on the link to edit my profile data
-# Then my current URI route is "/profile/edit"
-# I see a form like the registration page
-# The form contains all of my user information
-# The password fields are blank and can be left blank
-# I can change any or all of the information
-# When I submit the form
-# Then I am returned to my profile page
-# And I see a flash message telling me that my data is updated
-# And I see my updated information
