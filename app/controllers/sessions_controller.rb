@@ -25,7 +25,8 @@ class SessionsController < ApplicationController
         redirect_to root_path
       end
     else
-      render :new
+      flash[:alert] = 'Credentials Incorrect'
+      redirect_to login_path
     end
   end
 

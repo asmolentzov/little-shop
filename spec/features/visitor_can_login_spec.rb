@@ -88,6 +88,7 @@ describe 'As a visitor to the site' do
 
         fill_in :email, with: user.email
         fill_in :password, with: wrong_password
+        click_button "Log In"
 
         expect(current_path).to eq(login_path)
         expect(page).to have_content('Credentials Incorrect')
