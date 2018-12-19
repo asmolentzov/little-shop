@@ -9,43 +9,40 @@
 
   <body>
     <div class="yield" id="nav">
-      <ul>
+      <div id="hello-message">
         <% if current_user %>
-          <% if current_user.default?  %>
-            <li><%= link_to "Home", root_path %></li>
-            <li><%= link_to "Items", items_path %></li>
-            <li><%= link_to "Merchants", merchants_path %></li>
+          <p>Logged in as <%= current_user.name %></p>
+        <% end %>
+      <div id="cart-identity-nav">
+        <ul>
+          <% if current_default? || !(current_user) %>
             <li><%= link_to "Cart", cart_path %></li>
             <li>Total Items in Cart: <%= 0 %></li>
-            <li><%= link_to "Profile", profile_path %></li>
-            <li><%= link_to "Orders", profile_orders_path %></li>
-            <li><%= link_to "Log Out", logout_path, method: :delete %></li>
-            <li>Logged in as <%= current_user.name %></li>
-          <% elsif current_user.merchant? %>
-            <li><%= link_to "Home", root_path %></li>
-            <li><%= link_to "Items", items_path %></li>
-            <li><%= link_to "Merchants", merchants_path %></li>
-            <li><%= link_to "Dashboard", dashboard_path %></li>
-            <li><%= link_to "Log Out", logout_path, method: :delete %></li>
-          <% elsif current_admin? %>
-            <li><%= link_to "Home", root_path %></li>
-            <li><%= link_to "All Users", admin_users_path %></li>
-            <li><%= link_to "Items", items_path %></li>
-            <li><%= link_to "Merchants", merchants_path %></li>
-            <li><%= link_to "Profile", profile_path %></li>
-            <li><%= link_to "Orders", profile_orders_path %></li>
-            <li><%= link_to "Log Out", logout_path, method: :delete %></li>
           <% end %>
-        <% else %>
-          <li><%= link_to "Register", registration_path %></li>
-          <li><%= link_to "Log In", login_path %></li>
+          <% if current_user %>
+            <li><%= link_to "Log Out", logout_path, method: :delete %></li>
+            <li><%= link_to "Profile", profile_path %></li>
+          <% else %>
+            <li><%= link_to "Register", registration_path %></li>
+            <li><%= link_to "Log In", login_path %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div id="user-functions">
+        <ul>
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Items", items_path %></li>
           <li><%= link_to "Merchants", merchants_path %></li>
-          <li><%= link_to "Cart", cart_path %></li>
-          <li>Total Items in Cart: <%= 0 %></li>
-        <% end %>
-      </ul>
+          <% if current_user %>
+            <li><%= link_to "Orders", profile_orders_path %></li>
+          <% end %>
+          <% if current_merchant? %>
+            <li><%= link_to "Dashboard", dashboard_path %></li>
+          <% elsif current_admin? %>
+            <li><%= link_to "All Users", admin_users_path %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
     <% if flash.any? %>
       <% flash.each do |key, value| %>
