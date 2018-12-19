@@ -28,6 +28,6 @@ RSpec.describe User, type: :model do
         zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 1)
 
       expect(User.merchants).to eq([user_1, user_3])
-    end 
+    end
   end
 end
