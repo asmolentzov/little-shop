@@ -9,4 +9,8 @@ class User < ApplicationRecord
   has_secure_password
 
   enum role: [:default, :merchant, :admin]
+
+  def self.enabled_merchants
+    where("role = ? AND enabled = ?", 1, true)
+  end
 end
