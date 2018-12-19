@@ -70,6 +70,7 @@ describe 'As a visitor to the app' do
       visit profile_path
       
       expect(page.status_code).to eq(404)
+      expect(page).to have_content("The page you were looking for doesn't exist")
     end
   end
 end

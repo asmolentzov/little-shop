@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    unless current_user
+      render file: "/public/404", status: 404, layout: false
+    end
   end
 
   def new
