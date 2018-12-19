@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates_presence_of :name, :street, :city, :state, :zip,
                         :email, :password, :role, :enabled
-  validates :email, uniqueness: {message: 'Email address is already in use'}
+  validates :email, uniqueness: true
 
   has_many :orders
   has_many :items

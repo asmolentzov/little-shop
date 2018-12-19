@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       redirect_to profile_path
       flash[:success] = "You are now registered and logged in."
     else
-        if @user.errors.details[:email] != nil
+        if @user.errors.details[:email] 
           flash[:alert] = 'Email address is already in use'
           @user.email = nil
         end
