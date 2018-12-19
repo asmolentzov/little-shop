@@ -72,7 +72,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_zip, with: "ZIP1"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
-        click_on 'Sign Up'
+        click_on 'Submit'
 
         expect(page).to have_content('Email address is already in use')
         expect(find_field("user[name]").value).to eq("User One")
@@ -94,7 +94,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_state, with: "State One"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
-        click_on 'Sign Up'
+        click_on 'Submit'
 
         expect(page).to have_content('Required fields are missing')
         expect(find_field("user[name]").value).to eq("User One")
