@@ -47,6 +47,11 @@
         <% end %>
       </ul>
     </div>
+    <% if flash.any? %>
+      <% flash.each do |key, value| %>
+        <%= value %>
+      <% end %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
