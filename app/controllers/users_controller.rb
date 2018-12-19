@@ -28,6 +28,20 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  
+  def edit
+    @user = current_user
+  end
+  
+  def update
+    if current_user.update(user_params)
+      flash[:success] = 'You have updated your profile'
+      redirect_to profile_path
+    else
+      flash[:field_alert] = 'Required fields are missing'
+      redirect_to profile_edit_path
+    end
+  end
 
   private
 
