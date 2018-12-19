@@ -27,6 +27,12 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
   end
+  
+  def update
+    current_user.update(user_params)
+    flash[:success] = 'You have updated your profile'
+    redirect_to profile_path
+  end
 
   private
 
