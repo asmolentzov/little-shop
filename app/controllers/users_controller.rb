@@ -16,11 +16,18 @@ class UsersController < ApplicationController
       redirect_to profile_path
       flash[:success] = "You are now registered and logged in."
     else
-      binding.pry
-        if @user.errors.details[:email]
+      if @user.errors.full_messages.first == "Email has already been taken"
+        flash[:alert] = 'Email address is already in use'
+        @user.email = nil
+      end
+      @user.errors.each do |attr, msg|
+        if msg == "can't be blank"
+          flash[:alert] = 'Required fields are missing'
+        elsif attr == :email && msg == "has already been taken"
           flash[:alert] = 'Email address is already in use'
           @user.email = nil
         end
+      end
       render :new
     end
   end

@@ -96,14 +96,14 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_password, with: "password1"
         click_on 'Sign Up'
 
-        expect(page).to have_content('Required data is missing')
+        expect(page).to have_content('Required fields are missing')
         expect(find_field("user[name]").value).to eq("User One")
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
         expect(find_field("user[state]").value).to eq("State One")
         expect(find_field("user[email]").value).to eq("email1@aol.com")
-        
-        expect(find_field("user[zip]").value).to eq(nil)
+
+        expect(find_field("user[zip]").value).to eq("")
         expect(find_field("user[password]").value).to eq(nil)
       end
     end
