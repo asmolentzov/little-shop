@@ -9,6 +9,9 @@ describe 'as a visitor' do
         zip: 'ZIP2', email: 'email2@aol.com', password: 'password2', role: 1, enabled: false, created_at: 2.days.ago)
       user_3 = User.create(name: 'User Three', street: 'Street Three', city: 'City Three', state: 'State3',
         zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 1)
+      user_4 = User.create(name: 'User Four', street: 'Street Four', city: 'City Four', state: 'State4',
+        zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', created_at: 4.days.ago)
+        
       visit merchants_path
 
       expect(page).to have_content(user_1.name)

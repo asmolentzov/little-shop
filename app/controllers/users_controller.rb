@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @merchants = User.merchants
+    @merchants = User.enabled_merchants
   end
 
   def show

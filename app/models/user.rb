@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   enum role: [:default, :merchant, :admin]
 
-  def self.merchants
-    where(role: 1)
+  def self.enabled_merchants
+    where("role = ? AND enabled = ?", 1, true)
   end
 end
