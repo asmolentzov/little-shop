@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    
+    @user = current_user
   end
 
   private
