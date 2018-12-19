@@ -5,5 +5,9 @@
 <%= current_user.zip %>
 <%= current_user.email %>
 
+
+<% if current_user.role == 'default'%>
 <%= link_to 'Edit Profile', profile_edit_path %>
+<% elsif current_user.role == 'merchant' %>
 <%= link_to 'My Items', dashboard_items_path %>
+<% end %>
