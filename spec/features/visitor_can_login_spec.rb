@@ -80,5 +80,18 @@ describe 'As a visitor to the site' do
         expect(page).to have_content("You are already logged in")
       end
     end
+    context 'as a visitor' do
+      it 'should not let me log in with invalid credentials' do
+        email = 'email1@aol.com'
+        password = 'pass'
+        visit login_path
+
+        fill_in :email, with: email
+        fill_in :password, with: password
+
+        expect(current_path).to eq(login_path)
+        expect(page).to have_content('Credentials Incorrect')
+      end
+    end
   end
 end
