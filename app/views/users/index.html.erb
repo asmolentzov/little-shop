@@ -1,0 +1,8 @@
+<% @merchants.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+      <li><%= merchant.city %></li>
+      <li><%= merchant.state %></li>
+      <li><%= merchant.created_at %></li>
+    </ul>
+<% end %>
