@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '/cart', to: "carts#show"
   get '/login', to: "sessions#new"
+  post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
   get '/profile', as: :profile, to: "users#show"
   get '/profile/orders', to: "orders#index"
