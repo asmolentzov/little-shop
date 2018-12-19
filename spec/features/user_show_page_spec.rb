@@ -56,8 +56,8 @@ describe 'USER SHOW PAGE' do
       
       fill_in :user_name, with: new_name
       fill_in :user_city, with: new_city
-      click_button 'Submit'
       
+      click_button 'Submit'
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('You have updated your profile')
       expect(page).to have_content(new_name)
@@ -116,19 +116,22 @@ describe 'USER SHOW PAGE' do
     it 'does not allow me to leave fields blank' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       
       visit profile_edit_path
       
-      fill_in :user_name, with: nil
+      fill_in :user_name, with: ''
       click_button 'Submit'
       
+      expect(current_path).to eq(profile_edit_path)
       expect(page).to have_content('Required fields are missing')
-      expect(page).to have_content(user.name)
-      expect(page).to have_content(user.street)
-      expect(page).to have_content(user.city)
-      expect(page).to have_content(user.state)
-      expect(page).to have_content(user.zip)
-      expect(page).to have_content(user.email)
+      expect(find_field("user[name]").value).to eq(user.name)
+      expect(find_field("user[street]").value).to eq(user.street)
+      expect(find_field("user[city]").value).to eq(user.city)
+      expect(find_field("user[state]").value).to eq(user.state)
+      expect(find_field("user[zip]").value).to eq(user.zip)
+      expect(find_field("user[email]").value).to eq(user.email)
+      expect(find_field("user[password]").value).to eq(nil)
     end
   end
 end
