@@ -9,7 +9,9 @@ describe 'As an admin' do
   
   it 'allows admin users to see admin links' do
     visit items_path
-    
+
+
+
     within '#nav' do
       click_on "Home"
     end
@@ -33,13 +35,13 @@ describe 'As an admin' do
     end
 
     expect(current_path).to eq(root_path)
-    
+
     within "#nav" do
       click_link 'All Users'
     end
-    
+
     expect(current_path).to eq(admin_users_path)
-    
+
     within "#nav" do
       expect(page).to_not have_link("Cart")
       expect(page).to_not have_content("Total Items in Cart")
