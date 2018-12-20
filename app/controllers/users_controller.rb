@@ -33,10 +33,6 @@ class UsersController < ApplicationController
     end
   end
   
-  def edit
-    @user = current_user
-  end
-  
   def update
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
