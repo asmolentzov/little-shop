@@ -93,5 +93,16 @@ describe 'nav' do
       
       expect(page.status_code).to eq(404)
     end
+    it 'should not be able to navigate to any admin path' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to_not have_content("All Users")
+      end
+      
+      visit admin_users_path
+      
+      expect(page.status_code).to eq(404)
+    end
   end
 end
