@@ -1,6 +1,14 @@
 <% @items.each do |item| %>
-<%= item.name %>
-<%= item.name %>
-<%= item.description %>
-<%= item.current_price %>
-<% end %>
+  <div id="item-<%= "#{item.id}" %>">
+    <p><%= link_to "#{item.name}", item_path(item) %></p>
+    <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
+        <img src="<%= "#{item.image_link}" %>"  %>-img">
+      <% end %>
+    </p>
+    <p><%= item.user.name %></p>
+    <p><%= item.description %></p>
+    <p><%= item.inventory %></p>
+    <p><%= item.current_price %></p>
+  </div>
+<% end  %>
+
