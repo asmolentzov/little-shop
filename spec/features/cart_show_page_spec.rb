@@ -18,9 +18,9 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     cart = Cart.new()
 
-    cart.add_to_cart(item_1)
-    cart.add_to_cart(item_2)
-    cart.add_to_cart(item_2)
+    cart.add_item(item_1)
+    cart.add_item(item_2)
+    cart.add_item(item_2)
     subtotal_1 = item_1.price * cart.contents[item_1.id.to_s]
     subtotal_2 = item_2.price * cart.contents[item_2.id.to_s]
     quantity_1 = cart.contents[item_1.id.to_s]
