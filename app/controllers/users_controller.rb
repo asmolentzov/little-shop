@@ -1,12 +1,13 @@
 class UsersController < ApplicationController
+  
+  before_action :require_merchant_user, only: [:show] 
+  
   def index
     @merchants = User.enabled_merchants
   end
 
   def show
-    unless current_user
-      render file: "/public/404", status: 404, layout: false
-    end
+
   end
 
   def new
