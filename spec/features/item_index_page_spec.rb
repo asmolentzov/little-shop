@@ -43,11 +43,11 @@ describe 'as a visitor' do
           expect(page).to have_content(item_3.current_price)
         end
 
-        find("#item-#{item_1.id}-img").click
+        page.find(:css, "#item-#{item_1.id}-img").click
         expect(current_path).to eq(item_path(item_1))
         visit items_path
         click_on "#{item_1.name}"
-        expect(current_path).t eq(item_path(item_1))
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as a merchant user' do
@@ -91,11 +91,11 @@ describe 'as a visitor' do
           expect(page).to have_content(item_3.current_price)
         end
 
-        find("#item-#{item_1.id}-img").click
+        page.find(:css, "#item-#{item_1.id}-img").click
         expect(current_path).to eq(item_path(item_1))
         visit items_path
         click_on "#{item_1.name}"
-        expect(current_path).t eq(item_path(item_1))
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as an admin user' do
@@ -130,7 +130,7 @@ describe 'as a visitor' do
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
 
-        within("#item-#{item_1.id}") do
+        within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
           expect(page).to have_link("#{item_3.name}")
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
@@ -139,11 +139,11 @@ describe 'as a visitor' do
           expect(page).to have_content(item_3.current_price)
         end
 
-        find("#item-#{item_1.id}-img").click
+        page.find(:css, "#item-#{item_1.id}-img").click
         expect(current_path).to eq(item_path(item_1))
         visit items_path
         click_on "#{item_1.name}"
-        expect(current_path).t eq(item_path(item_1))
+        expect(current_path).to eq(item_path(item_1))
       end
     end
     context 'as a non-registered visitor' do
@@ -175,7 +175,7 @@ describe 'as a visitor' do
         expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
 
-        within("#item-#{item_1.id}") do
+        within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
           expect(page).to have_link("#{item_3.name}")
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
@@ -184,11 +184,11 @@ describe 'as a visitor' do
           expect(page).to have_content(item_3.current_price)
         end
 
-        find("#item-#{item_1.id}-img").click
+        page.find(:css, "#item-#{item_1.id}-img").click
         expect(current_path).to eq(item_path(item_1))
         visit items_path
         click_on "#{item_1.name}"
-        expect(current_path).t eq(item_path(item_1))
+        expect(current_path).to eq(item_path(item_1))
       end
     end
   end
