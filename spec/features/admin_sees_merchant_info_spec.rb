@@ -13,10 +13,10 @@ describe 'As an admin' do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
+    merchant_2.update!(enabled: false)
 
     visit merchants_path
 
-    merchant_2.update!(:enabled => 1)
 
 
     within "#merchant-#{merchant_1.id}" do
