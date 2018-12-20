@@ -7,10 +7,8 @@ Rails.application.routes.draw do
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
-  get '/profile', as: :profile, to: "users#show"
-  get '/profile/orders', to: "orders#index"
-  get '/profile/edit', to: "users#edit"
   delete '/logout', to: "sessions#destroy"
+  
   get '/merchants', as: :merchants, to: "users#index"
   get '/dashboard', as: :dashboard, to: "users#show"
 
@@ -19,6 +17,12 @@ Rails.application.routes.draw do
   
   namespace :admin do
     resources :users, only: [:index]
+  end
+  
+  namespace :profile do
+    resources :orders, only: [:index]
+    get '/', to: "users#show"
+    get '/edit', to: "users#edit"
   end
 
 end
