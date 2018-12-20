@@ -175,7 +175,7 @@ describe 'USER SHOW PAGE' do
       fill_in :user_email, with: other_email
       click_button 'Submit'
 
-      expect(page).to have_content('email address is already in use')
+      expect(page).to have_content('Email address is already in use')
       expect(find_field("user[name]").value).to eq(user.name)
       expect(find_field("user[street]").value).to eq(user.street)
       expect(find_field("user[city]").value).to eq(user.city)
@@ -183,7 +183,7 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[zip]").value).to eq(user.zip)
       expect(find_field("user[email]").value).to eq(nil)
       expect(find_field("user[password]").value).to eq(nil)
-      
+
     end
   end
 end
