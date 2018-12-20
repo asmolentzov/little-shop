@@ -3,9 +3,9 @@ class ItemsController < ApplicationController
   def index
    if current_merchant?
      @items = current_user.items
-    else
+   else
      @items = Item.all
-    end
+   end
   end
 
   def show

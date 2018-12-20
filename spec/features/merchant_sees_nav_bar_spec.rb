@@ -15,4 +15,38 @@ describe 'as a merchant' do
       expect(page).to_not have_content('Total Items in Cart:')
     end
   end
+  
+  it 'should not be able to navigate to any profile path' do
+    visit root_path
+    
+    within "#nav" do
+      expect(page).to_not have_content("Profile")
+    end
+    
+    visit profile_path
+    expect(page.status_code).to eq(404)
+    
+    visit profile_edit_path
+    expect(page.status_code).to eq(404)
+  end
+  it 'should not be able to navigate to any admin path' do
+    visit root_path
+    
+    within "#nav" do
+      expect(page).to_not have_content("All Users")
+    end
+    
+    visit admin_users_path
+    expect(page.status_code).to eq(404)
+  end
+  it 'should not be able to navigate to any cart path' do
+    visit root_path
+    
+    within "#nav" do
+      expect(page).to_not have_content("Cart")
+    end
+    
+    visit cart_path
+    expect(page.status_code).to eq(404)
+  end
 end

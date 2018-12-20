@@ -1,12 +1,4 @@
 require 'rails_helper'
-#
-# - a link to return to the welcome / home page of the application ("/")
-# - a link to browse all items for sale ("/items")
-# - a link to see all merchants ("/merchants")
-# - a link to my shopping cart ("/cart")
-# - a link to log in ("/login")
-# - a link to the user registration page ("/register")
-# Next to the shopping cart link I see a count of the items in my cart
 
 describe 'As a visitor to the app' do
   context 'Main home page' do
@@ -67,6 +59,45 @@ describe 'As a visitor to the app' do
       within "#nav" do
         expect(page).to have_content("Total Items in Cart: 0") # THIS NEEDS TO RETURN METHOD VALUE
       end
+    end
+    it 'should not be able to navigate to any profile path' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to_not have_content("Profile")
+      end
+      
+      visit profile_path
+      
+      expect(page.status_code).to eq(404)
+      expect(page).to have_content("The page you were looking for doesn't exist")
+      
+      visit profile_orders_path
+      expect(page.status_code).to eq(404)
+    end
+    it 'should not be able to navigate to any dashboard path' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to_not have_content("Dashboard")
+      end
+      
+      visit dashboard_path
+      
+      expect(page.status_code).to eq(404)
+      expect(page).to have_content("The page you were looking for doesn't exist")
+    end
+    it 'should not be able to navigate to any admin path' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to_not have_content("All Users")
+      end
+      
+      visit admin_users_path
+      
+      expect(page.status_code).to eq(404)
+      expect(page).to have_content("The page you were looking for doesn't exist")
     end
   end
 end
