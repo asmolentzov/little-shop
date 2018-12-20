@@ -43,4 +43,15 @@ describe 'As an admin' do
       expect(page).to_not have_content("Total Items in Cart")
     end
   end
+  
+  it 'should not be able to navigate to any profile path' do
+    visit root_path
+    
+    within "#nav" do
+      expect(page).to_not have_content("Profile")
+    end
+    
+    visit profile_path
+    expect(page.status_code).to eq(404)
+  end
 end
