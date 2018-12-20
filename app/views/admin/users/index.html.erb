@@ -3,7 +3,6 @@
     <ul>
       <li><%= link_to user.name, admin_user_path(user) %></li>
       <li><%= user.created_at %></li>
-      <% binding.pry %>
       <% if user.enabled? %>
         <li><%= button_to 'Disable', admin_users_path %></li>
       <% else %>

@@ -10,12 +10,9 @@ describe 'ADMIN USER INDEX PAGE' do
       user_2 = User.create(name: 'User Two', street: 'Street Two', city: 'City Two', state: 'State2',
       zip: 'ZIP2', email: 'email2@aol.com', password: 'password2', role: 0, enabled: true)
       user_3 = User.create(name: 'User Three', street: 'Street Three', city: 'City Three', state: 'State3',
-      zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 0, enabled: true)
+      zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 0, enabled: false)
       user_4 = User.create(name: 'User Four', street: 'Street Four', city: 'City Four', state: 'State4',
       zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', role: 0, enabled: true)
-      #Disable User 3
-      user_3.update(enabled: false)
-      binding.pry
       #Merchant User
       user_5 = User.create(name: 'User Five', street: 'Street Five', city: 'City Five', state: 'State5',
       zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)

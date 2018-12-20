@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates_presence_of :name, :street, :city, :state, :zip,
                         :email, :role
   validates_presence_of :password, if: :password
+  validates :enabled, inclusion: {in: [true, false]}
   validates :email, uniqueness: true
 
   has_many :orders

@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email)}
     it { should validate_presence_of(:password)}
     it { should validate_presence_of(:role)}
-    it { should validate_presence_of(:enabled)}
+    it  {should validate_inclusion_of(:enabled).in_array([true, false])}
   end
 
   describe 'class methods' do
@@ -41,12 +41,9 @@ RSpec.describe User, type: :model do
         user_2 = User.create(name: 'User Two', street: 'Street Two', city: 'City Two', state: 'State2',
         zip: 'ZIP2', email: 'email2@aol.com', password: 'password2', role: 0, enabled: true)
         user_3 = User.create(name: 'User Three', street: 'Street Three', city: 'City Three', state: 'State3',
-        zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 0, enabled: true)
+        zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 0, enabled: false)
         user_4 = User.create(name: 'User Four', street: 'Street Four', city: 'City Four', state: 'State4',
         zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', role: 0, enabled: true)
-        #Disable User 3
-        user_3.update(enabled: false)
-
         #Merchant User
         user_5 = User.create(name: 'User Five', street: 'Street Five', city: 'City Five', state: 'State5',
         zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
