@@ -21,19 +21,19 @@ describe 'USER SHOW PAGE' do
 
       expect(page).to_not have_content(user_1.password)
     end
-    
+
     it 'allows me to go to a form to edit my data that has all my data pre-entered' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-      
+
       visit profile_path
-      
+
       click_link "Edit Profile"
-      
+
       expect(current_path).to eq(profile_edit_path)
-      
+
       expect(find_field("user[name]").value).to eq(user.name)
       expect(find_field("user[street]").value).to eq(user.street)
       expect(find_field("user[city]").value).to eq(user.city)
@@ -47,16 +47,16 @@ describe 'USER SHOW PAGE' do
       old_city = 'City One'
       user = User.create(name: old_name, street: 'Street One', city: old_city, state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
-        
+
         new_name = 'NEW NAME'
         new_city = 'NEW CITY'
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-      
+
       visit profile_edit_path
-      
+
       fill_in :user_name, with: new_name
       fill_in :user_city, with: new_city
-      
+
       click_button 'Submit'
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('You have updated your profile')
@@ -78,18 +78,18 @@ describe 'USER SHOW PAGE' do
       old_email = 'email1@aol.com'
       user = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
         zip: old_zip, email: old_email, password: 'password1')
-        
+
       new_name = 'NEW NAME'
       new_street = 'New Street'
       new_city = 'NEW CITY'
       new_state = 'New State'
       new_zip = 'zip2'
       new_email = 'email2@aol.com'
-        
+
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-      
+
       visit profile_edit_path
-      
+
       fill_in :user_name, with: new_name
       fill_in :user_street, with: new_street
       fill_in :user_city, with: new_city
@@ -97,7 +97,7 @@ describe 'USER SHOW PAGE' do
       fill_in :user_zip, with: new_zip
       fill_in :user_email, with: new_email
       click_button 'Submit'
-      
+
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('You have updated your profile')
       expect(page).to have_content(new_name)
@@ -117,12 +117,12 @@ describe 'USER SHOW PAGE' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-      
+
       visit profile_edit_path
-      
+
       fill_in :user_name, with: ''
       click_button 'Submit'
-      
+
       expect(current_path).to eq(profile_edit_path)
       expect(page).to have_content('Required fields are missing')
       expect(find_field("user[name]").value).to eq(user.name)
@@ -132,6 +132,58 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[zip]").value).to eq(user.zip)
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
+    end
+
+
+    it 'does not allow me to update my email address to one that is already in use' do
+
+      other_name = 'User Other'
+      other_street = 'Street Other'
+      other_city = 'City Other'
+      other_state = 'State Other'
+      other_zip = 'ZIP Other'
+      other_email = 'other@aol.com'
+
+      User.create(name: other_name, street: other_street, city: other_city, state: other_state,
+        zip: other_zip, email: other_email, password: 'password1')
+
+      old_name = 'User One'
+      old_street = 'Street One'
+      old_city = 'City One'
+      old_state = 'State1'
+      old_zip = 'ZIP1'
+      old_email = 'email1@aol.com'
+
+      user = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
+        zip: old_zip, email: old_email, password: 'password1')
+
+      new_name = 'NEW NAME'
+      new_street = 'New Street'
+      new_city = 'NEW CITY'
+      new_state = 'New State'
+      new_zip = 'zip2'
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit profile_edit_path
+
+      fill_in :user_name, with: new_name
+      fill_in :user_street, with: new_street
+      fill_in :user_city, with: new_city
+      fill_in :user_state, with: new_state
+      fill_in :user_zip, with: new_zip
+      fill_in :user_email, with: other_email
+      click_button 'Submit'
+
+      expect(page).to have_content('email address is already in use')
+      expect(find_field("user[name]").value).to eq(user.name)
+      expect(find_field("user[street]").value).to eq(user.street)
+      expect(find_field("user[city]").value).to eq(user.city)
+      expect(find_field("user[state]").value).to eq(user.state)
+      expect(find_field("user[zip]").value).to eq(user.zip)
+      expect(find_field("user[email]").value).to eq(nil)
+      expect(find_field("user[password]").value).to eq(nil)
+      
     end
   end
 end
