@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 describe 'As an admin' do
-  it 'allows admin users to see admin links' do
-    admin = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
+  before(:each) do
+    @admin = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-    
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+  end
+  
+  it 'allows admin users to see admin links' do
     visit items_path
     
     within '#nav' do
