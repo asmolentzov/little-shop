@@ -13,9 +13,9 @@ describe 'As an admin' do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-    visit admin_merchants_path
+    visit merchants_path
 
-    within "merchant-#{merchant_1.id}" do
+    within "#merchant-#{merchant_1.id}" do
     expect(page).to have_content(merchant_1.name)
     expect(page).to have_content(merchant_1.city)
     expect(page).to have_content(merchant_1.state)
@@ -28,7 +28,7 @@ describe 'As an admin' do
     expect(page).to_not have_link(admin_merchants_path(merchant_2.id))
     end
 
-    within "merchant-#{merchant_2.id}" do
+    within "#merchant-#{merchant_2.id}" do
     expect(page).to have_content(merchant_2.name)
     expect(page).to have_content(merchant_2.city)
     expect(page).to have_content(merchant_2.state)
