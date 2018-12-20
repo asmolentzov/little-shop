@@ -56,17 +56,17 @@ describe 'as a visitor' do
           city: "city", state: "CO", zip: "80219", email: "email1@aol.com", role: 1)
         user_2 = User.create(name: "user_1", password: "test", street: "street",
           city: "city", state: "CO", zip: "80219", email: "email2@aol.com", role: 1)
-        item_1 = user_2.items.create(name: 'apple1', image_link: 'https://picsum.photos/g/200/300',
+        item_1 = user_1.items.create(name: 'apple1', image_link: 'https://picsum.photos/g/200/300',
         inventory: 3, description: 'apple one', current_price: 200, enabled: true)
         item_2 = user_2.items.create(name: 'apple2', image_link: 'https://picsum.photos/5472/3648?image=1083',
         inventory: 4, description: 'apple two', current_price: 400, enabled: false)
-        item_3 = user_2.items.create(name: 'apple3', image_link: 'https://picsum.photos/200/300?image=0',
+        item_3 = user_1.items.create(name: 'apple3', image_link: 'https://picsum.photos/200/300?image=0',
         inventory: 5, description: 'apple three', current_price: 500, enabled: true)
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
         visit items_path
-
+        
         within("#item-#{item_1.id}") do
           expect(page).to have_content(item_1.name)
           expect(page).to have_link("#{item_1.name}")

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  
+  before_action :require_merchant_user, only: [:show] 
+  
   def index
     if current_admin?
       @merchants = User.merchant
@@ -8,6 +11,7 @@ class UsersController < ApplicationController
   end
 
   def show
+
   end
 
   def new
@@ -32,11 +36,7 @@ class UsersController < ApplicationController
       render :new
     end
   end
-
-  def edit
-    @user = current_user
-  end
-
+  
   def update
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
