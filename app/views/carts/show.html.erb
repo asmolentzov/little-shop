@@ -1,0 +1,10 @@
+<% @cart.contents.each do |item, quantity| %>
+  <div id="item-<%= item.id %>">
+    <p><%= item.name %></p>
+    <img src="<%= "#{item.image_link}" %> id="item-<%= item.id %>-img">
+    <p><%= item.user.name %></p>
+    <p><%= item.current_price %></p>
+    <p>Quantity: <%= quantity %></p>
+    <p>Subtotal: <%= quantity * item.current_price %></p>
+  </div>
+<% end  %>

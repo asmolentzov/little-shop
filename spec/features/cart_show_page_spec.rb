@@ -16,15 +16,20 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     item_2 = Item.create(name: 'IBM PCXT 5161', user: merchant, inventory: 3,
     current_price: 400000, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'The latest in personal computing technology')
 
-    cart = Cart.new()
+    visit items_path
 
-    cart.add_item(item_1)
-    cart.add_item(item_2)
-    cart.add_item(item_2)
-    subtotal_1 = item_1.price * cart.contents[item_1.id.to_s]
-    subtotal_2 = item_2.price * cart.contents[item_2.id.to_s]
-    quantity_1 = cart.contents[item_1.id.to_s]
-    quantity_2 = cart.contents[item_2.id.to_s]
+    within "#item-#{item_1.id}" do
+      click_button('Add item')
+    end
+    within "#item-#{item_2.id}" do
+      click_button('Add item')
+      click_button('Add item')
+    end
+
+    subtotal_1 = item_1.current_price * @cart.contents[item_1.id.to_s]
+    subtotal_2 = item_2.current_price * @cart.contents[item_2.id.to_s]
+    quantity_1 = @cart.contents[item_1.id.to_s]
+    quantity_2 = @cart.contents[item_2.id.to_s]
 
     visit cart_path
 
@@ -32,17 +37,18 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
       expect(page).to have_content(item_1.name)
       expect(page).to have_css("img[src*='#{item_1.image_link}'")
       expect(page).to have_content(item_1.merchant.name)
-      expect(page).to have_content(item_1.price)
+      expect(page).to have_content(item_1.current_price)
       expect(page).to have_content("Quantity: #{quantity_1}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_1)}")
 
       expect(page).to_not have_content(item_2.name)
     end
+
     within "#item-#{item_2.id}" do
       expect(page).to have_content(item_2.name)
       expect(page).to have_css("img[src*='#{item_2.image_link}'")
       expect(page).to have_content(item_2.merchant.name)
-      expect(page).to have_content(item_2.price)
+      expect(page).to have_content(item_2.current_price)
       expect(page).to have_content("Quantity: #{quantity_2}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_2)}")
 
@@ -50,6 +56,6 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     end
 
     expect(page).to have_content("Grand total: #{number_to_currency(subtotal_1 + subtotal_2)}")
-
   end
+
 end
