@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   def index
-    @merchants = User.enabled_merchants
+    if current_admin?
+      binding.pry
+      @merchants = User.where(role: 1)
+    elsif
+      @merchants = User.enabled_merchants
+    end
   end
 
   def show
