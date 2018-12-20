@@ -18,7 +18,7 @@ class User < ApplicationRecord
     where("role = ? AND enabled = ?", 1, true)
   end
 
-  def self.merchant?
+  def self.merchant
     where(role: 1)
   end
 

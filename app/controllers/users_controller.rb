@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
     if current_admin?
-      @merchants = User.merchant?
+      @merchants = User.merchant
     elsif
       @merchants = User.enabled_merchants
     end

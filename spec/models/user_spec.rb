@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
           zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', created_at: 4.days.ago)
 
         expect(User.enabled_merchants).to eq([user_1, user_3])
-        expect(User.enabled_merchants).not_to eq([user_2, user_4])
+        expect(User.enabled_merchants).not_to include([user_2, user_4])
       end
     end
   end
@@ -47,8 +47,8 @@ RSpec.describe User, type: :model do
     user_4 = User.create(name: 'User Four', street: 'Street Four', city: 'City Four', state: 'State4',
       zip: 'ZIP4', email: 'email4@aol.com', password: 'password4',  created_at: 4.days.ago)
 
-      expect(User.merchant?.pluck(:name)).to eq([user_1.name, user_2.name, user_3.name])
-      expect(User.merchant?.pluck(:name)).to_not eq([user_4.name])
+      expect(User.merchant).to eq([user_1, user_2, user_3])
+      expect(User.merchant).to_not include([user_4])
     end
   end
 end
