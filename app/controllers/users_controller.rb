@@ -28,18 +28,25 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
     @user = current_user
   end
-  
+
   def update
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
-    else
-      flash[:field_alert] = 'Required fields are missing'
+    elsif
+      current_user.errors.each do |attr, msg|
+        if msg == "can't be blank"
+          flash[:field_alert] = 'Required fields are missing'
+        elsif attr == :email && msg == "has already been taken"
+          flash[:email_alert] = 'Email address is already in use'
+          current_user.email = nil
+        end
       redirect_to profile_edit_path
+      end
     end
   end
 

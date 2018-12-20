@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
   get '/dashboard', as: :dashboard, to: "users#show"
+  get '/dashboard/items', to: "items#index"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]

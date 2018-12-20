@@ -1,7 +1,11 @@
 class ItemsController < ApplicationController
 
   def index
-    @items = Item.all
+   if current_merchant?
+     @items = current_user.items
+    else
+     @items = Item.all
+    end
   end
 
   def show
