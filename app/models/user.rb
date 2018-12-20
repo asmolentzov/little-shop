@@ -3,6 +3,10 @@ class User < ApplicationRecord
                         :email, :password, :role
   validates :email, uniqueness: true
 
+  validates :enabled, inclusion: {in: [true, false]}
+
+
+
   has_many :orders
   has_many :items
 
@@ -17,5 +21,7 @@ class User < ApplicationRecord
   def self.merchant?
     where(role: 1)
   end
+
+  private
 
 end

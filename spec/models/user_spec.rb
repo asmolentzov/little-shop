@@ -15,7 +15,8 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email)}
     it { should validate_presence_of(:password)}
     it { should validate_presence_of(:role)}
-    it { should validate_presence_of(:enabled)}
+    it  {should validate_inclusion_of(:enabled).
+          in_array([true, false])}
   end
 
   describe 'class methods' do
