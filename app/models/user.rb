@@ -1,11 +1,10 @@
 class User < ApplicationRecord
   validates_presence_of :name, :street, :city, :state, :zip,
-                        :email, :password, :role
-  validates :email, uniqueness: true
-
+                        :email, :role
+  validates_presence_of :password, if: :password
   validates :enabled, inclusion: {in: [true, false]}
 
-
+  validates :email, uniqueness: true
 
   has_many :orders
   has_many :items
@@ -18,10 +17,12 @@ class User < ApplicationRecord
     where("role = ? AND enabled = ?", 1, true)
   end
 
+  def self.default_users
+    where(role: :default)
+  end
+
   def self.merchant
     where(role: 1)
   end
-
-  private
 
 end
