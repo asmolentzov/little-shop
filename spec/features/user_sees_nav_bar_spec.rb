@@ -75,14 +75,23 @@ describe 'nav' do
     end
 
     it 'sees text about logged in' do
-
-
       visit root_path
 
       within "#nav" do
         expect(page).to have_content("Logged in as #{@user.name}")
       end
-
+    end
+    
+    it 'should not be able to navigate to any dashboard path' do
+      visit root_path
+      
+      within "#nav" do
+        expect(page).to_not have_content("Dashboard")
+      end
+      
+      visit dashboard_path
+      
+      expect(page.status_code).to eq(404)
     end
   end
 end
