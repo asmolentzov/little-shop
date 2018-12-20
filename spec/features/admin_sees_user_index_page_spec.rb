@@ -15,7 +15,7 @@ describe 'ADMIN USER INDEX PAGE' do
       zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', role: 0, enabled: true)
       #Disable User 3
       user_3.update(enabled: false)
-
+      binding.pry
       #Merchant User
       user_5 = User.create(name: 'User Five', street: 'Street Five', city: 'City Five', state: 'State5',
       zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
