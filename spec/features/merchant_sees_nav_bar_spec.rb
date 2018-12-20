@@ -39,4 +39,14 @@ describe 'as a merchant' do
     visit admin_users_path
     expect(page.status_code).to eq(404)
   end
+  it 'should not be able to navigate to any cart path' do
+    visit root_path
+    
+    within "#nav" do
+      expect(page).to_not have_content("Cart")
+    end
+    
+    visit cart_path
+    expect(page.status_code).to eq(404)
+  end
 end
