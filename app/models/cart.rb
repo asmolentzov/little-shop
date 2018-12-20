@@ -10,4 +10,12 @@ class Cart
     @contents[item_id.to_s] += 1
   end
 
+  def grand_total
+    total = 0
+    @contents.each do |item_id, quantity|
+      total += Item.find(item_id.to_i).current_price * quantity
+    end
+    total
+  end
+
 end

@@ -2,6 +2,7 @@ class CartsController < ApplicationController
 
   def show
     @cart = Cart.new(session[:cart])
+    @cart_items = Item.find(@cart.contents.keys)
   end
 
   def create

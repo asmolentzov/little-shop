@@ -1,9 +1,10 @@
 require 'rails_helper'
-include ActionView::Helpers::TextHelper
 
 
 
 RSpec.describe "When a user visitor visits their cart show page with items in cart" do
+  include ActionView::Helpers::NumberHelper
+
   it "displays the items in their cart" do
     user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
     zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
@@ -26,18 +27,18 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
       click_button('Add item')
     end
 
-    subtotal_1 = item_1.current_price * @cart.contents[item_1.id.to_s]
-    subtotal_2 = item_2.current_price * @cart.contents[item_2.id.to_s]
-    quantity_1 = @cart.contents[item_1.id.to_s]
-    quantity_2 = @cart.contents[item_2.id.to_s]
+    quantity_1 = 1
+    quantity_2 = 2
+    subtotal_1 = (item_1.current_price * quantity_1)/100
+    subtotal_2 = (item_2.current_price * quantity_2)/100
 
     visit cart_path
 
     within "#item-#{item_1.id}" do
       expect(page).to have_content(item_1.name)
-      expect(page).to have_css("img[src*='#{item_1.image_link}'")
-      expect(page).to have_content(item_1.merchant.name)
-      expect(page).to have_content(item_1.current_price)
+      expect(page).to have_css("img[src*='#{item_1.image_link}']")
+      expect(page).to have_content(item_1.user.name)
+      expect(page).to have_content(number_to_currency(item_1.current_price/100))
       expect(page).to have_content("Quantity: #{quantity_1}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_1)}")
 
@@ -46,9 +47,9 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     within "#item-#{item_2.id}" do
       expect(page).to have_content(item_2.name)
-      expect(page).to have_css("img[src*='#{item_2.image_link}'")
-      expect(page).to have_content(item_2.merchant.name)
-      expect(page).to have_content(item_2.current_price)
+      expect(page).to have_css("img[src*='#{item_2.image_link}']")
+      expect(page).to have_content(item_2.user.name)
+      expect(page).to have_content(number_to_currency(item_2.current_price/100))
       expect(page).to have_content("Quantity: #{quantity_2}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_2)}")
 
