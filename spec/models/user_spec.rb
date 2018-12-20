@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
       end
     end
   end
-  describe '.merchant?' do
+  describe '.merchant' do
     it 'should return all merchants' do
     user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
       zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 1, created_at: 1.days.ago)
