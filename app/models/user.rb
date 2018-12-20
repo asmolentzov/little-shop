@@ -3,6 +3,7 @@ class User < ApplicationRecord
                         :email, :role
   validates_presence_of :password, if: :password
   validates :enabled, inclusion: {in: [true, false]}
+
   validates :email, uniqueness: true
 
   has_many :orders
@@ -18,6 +19,10 @@ class User < ApplicationRecord
 
   def self.default_users
     where(role: :default)
+  end
+
+  def self.merchant
+    where(role: 1)
   end
 
 end
