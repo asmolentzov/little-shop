@@ -1,5 +1,5 @@
 <% @merchants.each do |merchant| %>
-    <ul>
+    <ul id="merchant-<%= merchant.id %>">
       <li><%= merchant.name %></li>
       <li><%= merchant.city %></li>
       <li><%= merchant.state %></li>
