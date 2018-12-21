@@ -11,4 +11,4 @@
     <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
   </div>
 <% end  %>
-<p>Grand Total: <%= @cart.grand_total %></p>
+<p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>

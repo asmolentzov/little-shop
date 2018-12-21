@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
 
   def show
-    unless current_default? || !current_user
+    if current_merchant? || current_admin?
       render file: "public/404", status: 404, layout: false
     end
     @cart = Cart.new(session[:cart])
