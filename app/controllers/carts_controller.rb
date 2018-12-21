@@ -3,9 +3,10 @@ class CartsController < ApplicationController
   def show
     if current_merchant? || current_admin?
       render file: "public/404", status: 404, layout: false
+    else
+      @cart = Cart.new(session[:cart])
+      @cart_items = Item.find(@cart.contents.keys)
     end
-    @cart = Cart.new(session[:cart])
-    @cart_items = Item.find(@cart.contents.keys)
   end
 
   def create

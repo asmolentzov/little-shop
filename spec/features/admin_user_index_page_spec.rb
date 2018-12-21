@@ -46,7 +46,7 @@ describe 'ADMIN USER INDEX PAGE' do
       end
     end
 
-    it 'shows a list of user information and associated links' do
+    xit 'allows me to toggle between enabled and disabled statuses for users' do
       #Defaul Users
       user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
       zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
