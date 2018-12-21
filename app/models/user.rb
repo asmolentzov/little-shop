@@ -21,6 +21,6 @@ class User < ApplicationRecord
   end
 
   def enabled_toggle
-    enabled ? enabled = false : enabled = true
+    enabled ? self.update(enabled: false) : self.update(enabled: true)
   end
 end
