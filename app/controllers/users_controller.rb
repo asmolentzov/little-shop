@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  
-  before_action :require_merchant_user, only: [:show] 
-  
+
+  before_action :require_merchant_user, only: [:show]
+
   def index
     if current_admin?
       @merchants = User.merchant
@@ -36,8 +36,9 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def update
+  to_update = User.find(params[:id])
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
@@ -51,12 +52,21 @@ class UsersController < ApplicationController
         end
       redirect_to profile_edit_path
       end
+    else
+      binding.pry
+      to_update[:enabled] = true
+      flash[:success] = "#{to_update.name} is now enabled"
+      redirect_to users_path
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
+    if current_admin?
+      params.fetch(:user_id, {}).permit(:name, :street, :city, :state, :zip, :email, :password, :enabled)
+    else
+      params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
+    end
   end
 end
