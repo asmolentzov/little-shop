@@ -57,6 +57,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     end
 
     expect(page).to have_content("Grand Total: #{number_to_currency(subtotal_1 + subtotal_2)}")
+    expect(page).to have_link("Empty Cart")
   end
 
 end

@@ -12,3 +12,4 @@
   </div>
 <% end  %>
 <p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
+<%= link_to "Empty Cart", cart_path %>
