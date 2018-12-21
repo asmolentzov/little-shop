@@ -64,9 +64,9 @@ describe 'As an admin' do
             click_on merchant_1.name
 
             expect(current_path).to eq(admin_merchant_path(merchant_1.id))
-            expect(page).to have_content(merchant_2.name)
-            expect(page).to have_content(merchant_2.city)
-            expect(page).to have_content(merchant_2.state)
+            expect(page).to have_content(merchant_1.name)
+            expect(page).to have_content(merchant_1.city)
+            expect(page).to have_content(merchant_1.state)
 
             expect(page).to_not have_content(merchant_2.name)
             expect(page).to_not have_content(merchant_2.city)

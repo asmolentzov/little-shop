@@ -5,6 +5,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
+    @merchant = User.find(params[:id])
   end
 
 end
