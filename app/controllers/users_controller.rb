@@ -38,7 +38,6 @@ class UsersController < ApplicationController
   end
 
   def update
-  to_update = User.find(params[:id])
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
@@ -52,19 +51,26 @@ class UsersController < ApplicationController
         end
       redirect_to profile_edit_path
       end
-    else
-      binding.pry
-      to_update[:enabled] = true
-      flash[:success] = "#{to_update.name} is now enabled"
-      redirect_to users_path
     end
+  end
+
+  def enable
+    binding.pry
+    user = User.find(params[:user_id])
+    user[:enabled] = params[:enabled]
+    if user[:enabled] = true
+      flash[:notice] = "#{user.name} is now enabled"
+    else
+      flash[:notice] = "#{user.name} is now disabled"
+    end
+    redirect_to "/merchants"
   end
 
   private
 
   def user_params
     if current_admin?
-      params.fetch(:user_id, {}).permit(:name, :street, :city, :state, :zip, :email, :password, :enabled)
+      params.fetch(:user, {}).permit(:name, :street, :city, :state, :zip, :email, :password, :enabled, :user_id)
     else
       params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
     end

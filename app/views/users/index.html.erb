@@ -8,9 +8,9 @@
         <% if current_admin? %>
         <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
           <% if merchant.enabled %>
-          <li><%= button_to "disable", user_path(merchant.id), method: :patch, params: { user_id: merchant.id, enabled: false } %></li>
+          <li><%= button_to "disable", "/deactivate", method: :enable, params: { user_id: merchant.id, enabled: false } %></li>
           <% else  %>
-          <li><%= button_to "enable", user_path(merchant.id), method: :patch, params: { enabled: true } %></li>
+          <li><%= button_to "enable", "/activate", method: :enable, params: { user_id: merchant.id, enabled: true } %></li>
           <% end %>
         <% end %>
     </ul>
