@@ -13,6 +13,7 @@ describe 'as a logged in user' do
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content("Successfully Logged Out")
+      expect(page).to_not have_link("Log Out")
     end
   end
   context 'merchant user' do
@@ -27,6 +28,7 @@ describe 'as a logged in user' do
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content("Successfully Logged Out")
+      expect(page).to_not have_link("Log Out")
     end
   end
   context 'admin user' do
@@ -41,6 +43,7 @@ describe 'as a logged in user' do
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content("Successfully Logged Out")
+      expect(page).to_not have_link("Log Out")
     end
   end
 end
