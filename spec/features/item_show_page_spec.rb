@@ -25,7 +25,7 @@ describe 'as any user' do
       expect(page).to have_content(item_1.inventory)
       expect(page).to have_content(item_1.current_price)
       expect(page).to have_content(item_1.avg_fulfill_time)
-      expect(page).to have_link("Add item")
+      expect(page).to have_button("Add item")
     end
   end
 end

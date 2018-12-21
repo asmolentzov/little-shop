@@ -5,3 +5,4 @@
 <p><%= @item.inventory %></p>
 <p><%= @item.current_price %></p>
 <p><%= @item.avg_fulfill_time %>
+<%= button_to "Add item", cart_path(@item) %>
