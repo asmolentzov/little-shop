@@ -6,4 +6,8 @@ class Item < ApplicationRecord
 
   has_many :order_items
   has_many :orders, through: :order_items
+
+  def avg_fulfill_time
+    self.order_items.where(fulfilled: true).average("order_items.updated_at - order_items.created_at").to_i
+  end
 end

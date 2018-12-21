@@ -1,0 +1,8 @@
+<p><%= @item.name %></p>
+<p><%= image_tag(@item.image_link) %></p>
+<p><%= @item.user.name %></p>
+<p><%= @item.description %></p>
+<p><%= @item.inventory %></p>
+<p><%= @item.current_price %></p>
+<p><%= @item.avg_fulfill_time %>
+<%= button_to "Add item", cart_path(@item) %>
