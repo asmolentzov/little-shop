@@ -19,9 +19,9 @@ describe 'as any user' do
       click_on 'apple1'
 
       expect(page).to have_content(item_1.name)
-      expect(page).to have_content(item_1.description)
       expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
       expect(page).to have_content(item_1.user.name)
+      expect(page).to have_content(item_1.description)
       expect(page).to have_content(item_1.inventory)
       expect(page).to have_content(item_1.current_price)
       expect(page).to have_content(item_1.avg_fulfill_time)
