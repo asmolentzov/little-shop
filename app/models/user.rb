@@ -20,4 +20,7 @@ class User < ApplicationRecord
     where(role: :default)
   end
 
+  def enabled_toggle
+    enabled ? enabled = false : enabled = true
+  end
 end

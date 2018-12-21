@@ -54,5 +54,15 @@ RSpec.describe User, type: :model do
         expect(User.default_users).to eq([user_1, user_2, user_3, user_4])
       end
     end
+    describe '.enabled_toggle' do
+      it 'toggles a user between enabled and disabled states' do
+        user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
+          zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
+        user_1.enabled_toggle
+        expect(user_1.enabled).to eq(false)
+        user_1.enabled_toggle
+        expect(user_1.enabled).to eq(true)
+      end
+    end
   end
 end
