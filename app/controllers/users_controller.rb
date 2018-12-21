@@ -54,16 +54,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def enable
-    user = User.find(params[:user_id])
-    user.update(:enabled => params[:enabled])
-    if user[:enabled] == true
-      flash[:notice] = "#{user.name} is now enabled"
-    else
-      flash[:notice] = "#{user.name} is now disabled"
-    end
-    redirect_to "/merchants"
-  end
 
   private
 

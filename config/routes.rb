@@ -13,16 +13,13 @@ Rails.application.routes.draw do
   get '/dashboard', as: :dashboard, to: "users#show"
   get '/dashboard/items', to: "items#index"
 
-  post '/deactivate', to: "users#enable"
-  post '/activate', to: "users#enable"
-
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
 
   namespace :admin do
     resources :users, only: [:index, :show]
-    resources :users, as: :merchants, only: [:index, :show]
+    resources :users, as: :merchants, only: [:index, :show, :update]
   end
 
   namespace :profile do
