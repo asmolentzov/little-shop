@@ -23,26 +23,26 @@ describe 'As an admin' do
     expect(page).to have_content(merchant_1.name)
     expect(page).to have_content(merchant_1.city)
     expect(page).to have_content(merchant_1.state)
-    expect(page).to have_link(admin_merchants_path(merchant_1.id))
+    expect(page).to have_link(merchant_1.name)
     expect(page).to have_button("disable")
 
     expect(page).to_not have_content(merchant_2.name)
     expect(page).to_not have_content(merchant_2.city)
     expect(page).to_not have_content(merchant_2.state)
-    expect(page).to_not have_link(admin_merchants_path(merchant_2.id))
+    expect(page).to_not have_link(merchant_2.name)
     end
 
     within "#merchant-#{merchant_2.id}" do
     expect(page).to have_content(merchant_2.name)
     expect(page).to have_content(merchant_2.city)
     expect(page).to have_content(merchant_2.state)
-    expect(page).to have_link(admin_merchants_path(merchant_2.id))
+    expect(page).to have_link(merchant_2.name)
     expect(page).to have_button("enable")
 
     expect(page).to_not have_content(merchant_1.name)
     expect(page).to_not have_content(merchant_1.city)
     expect(page).to_not have_content(merchant_1.state)
-    expect(page).to_not have_link(admin_merchants_path(merchant_1.id))
+    expect(page).to_not have_link(merchant_1.name)
     end
   end
 
@@ -60,9 +60,10 @@ describe 'As an admin' do
           visit merchants_path
 
           within "#merchant-#{merchant_1.id}" do
-            click_on admin_merchants_path(merchant_1.id)
 
-            expect(current_path).to eq(admin_merchants_path(merchant_1.id))
+            click_on merchant_1.name
+
+            expect(current_path).to eq(admin_merchant_path(merchant_1.id))
             expect(page).to have_content(merchant_2.name)
             expect(page).to have_content(merchant_2.city)
             expect(page).to have_content(merchant_2.state)

@@ -6,7 +6,7 @@
       <li><%= merchant.street %></li>
       <li><%= merchant.created_at %></li>
         <% if current_admin? %>
-        <li><%= link_to(admin_merchants_path(merchant.id)) %></li>
+        <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
           <% if merchant.enabled %>
           <li><%= button_to("disable") %></li>
           <% else  %>
