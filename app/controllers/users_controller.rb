@@ -55,9 +55,8 @@ class UsersController < ApplicationController
   end
 
   def enable
-    binding.pry
     user = User.find(params[:user_id])
-    user[:enabled] = params[:enabled]
+    user.update(:enabled => params[:enabled])
     if user[:enabled] = true
       flash[:notice] = "#{user.name} is now enabled"
     else

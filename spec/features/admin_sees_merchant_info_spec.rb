@@ -96,11 +96,11 @@ describe 'As an admin' do
     end
 
     expect(page).to have_content("#{merchant_2.name} is now enabled")
-    # within "#merchant-#{merchant_2.id}" do
-    #
-    #
-    # expect(page).to have_button("disable")
-    #
-    # end
+    
+    within "#merchant-#{merchant_2.id}" do
+
+    expect(page).to have_button("disable")
+
+    end
   end
 end
