@@ -45,5 +45,27 @@ describe 'ADMIN USER INDEX PAGE' do
         expect(page).to have_button("Disable")
       end
     end
+
+    xit 'allows me to toggle between enabled and disabled statuses for users' do
+      #Defaul Users
+      user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
+      zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
+      #Admin User
+      user_6 = User.create(name: 'User Six', street: 'Street Six', city: 'City Six', state: 'State6',
+      zip: 'ZIP6', email: 'email6@aol.com', password: 'password6', role: 2, enabled: true)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_6)
+
+      visit admin_users_path
+
+      within "#user-links-#{user_1.id}" do
+        click_button('Disable')
+        expect(page).to have_button("Enable")
+        expect(user_1.enabled).to eq(false)
+        click_button('Enable')
+        expect(page).to have_button("Disable")
+        expect(user_1.enabled).to eq(true)
+      end
+    end
   end
 end

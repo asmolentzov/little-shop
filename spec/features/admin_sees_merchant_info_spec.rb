@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'As an admin' do
-  it 'can visit the merchant index path' do
+  xit 'can visit the merchant index path' do
     merchant_1 = User.create(name: 'Argellica Jones', street: '9 Slider Ave', city: 'Smithtown', state: 'PA',
       zip: '76390', email: 'Jonesey@aol.com', password: '123456789', role: 1, enabled: true)
     merchant_2 = User.create(name: 'Holden Butts', street: '5607 E County Rd.', city: 'bifftown', state: 'CO',
