@@ -68,10 +68,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    if current_admin?
-      params.fetch(:user, {}).permit(:name, :street, :city, :state, :zip, :email, :password, :enabled, :user_id)
-    else
       params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
-    end
   end
 end
