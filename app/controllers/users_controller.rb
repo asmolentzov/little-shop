@@ -1,17 +1,15 @@
 class UsersController < ApplicationController
-  
-  before_action :require_merchant_user, only: [:show] 
-  
+  before_action :require_merchant_user, only: [:show]
+
   def index
     if current_admin?
       @merchants = User.merchant
-    elsif
+    else
       @merchants = User.enabled_merchants
     end
   end
 
   def show
-
   end
 
   def new
@@ -36,21 +34,18 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
+  def edit
+    @user = current_user
+  end
+
   def update
     if current_user.update(user_params)
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
-    elsif
-      current_user.errors.each do |attr, msg|
-        if msg == "can't be blank"
-          flash[:field_alert] = 'Required fields are missing'
-        elsif attr == :email && msg == "has already been taken"
-          flash[:email_alert] = 'Email address is already in use'
-          current_user.email = nil
-        end
+    else
+      flash[:field_alert] = 'Required fields are missing'
       redirect_to profile_edit_path
-      end
     end
   end
 

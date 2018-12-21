@@ -9,6 +9,6 @@
     <p><%= item.description %></p>
     <p><%= item.inventory %></p>
     <p><%= item.current_price %></p>
+    <%= button_to 'Add item', carts_path(item_id: item.id) %>
   </div>
 <% end  %>
-

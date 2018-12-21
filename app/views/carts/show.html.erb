@@ -1,0 +1,15 @@
+
+
+<% @cart_items.each do |item| %>
+  <% quantity = @cart.contents[item.id.to_s] %>
+  <div id="item-<%= item.id %>">
+    <p><%= item.name %></p>
+    <img src="<%= "#{item.image_link}" %> id="item-<%= item.id %>-img">
+    <p><%= item.user.name %></p>
+    <p><%= number_to_currency(item.current_price/100) %></p>
+    <p>Quantity: <%= quantity %></p>
+    <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
+  </div>
+<% end  %>
+<p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
+<%= link_to "Empty Cart", cart_path %>
