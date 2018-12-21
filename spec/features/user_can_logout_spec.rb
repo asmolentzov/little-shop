@@ -5,7 +5,11 @@ describe 'as a logged in user' do
     it 'should be able to log out' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1', zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      visit login_path
+
+      fill_in :email, with: user.email
+      fill_in :password, with: user.password
+      click_button 'Log In'
 
       visit profile_path
 
@@ -20,7 +24,11 @@ describe 'as a logged in user' do
     it 'should be able to log out' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1', zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 1)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      visit login_path
+
+      fill_in :email, with: user.email
+      fill_in :password, with: user.password
+      click_button 'Log In'
 
       visit dashboard_path
 
@@ -35,7 +43,11 @@ describe 'as a logged in user' do
     it 'should be able to log out' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1', zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 2)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      visit login_path
+
+      fill_in :email, with: user.email
+      fill_in :password, with: user.password
+      click_button 'Log In'
 
       visit items_path
 
