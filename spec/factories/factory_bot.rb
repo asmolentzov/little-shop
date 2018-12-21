@@ -36,15 +36,15 @@ FactoryBot.define do
   end
   
   factory :order do
-    status { pending }
+    status { 'pending' }
     user
     
     factory :fulfilled_order do
-      status { fulfilled }
+      status { 'fulfilled' }
     end
     
     factory :cancelled_order do
-      status { cancelled }
+      status { 'cancelled' }
     end
   end
   
