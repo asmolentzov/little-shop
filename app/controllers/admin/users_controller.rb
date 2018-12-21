@@ -5,7 +5,12 @@ class Admin::UsersController < ApplicationController
     @users = User.default_users
   end
 
+  def show
+    @merchant = User.find(params[:id])
+  end
+  
   def create
+
   end
 
 end

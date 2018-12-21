@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :show]
-    resources :users, as: :merchants, only: [:index]
+    resources :users, as: :merchants, only: [:index, :show]
   end
 
   namespace :profile do

@@ -4,5 +4,13 @@
       <li><%= merchant.city %></li>
       <li><%= merchant.state %></li>
       <li><%= merchant.created_at %></li>
+        <% if current_admin? %>
+        <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
+          <% if merchant.enabled %>
+          <li><%= button_to("disable") %></li>
+          <% else  %>
+          <li><%= button_to("enable") %></li>
+          <% end %>
+        <% end %>
     </ul>
 <% end %>
