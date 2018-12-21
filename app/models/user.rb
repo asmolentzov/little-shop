@@ -3,7 +3,6 @@ class User < ApplicationRecord
                         :email, :role
   validates_presence_of :password, if: :password
   validates :enabled, inclusion: {in: [true, false]}
-
   validates :email, uniqueness: true
 
   has_many :orders
@@ -21,8 +20,7 @@ class User < ApplicationRecord
     where(role: :default)
   end
 
-  def self.merchant
-    where(role: 1)
+  def enabled_toggle
+    enabled ? self.update(enabled: false) : self.update(enabled: true)
   end
-
 end

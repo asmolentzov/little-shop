@@ -4,7 +4,7 @@
       <li><%= link_to user.name, admin_user_path(user) %></li>
       <li><%= user.created_at %></li>
       <% if user.enabled? %>
-        <li><%= button_to 'Disable', admin_users_path %></li>
+        <li><%= button_to 'Disable', admin_users_path() %></li>
       <% else %>
         <li><%= button_to 'Enable', admin_users_path %></li>
       <% end %>
