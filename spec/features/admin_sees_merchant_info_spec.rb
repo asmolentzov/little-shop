@@ -89,8 +89,6 @@ describe 'As an admin' do
 
     visit merchants_path
 
-    save_and_open_page
-
     within "#merchant-#{merchant_2.id}" do
 
     click_on "enable"
