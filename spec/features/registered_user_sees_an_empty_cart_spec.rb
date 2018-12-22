@@ -1,10 +1,14 @@
 require 'rails_helper'
 
-describe 'as a non registered user' do
+describe 'as a registered user' do
   it 'sees an empty cart' do
+
+    user_1 = create(:user)
 
     item_1 = create(:item)
     item_2 = create(:item)
+
+   allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
    visit cart_path
 
