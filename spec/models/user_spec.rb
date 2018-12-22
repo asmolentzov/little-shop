@@ -145,6 +145,30 @@ RSpec.describe User, type: :model do
         expect(User.merchants_by_time).to eq(sorted_merchants)
       end
     end
+    describe '.top_states' do
+      it 'should return the top three states where any orders were shipped' do
+        user_1 = create(:user, state: 'CO')
+        create(:order, user: user_1)
+        create(:order, user: user_1)
+        
+        user_2 = create(:user, state: 'HI')
+        create(:order, user: user_2)
+        create(:order, user: user_2)
+        create(:order, user: user_2)
+        
+        user_3 = create(:user, state: 'CA')
+        create(:order, user: user_3)
+        
+        user_4 = create(:user, state: 'NY')
+        
+        user_5 = create(:user, state: 'HI')
+        create(:order, user: user_5)
+        
+        states = ['HI', 'CO', 'CA']
+        
+        expect(User.top_states).to eq(states)
+      end
+    end
   end
   
   describe 'Instance Methods' do
