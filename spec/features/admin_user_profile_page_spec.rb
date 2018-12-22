@@ -18,6 +18,7 @@ describe 'As an admin user' do
       expect(page).to have_content(user_1.email)
 
       expect(page).to have_link('Edit Profile')
+      expect(page).to_not have_link("My Items")
 
       expect(page).to_not have_content(user_1.password)
     end
@@ -40,6 +41,7 @@ describe 'As an admin user' do
       expect(page).to have_content(user_1.email)
 
       expect(page).to have_link('My Items')
+      expect(page).to_not have_link("Edit Profile")
 
       expect(page).to_not have_content(user_1.password)
     end
