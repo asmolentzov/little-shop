@@ -17,6 +17,14 @@ describe 'As a visitor' do
       expect(page).to have_content('You must register or log in to checkout')
       expect(page).to have_link('register')
       expect(page).to have_link('log in')
+
+      click_on 'register'
+      expect(current_path).to eq(registration_path)
+
+      visit cart_path
+
+      click_on 'log in'
+      expect(current_path).to eq(login_path)
     end
     it 'should not show the register or login message if I am logged in' do
       item_1 = create(:item)
