@@ -35,6 +35,13 @@
     </ul>
     <% end %>
   </p>
+  <p>Top 3 Cities with Most Orders:
+    <% @top_cities.each do |city, state| %>
+    <ul>
+      <li><%= city %>, <%= state %></li>
+    </ul>
+    <% end %>
+  </p>
 </div>
 
 <% @merchants.each do |merchant| %>
