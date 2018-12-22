@@ -22,9 +22,11 @@ class User < ApplicationRecord
   
   def self.merchants_by_quantity
     User.joins(items: :order_items)
+        .where("order_items.fulfilled = true")
         .group(:id)
         .select("users.*, count(order_items.id) AS quantity")
         .order("quantity DESC")
+        .limit(3)
   end
 
   def enabled_toggle

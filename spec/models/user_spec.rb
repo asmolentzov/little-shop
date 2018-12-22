@@ -58,28 +58,26 @@ RSpec.describe User, type: :model do
     describe '.merchants_by_quantity' do
       it 'should return the top three merchants by quantity of items sold' do
         merchant_1 = create(:merchant)
-        item_1 = create(:item, user: merchant_1)
-        item_2 = create(:item, user: merchant_1)
-        item_3 = create(:item, user: merchant_1)
-        create(:fulfilled_order_item, item: item_1)
-        create(:fulfilled_order_item, item: item_2)
-        create(:fulfilled_order_item, item: item_3)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
         
         merchant_2 = create(:merchant)
-        item_8 = create(:item, user: merchant_2)
-        create(:fulfilled_order_item, item: item_8)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2))
         
         merchant_3 = create(:merchant)
         
         merchant_4 = create(:merchant)
-        item_4 = create(:item, user: merchant_4)
-        item_5 = create(:item, user: merchant_4)
-        item_6 = create(:item, user: merchant_4)
-        item_7 = create(:item, user: merchant_4)
-        create(:fulfilled_order_item, item: item_4)
-        create(:fulfilled_order_item, item: item_5)
-        create(:unfulfilled_order_item, item: item_6)
-        create(:unfulfilled_order_item, item: item_7)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
+        
+        merchant_5 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_5))
         
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
