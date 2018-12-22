@@ -57,8 +57,30 @@ describe 'as a visitor' do
       
       within "#statistics" do
         expect(page).to have_content("Top Merchants by Quantity:#{top_merchants_quantity}")
-        
         expect(page).to have_content("Top Merchants by Price:#{top_merchants_price}")
+        expect(page).to_not have_content(merchant_3.name)
+      end
+    end
+    it 'should show stats about top and bottom three merchants in terms of fulfillment time' do
+      merchant_1 = create(:merchant)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
+      
+      merchant_2 = create(:merchant)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
+      
+      merchant_3 = create(:merchant)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.days.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
+      
+      merchant_4 = create(:merchant)
+      
+      fastest_merchants = "\n#{merchant_2.name}\n#{merchant_1.name}\n#{merchant_3.name}"
+      
+      within "#statistics" do
+        expect(page).to have_content("Top Merchants With Fastets Fulfillment Times:#{fastest_merchants}")
       end
       
     end
