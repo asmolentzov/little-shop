@@ -90,10 +90,30 @@ describe 'as a visitor' do
     end
     
     it 'should show stats for top 3 states and cities where orders were shipped' do
-      merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant)
-      merchant_3 = create(:merchant)
-      merchant_4 = create(:merchant)
+      user_1 = create(:user, state: 'CO')
+      create(:order, user: user_1)
+      create(:order, user: user_1)
+      
+      user_2 = create(:user, state: 'HI')
+      create(:order, user: user_2)
+      create(:order, user: user_2)
+      create(:order, user: user_2)
+      
+      user_3 = create(:user, state: 'CA')
+      create(:order, user: user_3)
+      
+      user_4 = create(:user, state: 'NY')
+      
+      user_5 = create(:user, state: 'HI')
+      create(:order, user: user_5)
+      
+      top_states = "\n#{user_2.state}\n#{user_1.state}\n#{user_3.state}"
+      
+      within "#statistics" do
+        expect(page).to have_content("Top 3 States with Most Orders: #{top_states}")
+        expect(page).to_not have_content(user_4.state)
+      end
+      
     end
   end
 end
