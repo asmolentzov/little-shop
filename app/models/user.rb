@@ -22,7 +22,7 @@ class User < ApplicationRecord
   
   def self.merchants_by_quantity
     User.joins(items: :order_items)
-        .where("order_items.fulfilled = true")
+        .where("order_items.fulfilled = ?", true)
         .group(:id)
         .select("users.*, count(order_items.id) AS quantity")
         .order("quantity DESC")
@@ -31,11 +31,19 @@ class User < ApplicationRecord
   
   def self.merchants_by_price
     User.joins(items: :order_items)
-        .where("order_items.fulfilled = true")
+        .where("order_items.fulfilled = ?", true)
         .group(:id)
         .select("users.*, sum(order_items.order_price) AS total")
         .order("total DESC")
         .limit(3)
+  end
+  
+  def self.merchants_by_time
+    User.joins(items: :order_items)
+        .where("order_items.fulfilled = ?", true)
+        .group(:id)
+        .select("users.*, avg(order_items.updated_at - order_items.created_at) AS average_f_time")
+        .order("average_f_time ASC")
   end
 
   def enabled_toggle

@@ -109,21 +109,22 @@ RSpec.describe User, type: :model do
       end
     end
     describe '.merchants_by_time' do
-      it 'should return merchants sorted by average fulfillment time descending' do
+      it 'should return merchants sorted by average fulfillment time ascending' do
         merchant_1 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
         
         merchant_2 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
         
         merchant_3 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.days.ago)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 2.days.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
         
         merchant_4 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4), created_at: 4.days.ago)
         
         sorted_merchants = [merchant_2, merchant_1, merchant_3, merchant_4]
         
