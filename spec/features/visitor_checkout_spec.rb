@@ -18,5 +18,24 @@ describe 'As a visitor' do
       expect(page).to have_link('register')
       expect(page).to have_link('log in')
     end
+    it 'should not show the register or login message if I am logged in' do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      user_1 = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit items_path
+
+      within("#item-#{item_1.id}") do
+        click_button 'Add item'
+      end
+
+      visit cart_path
+
+      expect(page).to_not have_content('You must register or log in to checkout')
+      expect(page).to_not have_link('register')
+      expect(page).to_not have_link('log in')
+    end
   end
 end
