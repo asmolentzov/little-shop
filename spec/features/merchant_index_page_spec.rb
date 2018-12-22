@@ -89,7 +89,7 @@ describe 'as a visitor' do
       end
     end
     
-    it 'should show stats for top 3 states and cities where orders were shipped' do
+    it 'should show stats for top 3 states where orders were shipped' do
       user_1 = create(:user, state: 'CO')
       create(:fulfilled_order, user: user_1)
       create(:fulfilled_order, user: user_1)
@@ -124,6 +124,49 @@ describe 'as a visitor' do
       within "#statistics" do
         expect(page).to have_content("Top 3 States with Most Orders:#{top_states}")
         expect(page).to_not have_content(user_4.state)
+      end
+    end
+    it 'should show stats for top 3 cities where orders were shipped' do
+      user_1 = create(:user, city: 'Springfield', state: 'CO')
+      create(:fulfilled_order, user: user_1)
+      create(:fulfilled_order, user: user_1)
+      
+      user_2 = create(:user, city: 'Honolulu', state: 'HI')
+      4.times do
+        create(:fulfilled_order, user: user_2)
+      end
+      
+      user_3 = create(:user, city: 'Claremont', state: 'CA')
+      create(:fulfilled_order, user: user_3)
+      
+      user_4 = create(:user, city: 'New York City', state: 'NY')
+      
+      user_5 = create(:user, city: 'Honolulu', state: 'HI')
+      create(:fulfilled_order, user: user_5)
+      
+      user_6 = create(:user, city: 'Fairbanks', state: 'AK')
+      6.times do
+        create(:fulfilled_order, user: user_6, status: 0 )
+      end
+      
+      user_7 = create(:user, city: 'Fairbanks', state: 'AK')
+      6.times do
+        create(:fulfilled_order, user: user_7, status: 2)
+      end
+      
+      user_8 = create(:user, city: 'Springfield', state: 'MI')
+      create(:fulfilled_order, user: user_8)
+      create(:fulfilled_order, user: user_8)
+      create(:fulfilled_order, user: user_8)
+      
+      top_cities = "\n#{user_2.city}, #{user_2.state}\n#{user_8.city}, #{user_8.state}\n#{user_1.city}, #{user_1.state}"
+      
+      visit merchants_path 
+      
+      within "#statistics" do
+        expect(page).to have_content("Top 3 Cities with Most Orders:#{top_cities}")
+        expect(page).to_not have_content(user_4.city)
+        expect(page).to_not have_content(user_3.city)
       end
       
     end
