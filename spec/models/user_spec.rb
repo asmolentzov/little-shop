@@ -179,6 +179,45 @@ RSpec.describe User, type: :model do
         expect(User.top_states).to eq(states)
       end
     end
+    describe '.top_cities' do
+      it 'should return the top three cities with the most orders shipped' do
+        user_1 = create(:user, city: 'Springfield', state: 'CO')
+        create(:fulfilled_order, user: user_1)
+        create(:fulfilled_order, user: user_1)
+        
+        user_2 = create(:user, city: 'Honolulu', state: 'HI')
+        4.times do
+          create(:fulfilled_order, user: user_2)
+        end
+        
+        user_3 = create(:user, city: 'Claremont', state: 'CA')
+        create(:fulfilled_order, user: user_3)
+        
+        user_4 = create(:user, city: 'New York City', state: 'NY')
+        
+        user_5 = create(:user, city: 'Honolulu', state: 'HI')
+        create(:fulfilled_order, user: user_5)
+        
+        user_6 = create(:user, city: 'Fairbanks', state: 'AK')
+        6.times do
+          create(:fulfilled_order, user: user_6, status: 0 )
+        end
+        
+        user_7 = create(:user, city: 'Fairbanks', state: 'AK')
+        6.times do
+          create(:fulfilled_order, user: user_7, status: 2)
+        end
+        
+        user_8 = create(:user, city: 'Springfield', state: 'MI')
+        create(:fulfilled_order, user: user_8)
+        create(:fulfilled_order, user: user_8)
+        create(:fulfilled_order, user: user_8)
+        
+        cities = [['Honolulu', 'HI'], ['Springfield', 'MI'], ['Springfield', 'CO']]
+        
+        expect(User.top_cities).to eq(cities)
+      end
+    end
   end
   
   describe 'Instance Methods' do
