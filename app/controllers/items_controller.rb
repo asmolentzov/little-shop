@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
      @items = current_user.items
    else
      @items = Item.all
+     @cart = Cart.new(session[:cart])
    end
   end
 

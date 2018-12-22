@@ -17,7 +17,7 @@
         <ul>
           <% if current_default? || !(current_user) %>
             <li><%= link_to "Cart", cart_path %></li>
-            <li>Total Items in Cart: <%= 0 %></li>
+            <li>Total Items in Cart: <%= @cart.cart_count %></li>
           <% end %>
           <% if current_user %>
             <li><%= link_to "Log Out", logout_path, method: :delete %></li>
