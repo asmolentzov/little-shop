@@ -6,6 +6,7 @@ class UsersController < ApplicationController
       @merchants = User.merchant
     else
       @merchants = User.enabled_merchants
+      @top_merchants_by_quantity = User.merchants_by_quantity
     end
   end
 

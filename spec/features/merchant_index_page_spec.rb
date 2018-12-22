@@ -49,6 +49,8 @@ describe 'as a visitor' do
       create(:fulfilled_order_item, item: item_4)
       create(:fulfilled_order_item, item: item_5)
       
+      visit merchants_path
+      
       # within "#statistics" do
       #   expect(page).to have_content("Top Merchants by Price: ")
       # end
