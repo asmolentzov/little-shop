@@ -6,9 +6,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @merchant = User.find(params[:id])
+    @user = User.find(params[:id])
+    @user_role = @user.role
   end
-  
+
   def create
 
   end
