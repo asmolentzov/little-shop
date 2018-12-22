@@ -54,7 +54,36 @@ RSpec.describe User, type: :model do
         expect(User.default_users).to eq([user_1, user_2, user_3, user_4])
       end
     end
-    describe '.enabled_toggle' do
+
+    describe '.merchants_by_quantity' do
+      it 'should return the top three merchants by quantity of items sold' do
+        merchant_1 = create(:merchant)
+        item_1 = create(:item, user: merchant_1)
+        item_2 = create(:item, user: merchant_1)
+        item_3 = create(:item, user: merchant_1)
+        create(:fulfilled_order_item, item: item_1)
+        create(:fulfilled_order_item, item: item_2)
+        create(:fulfilled_order_item, item: item_3)
+        
+        merchant_2 = create(:merchant)
+        item_6 = create(:item, user: merchant_2)
+        create(:fulfilled_order_item, item: item_6)
+        
+        merchant_3 = create(:merchant)
+        
+        merchant_4 = create(:merchant)
+        item_4 = create(:item, user: merchant_4)
+        item_5 = create(:item, user: merchant_4)
+        create(:fulfilled_order_item, item: item_4)
+        create(:fulfilled_order_item, item: item_5)
+        
+        expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
+      end
+    end
+  end
+  
+  describe 'Instance Methods' do
+    describe '#enabled_toggle' do
       it 'toggles a user between enabled and disabled states' do
         user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
           zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
