@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       @merchants = User.enabled_merchants
     end
     @top_merchants_by_quantity = User.merchants_by_quantity
-    @top_merchants_price = User.merchants_by_price
+    @top_merchants_by_price = User.merchants_by_price
   end
 
   def show

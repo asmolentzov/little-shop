@@ -30,10 +30,9 @@ describe 'as a visitor' do
     
     it 'should show an area with statistics showing top merchants by price and quantity' do
       merchant_1 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+      4.times do
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
+      end
       
       merchant_2 = create(:merchant)
       create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 4000)
@@ -42,9 +41,9 @@ describe 'as a visitor' do
       merchant_3 = create(:merchant)
       
       merchant_4 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+      3.times do
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4),  order_price: 100)
+      end
       create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
       create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
       
