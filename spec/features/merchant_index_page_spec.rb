@@ -168,7 +168,6 @@ describe 'as a visitor' do
         expect(page).to_not have_content(user_4.city)
         expect(page).to_not have_content(user_3.city)
       end
-      
     end
   end
 end

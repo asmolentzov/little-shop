@@ -55,8 +55,8 @@ class User < ApplicationRecord
     .group(:state)
     .select("users.state, count(orders.id) AS state_count")
     .order("state_count DESC")
-    .map(&:state)
     .limit(3)
+    .map(&:state)
   end
   
   def self.top_cities
