@@ -57,7 +57,7 @@ describe 'As a visitor to the app' do
       visit root_path
 
       within "#nav" do
-        expect(page).to have_content("Total Items in Cart: 0") # THIS NEEDS TO RETURN METHOD VALUE
+        expect(page).to have_content("Cart: #{@cart.cart_count}") # THIS NEEDS TO RETURN METHOD VALUE
       end
     end
     it 'should not be able to navigate to any profile path' do
