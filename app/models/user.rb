@@ -56,6 +56,18 @@ class User < ApplicationRecord
     .select("users.state, count(orders.id) AS state_count")
     .order("state_count DESC")
     .map(&:state)
+    .limit(3)
+  end
+  
+  def self.top_cities
+    joins(:orders)
+    .where("orders.status = ?", 1)
+    .group(:city)
+    .group(:state)
+    .select("users.city, users.state, count(orders.id) AS city_count")
+    .order("city_count DESC")
+    .limit(3)
+    .map { |user| [user.city, user.state] }
   end
 
   def enabled_toggle
