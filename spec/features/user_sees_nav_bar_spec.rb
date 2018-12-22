@@ -9,8 +9,6 @@ describe 'nav' do
     end
 
     it 'sees a nav bar with the same of links as visitor' do
-
-
       visit items_path
       within '#nav' do
         click_on "Home"
@@ -29,17 +27,36 @@ describe 'nav' do
       end
 
       expect(current_path).to eq(merchants_path)
+    end
+    it 'should see number of items in cart' do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      
+      visit items_path
 
-      within '#nav' do
-        click_on "Cart"
+      within "#nav" do
+        expect(page).to have_content("Cart: 0") 
       end
-
-      expect(current_path).to eq(cart_path)
+      
+      within "#item-#{item_1.id}" do
+        click_button('Add item')
+      end
+      
+      within "#nav" do
+        expect(page).to have_content("Cart: 1") 
+      end
+      
+      within "#item-#{item_2.id}" do
+        click_button('Add item')
+        click_button('Add item')
+      end
+      
+      within "#nav" do
+        expect(page).to have_content("Cart: 3") 
+      end
     end
 
     it 'sees a nav bar with user specific links' do
-
-
       visit root_path
 
       within "#nav" do
@@ -63,8 +80,6 @@ describe 'nav' do
     end
 
     it 'does not see visitor specific links' do
-
-
       visit root_path
 
       within "#nav" do
