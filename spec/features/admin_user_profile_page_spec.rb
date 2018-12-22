@@ -3,10 +3,8 @@ require 'rails_helper'
 describe 'As an admin user' do
   describe  'when I visit a user profile page' do
     it 'should see the same information that a user sees' do
-      user_1 = User.create(name: "user_1", password: "test", street: "street",
-      city: "city", state: "CO", zip: "80219", email: "email1@aol.com", role: 0)
-      user_2 = User.create(name: "user_2", password: "tested", street: "street2"
-      city: "city2", state: "NM", zip: "80200", email: "email2@aol.com", role: 2)
+      user_1 = create(:user)
+      user_2 = create(:admin)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_2)
 
