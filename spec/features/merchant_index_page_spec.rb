@@ -67,22 +67,26 @@ describe 'as a visitor' do
       create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
       
       merchant_2 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.hours.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
       
       merchant_3 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 2.days.ago)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 3.days.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 2.days.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
       
       merchant_4 = create(:merchant)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_4), created_at: 4.days.ago)
       
       fastest_merchants = "\n#{merchant_2.name}\n#{merchant_1.name}\n#{merchant_3.name}"
+      slowest_merchants = "\n#{merchant_4.name}\n#{merchant_3.name}\n#{merchant_1.name}"
       
       visit merchants_path
       
       within "#statistics" do
-        expect(page).to have_content("Merchants With Fastest Fulfillment Time:#{fastest_merchants}")
+        expect(page).to have_content("Merchants with Fastest Fulfillment Times:#{fastest_merchants}")
+        expect(page).to have_content("Merchants with Slowest Fulfillment Times:#{slowest_merchants}")
+        
       end
       
     end
