@@ -85,10 +85,10 @@ RSpec.describe User, type: :model do
     describe '.merchants_by_price' do
       it 'should return top three merchants by total price of items sold' do
         merchant_1 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
         
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 4000)
@@ -97,9 +97,9 @@ RSpec.describe User, type: :model do
         merchant_3 = create(:merchant)
         
         merchant_4 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4),  order_price: 100)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4),  order_price: 100)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4),  order_price: 100)
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         

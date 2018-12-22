@@ -28,6 +28,15 @@ class User < ApplicationRecord
         .order("quantity DESC")
         .limit(3)
   end
+  
+  def self.merchants_by_price
+    User.joins(items: :order_items)
+        .where("order_items.fulfilled = true")
+        .group(:id)
+        .select("users.*, sum(order_items.order_price) AS total")
+        .order("total DESC")
+        .limit(3)
+  end
 
   def enabled_toggle
     enabled ? self.update(enabled: false) : self.update(enabled: true)
