@@ -91,28 +91,38 @@ describe 'as a visitor' do
     
     it 'should show stats for top 3 states and cities where orders were shipped' do
       user_1 = create(:user, state: 'CO')
-      create(:order, user: user_1)
-      create(:order, user: user_1)
+      create(:fulfilled_order, user: user_1)
+      create(:fulfilled_order, user: user_1)
       
       user_2 = create(:user, state: 'HI')
-      create(:order, user: user_2)
-      create(:order, user: user_2)
-      create(:order, user: user_2)
+      create(:fulfilled_order, user: user_2)
+      create(:fulfilled_order, user: user_2)
+      create(:fulfilled_order, user: user_2)
       
       user_3 = create(:user, state: 'CA')
-      create(:order, user: user_3)
+      create(:fulfilled_order, user: user_3)
       
       user_4 = create(:user, state: 'NY')
       
       user_5 = create(:user, state: 'HI')
-      create(:order, user: user_5)
+      create(:fulfilled_order, user: user_5)
+      
+      user_6 = create(:user, state: 'AK')
+      5.times do
+        create(:fulfilled_order, user: user_6, status: 0 )
+      end
+      
+      user_7 = create(:user, state: 'AK')
+      5.times do
+        create(:fulfilled_order, user: user_7, status: 2)
+      end
       
       top_states = "\n#{user_2.state}\n#{user_1.state}\n#{user_3.state}"
       
       visit merchants_path 
       
       within "#statistics" do
-        expect(page).to have_content("Top 3 States with Most Orders: #{top_states}")
+        expect(page).to have_content("Top 3 States with Most Orders:#{top_states}")
         expect(page).to_not have_content(user_4.state)
       end
       
