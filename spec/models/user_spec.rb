@@ -66,16 +66,20 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, item: item_3)
         
         merchant_2 = create(:merchant)
-        item_6 = create(:item, user: merchant_2)
-        create(:fulfilled_order_item, item: item_6)
+        item_8 = create(:item, user: merchant_2)
+        create(:fulfilled_order_item, item: item_8)
         
         merchant_3 = create(:merchant)
         
         merchant_4 = create(:merchant)
         item_4 = create(:item, user: merchant_4)
         item_5 = create(:item, user: merchant_4)
+        item_6 = create(:item, user: merchant_4)
+        item_7 = create(:item, user: merchant_4)
         create(:fulfilled_order_item, item: item_4)
         create(:fulfilled_order_item, item: item_5)
+        create(:unfulfilled_order_item, item: item_6)
+        create(:unfulfilled_order_item, item: item_7)
         
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
