@@ -86,9 +86,14 @@ describe 'as a visitor' do
       within "#statistics" do
         expect(page).to have_content("Merchants with Fastest Fulfillment Times:#{fastest_merchants}")
         expect(page).to have_content("Merchants with Slowest Fulfillment Times:#{slowest_merchants}")
-        
       end
-      
+    end
+    
+    it 'should show stats for top 3 states and cities where orders were shipped' do
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+      merchant_3 = create(:merchant)
+      merchant_4 = create(:merchant)
     end
   end
 end
