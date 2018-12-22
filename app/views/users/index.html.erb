@@ -14,8 +14,15 @@
     </ul>
     <% end %>
   </p>
-  <p>Merchants with Fastest Fulfillment Time:
+  <p>Merchants with Fastest Fulfillment Times:
     <% @top_merchants_by_time.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Merchants with Slowest Fulfillment Times:
+    <% @bottom_merchants_by_time.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
