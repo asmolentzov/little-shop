@@ -82,6 +82,33 @@ RSpec.describe User, type: :model do
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
     end
+    describe '.merchants_by_price' do
+      it 'should return top three merchants by total price of items sold' do
+        merchant_1 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        
+        merchant_2 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 4000)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 5000)
+        
+        merchant_3 = create(:merchant)
+        
+        merchant_4 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
+        
+        merchant_5 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_5), order_price: 10000)
+        
+        expect(User.merchants_by_price).to eq([merchant_5, merchant_2, merchant_1])
+      end
+    end
   end
   
   describe 'Instance Methods' do
