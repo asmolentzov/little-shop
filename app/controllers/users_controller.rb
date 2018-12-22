@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     @top_merchants_by_price = User.merchants_by_price
     @top_merchants_by_time = User.merchants_by_time[0..2]
     @bottom_merchants_by_time = User.merchants_by_time.reverse[0..2]
+    @top_states = User.top_states
   end
 
   def show

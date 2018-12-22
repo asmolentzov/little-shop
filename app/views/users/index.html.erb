@@ -28,6 +28,13 @@
     </ul>
     <% end %>
   </p>
+  <p>Top 3 States with Most Orders:
+    <% @top_states.each do |state| %>
+    <ul>
+      <li><%= state %></li>
+    </ul>
+    <% end %>
+  </p>
 </div>
 
 <% @merchants.each do |merchant| %>

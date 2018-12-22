@@ -109,6 +109,8 @@ describe 'as a visitor' do
       
       top_states = "\n#{user_2.state}\n#{user_1.state}\n#{user_3.state}"
       
+      visit merchants_path 
+      
       within "#statistics" do
         expect(page).to have_content("Top 3 States with Most Orders: #{top_states}")
         expect(page).to_not have_content(user_4.state)
