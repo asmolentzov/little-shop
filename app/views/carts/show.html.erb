@@ -10,6 +10,6 @@
   </div>
 <% end  %>
 <p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
-  <% unless @cart_items.count == 0 %>
+  <% unless @cart.cart_count == 0 %>
     <%= link_to "Empty Cart", cart_path %>
   <% end %>
