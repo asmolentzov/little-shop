@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     end
     @top_merchants_by_quantity = User.merchants_by_quantity
     @top_merchants_by_price = User.merchants_by_price
+    @top_merchants_by_time = User.merchants_by_time[0..2]
   end
 
   def show

@@ -79,8 +79,10 @@ describe 'as a visitor' do
       
       fastest_merchants = "\n#{merchant_2.name}\n#{merchant_1.name}\n#{merchant_3.name}"
       
+      visit merchants_path
+      
       within "#statistics" do
-        expect(page).to have_content("Top Merchants With Fastets Fulfillment Times:#{fastest_merchants}")
+        expect(page).to have_content("Merchants With Fastest Fulfillment Time:#{fastest_merchants}")
       end
       
     end
