@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'As an admin user' do
-  describe  'when I visit a user profile page' do
+  describe  'when I visit a default user profile page' do
     it 'should see the same information that a user sees' do
       user_1 = create(:user)
       user_2 = create(:admin)
