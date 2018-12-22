@@ -17,5 +17,8 @@ class Cart
     end
     total
   end
-
+  
+  def cart_count
+    @contents.values.sum
+  end
 end
