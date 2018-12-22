@@ -14,10 +14,10 @@ describe 'as a registered user' do
    visit cart_path
 
    expect(page).to have_content("Cart: 0")
-   expect(page).to_not have_contnet(item_1.name)
-   expect(page).to_not have_contnet(item_1.price)
-   expect(page).to_not have_contnet(item_2.name)
-   expect(page).to_not have_contnet(item_2.price)
+   expect(page).to_not have_content(item_1.name)
+   expect(page).to_not have_content(item_1.price)
+   expect(page).to_not have_content(item_2.name)
+   expect(page).to_not have_content(item_2.price)
    expect(page).to_not have_link('Empty Cart')
 
   end
