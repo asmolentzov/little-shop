@@ -54,11 +54,27 @@ describe 'As a visitor to the app' do
       expect(current_path).to eq(registration_path)
     end
     it 'should see number of items in cart' do
-      visit root_path
+      item_1 = create(:item)
+      item_2 = create(:item)
+      
+      visit items_path
 
       within "#nav" do
-        expect(page).to have_content("Cart: #{@cart.cart_count}") # THIS NEEDS TO RETURN METHOD VALUE
+        expect(page).to have_content("Cart: 0") 
       end
+      
+      within "#item-#{item_1.id}" do
+        click_button('Add item')
+      end
+      
+      within "#nav" do
+        expect(page).to have_content("Cart: 1") 
+      end
+      
+      # within "#item-#{item_2.id}" do
+      #   click_button('Add item')
+      #   click_button('Add item')
+      # end
     end
     it 'should not be able to navigate to any profile path' do
       visit root_path
