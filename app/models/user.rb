@@ -51,6 +51,7 @@ class User < ApplicationRecord
   
   def self.top_states
     joins(:orders)
+    .where("orders.status = ?", 1)
     .group(:state)
     .select("users.state, count(orders.id) AS state_count")
     .order("state_count DESC")
