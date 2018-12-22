@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :current_default?, :current_merchant?, :current_admin?,
                 :require_default_user, :require_merchant_user, :require_admin
+                
+  before_action :set_cart
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -36,6 +38,10 @@ class ApplicationController < ActionController::Base
     unless current_admin?
       render file: "public/404", status: 404, layout: false
     end
+  end
+  
+  def set_cart
+    @cart = Cart.new(session[:cart])
   end
 
 end
