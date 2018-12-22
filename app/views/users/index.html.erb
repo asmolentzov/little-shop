@@ -1,6 +1,14 @@
 <div id="statistics">
+  Statistics!
   <p>Top Merchants by Quantity: 
-    <%= @top_merchants_by_quantity.each do |merchant| %>
+    <% @top_merchants_by_quantity.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Top Merchants by Price: 
+    <% @top_merchants_by_price.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
