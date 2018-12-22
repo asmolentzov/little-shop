@@ -58,10 +58,9 @@ RSpec.describe User, type: :model do
     describe '.merchants_by_quantity' do
       it 'should return the top three merchants by quantity of items sold' do
         merchant_1 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        4.times do
+          create(:fulfilled_order_item, item: create(:item, user: merchant_1))
+        end
         
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2))
@@ -70,14 +69,19 @@ RSpec.describe User, type: :model do
         merchant_3 = create(:merchant)
         
         merchant_4 = create(:merchant)
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
-        create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        3.times do
+          create(:fulfilled_order_item, item: create(:item, user: merchant_4))
+        end
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         
         merchant_5 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_5))
+        
+        merchant_6 = create(:merchant, enabled: false)
+        5.times do
+          create(:fulfilled_order_item, item: create(:item, user: merchant_6))
+        end
         
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
@@ -105,6 +109,11 @@ RSpec.describe User, type: :model do
         merchant_5 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_5), order_price: 10000)
         
+        merchant_6 = create(:merchant, enabled: false)
+        5.times do
+          create(:fulfilled_order_item, item: create(:item, user: merchant_6), order_price: 10000)
+        end
+        
         expect(User.merchants_by_price).to eq([merchant_5, merchant_2, merchant_1])
       end
     end
@@ -113,6 +122,7 @@ RSpec.describe User, type: :model do
         merchant_1 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.minute.ago)
         
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
@@ -125,6 +135,10 @@ RSpec.describe User, type: :model do
         
         merchant_4 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_4), created_at: 4.days.ago)
+        
+        merchant_5 = create(:merchant, enabled: false)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_5), created_at: 1.minute.ago)
+        
         
         sorted_merchants = [merchant_2, merchant_1, merchant_3, merchant_4]
         
