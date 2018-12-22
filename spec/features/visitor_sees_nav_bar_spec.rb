@@ -71,10 +71,14 @@ describe 'As a visitor to the app' do
         expect(page).to have_content("Cart: 1") 
       end
       
-      # within "#item-#{item_2.id}" do
-      #   click_button('Add item')
-      #   click_button('Add item')
-      # end
+      within "#item-#{item_2.id}" do
+        click_button('Add item')
+        click_button('Add item')
+      end
+      
+      within "#nav" do
+        expect(page).to have_content("Cart: 3") 
+      end
     end
     it 'should not be able to navigate to any profile path' do
       visit root_path

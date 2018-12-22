@@ -16,8 +16,7 @@
       <div id="cart-identity-nav">
         <ul>
           <% if current_default? || !(current_user) %>
-            <li><%= link_to "Cart", cart_path %></li>
-            <li>Total Items in Cart: <%= @cart.cart_count %></li>
+            <li><%= link_to "Cart: #{@cart.cart_count}", cart_path %></li>
           <% end %>
           <% if current_user %>
             <li><%= link_to "Log Out", logout_path, method: :delete %></li>
