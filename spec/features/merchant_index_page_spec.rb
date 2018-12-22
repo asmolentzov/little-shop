@@ -36,8 +36,8 @@ describe 'as a visitor' do
       create(:fulfilled_order_item, item: create(:item, user: merchant_1))
       
       merchant_2 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_2))
-      create(:fulfilled_order_item, item: create(:item, user: merchant_2))
+      create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 4000)
+      create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 5000)
       
       merchant_3 = create(:merchant)
       
@@ -49,16 +49,17 @@ describe 'as a visitor' do
       create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
       
       merchant_5 = create(:merchant)
-      create(:fulfilled_order_item, item: create(:item, user: merchant_5))
+      create(:fulfilled_order_item, item: create(:item, user: merchant_5), order_price: 10000)
+      
+      top_merchants_quantity = "\n#{merchant_1.name}\n#{merchant_4.name}\n#{merchant_2.name}"
+      top_merchants_price = "\n#{merchant_5.name}\n#{merchant_2.name}\n#{merchant_1.name}"
       
       visit merchants_path
       
-      # within "#statistics" do
-      #   expect(page).to have_content("Top Merchants by Price: ")
-      # end
-      # 
       within "#statistics" do
-        expect(page).to have_content("Top Merchants by Quantity:\n#{merchant_1.name}\n#{merchant_4.name}\n#{merchant_2.name}")
+        expect(page).to have_content("Top Merchants by Quantity:#{top_merchants_quantity}")
+        
+        expect(page).to have_content("Top Merchants by Price:#{top_merchants_price}")
       end
       
     end
