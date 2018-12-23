@@ -31,6 +31,12 @@ describe 'as any user' do
 
   context 'when i visit the items show page as an unregistered user' do
     it 'can click link to add item to cart' do
+
+      user_1 = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+
       item_1 = create(:item)
       item_2 = create(:item)
       item_3 = create(:item)
