@@ -4,7 +4,6 @@ describe 'As a visitor' do
   describe 'when I add items to my cart and I visit my cart page' do
     it 'should see a message telling me to register or login to checkout' do
       item_1 = create(:item)
-      item_2 = create(:item)
 
       visit items_path
 
@@ -28,7 +27,6 @@ describe 'As a visitor' do
     end
     it 'should not show the register or login message if I am logged in' do
       item_1 = create(:item)
-      item_2 = create(:item)
       user_1 = create(:user)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
