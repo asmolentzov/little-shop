@@ -97,7 +97,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
   
   it 'allows a registered user to empty their cart' do
     user = create(:user)
-    allow(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant)
