@@ -38,9 +38,9 @@ describe 'as any user' do
 
       visit item_path(item_1.id)
 
-      expect(page).to have_link("add item to cart")
+      expect(page).to have_button("Add item")
 
-      click_on "add item to cart"
+      click_on "Add item"
 
       expect(current_path).to eq(items_path)
 
