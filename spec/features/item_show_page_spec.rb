@@ -32,10 +32,49 @@ describe 'as any user' do
   context 'when i visit the items show page as an unregistered user' do
     it 'can click link to add item to cart' do
 
+      item_1 = create(:item)
+      item_2 = create(:item)
+      item_3 = create(:item)
+      item_4 = create(:item)
+
+      visit item_path(item_1.id)
+
+      expect(page).to have_button("Add item")
+
+      click_on "Add item"
+
+      expect(current_path).to eq(items_path)
+
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 1")
+
+      end
+
+      expect(page).to have_content(item_1.name)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
+      expect(page).to have_content(item_4.name)
+
+      expect(page).to have_content(item_1.description)
+      expect(page).to have_content(item_2.description)
+      expect(page).to have_content(item_3.description)
+      expect(page).to have_content(item_4.description)
+
+      expect(page).to have_content(item_1.current_price)
+      expect(page).to have_content(item_2.current_price)
+      expect(page).to have_content(item_3.current_price)
+      expect(page).to have_content(item_4.current_price)
+
+    end
+  end
+
+  context 'when i visit the items show page as a registered user' do
+    it 'can click link to add item to cart' do
+
       user_1 = create(:user)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
-
 
       item_1 = create(:item)
       item_2 = create(:item)
