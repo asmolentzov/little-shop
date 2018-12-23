@@ -10,6 +10,8 @@ class Order < ApplicationRecord
   
   def self.biggest_orders
     joins(:order_items)
+    .where(status: 1)
+    .where("order_items.fulfilled = ?", true)
     .select("orders.*, count(order_items.id) AS item_count")
     .group(:id)
     .order("item_count DESC")

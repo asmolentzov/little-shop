@@ -31,6 +31,19 @@ RSpec.describe Order, type: :model do
         
         order_4 = create(:fulfilled_order)
         create(:fulfilled_order_item, order: order_4)
+        5.times do
+          create(:unfulfilled_order_item, order: order_4)
+        end
+        
+        order_5 = create(:order)
+        5.times do
+          create(:fulfilled_order_item, order: order_5)
+        end
+        
+        order_6 = create(:cancelled_order)
+        5.times do
+          create(:fulfilled_order_item, order: order_6)
+        end
         
         orders = [order_2, order_3, order_1]
         
