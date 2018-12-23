@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/cart', to: "carts#show"
+  delete '/cart', to: "carts#destroy"
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"

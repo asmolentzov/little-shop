@@ -16,5 +16,10 @@ class CartsController < ApplicationController
     session[:cart][item_id_str] += 1
     redirect_to items_path
   end
+  
+  def destroy
+    @cart.empty
+    redirect_to cart_path
+  end
 
 end
