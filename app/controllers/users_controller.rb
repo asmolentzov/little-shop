@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @bottom_merchants_by_time = User.merchants_by_time.reverse[0..2]
     @top_states = User.top_states
     @top_cities = User.top_cities
+    @biggest_orders = Order.biggest_orders
   end
 
   def show

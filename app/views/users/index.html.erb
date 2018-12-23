@@ -42,6 +42,13 @@
     </ul>
     <% end %>
   </p>
+  <p>Biggest Orders by Quantity of Items:
+    <% @biggest_orders.each do |order| %>
+    <ul>
+      <li>Order #<%= order.id %></li>
+    </ul>
+    <% end %>
+  </p>
 </div>
 
 <% @merchants.each do |merchant| %>
