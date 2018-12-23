@@ -43,6 +43,17 @@ RSpec.describe Cart do
         expect(cart.cart_count).to eq(3)
       end
     end
+    
+    describe '#empty' do
+      it 'should empty the cart' do
+        cart = Cart.new({'1' => 2, '2' => 1})
+        expect(cart.cart_count).to eq(3)
+        
+        cart.empty
+        
+        expect(cart.cart_count).to eq(0)
+      end
+    end
   end
 
 end
