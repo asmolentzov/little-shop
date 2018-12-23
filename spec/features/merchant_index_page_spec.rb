@@ -169,5 +169,32 @@ describe 'as a visitor' do
         expect(page).to_not have_content(user_3.city)
       end
     end
+    it 'should show stats for the top 3 biggest order by quantity of items' do
+      order_1 = create(:fulfilled_order)
+      create(:fulfilled_order_item, order: order_1)
+      create(:fulfilled_order_item, order: order_1)
+      
+      order_2 = create(:fulfilled_order)
+      4.times do
+        create(:fulfilled_order_item, order: order_2)
+      end
+      
+      order_3 = create(:fulfilled_order)
+      3.times do
+        create(:fulfilled_order_item, order: order_3)
+      end
+      
+      order_4 = create(:fulfilled_order)
+      create(:fulfilled_order_item, order: order_4)
+      
+      top_orders = "\nOrder ##{order_2.id}\nOrder ##{order_3.id}\nOrder ##{order_1.id}"
+      
+      visit merchants_path
+      
+      within "#statistics" do
+        expect(page).to have_content("Biggest Orders by Quantity of Items: #{top_orders}")
+        expect(page).to_not have_content("Order ##{order_4.id}")
+      end
+    end
   end
 end
