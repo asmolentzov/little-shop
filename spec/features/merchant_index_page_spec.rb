@@ -186,14 +186,29 @@ describe 'as a visitor' do
       
       order_4 = create(:fulfilled_order)
       create(:fulfilled_order_item, order: order_4)
+      5.times do
+        create(:unfulfilled_order_item, order: order_4)
+      end
+      
+      order_5 = create(:order)
+      5.times do
+        create(:fulfilled_order_item, order: order_5)
+      end
+      
+      order_6 = create(:cancelled_order)
+      5.times do
+        create(:fulfilled_order_item, order: order_6)
+      end
       
       top_orders = "\nOrder ##{order_2.id}\nOrder ##{order_3.id}\nOrder ##{order_1.id}"
       
       visit merchants_path
       
       within "#statistics" do
-        expect(page).to have_content("Biggest Orders by Quantity of Items: #{top_orders}")
+        expect(page).to have_content("Biggest Orders by Quantity of Items:#{top_orders}")
         expect(page).to_not have_content("Order ##{order_4.id}")
+        expect(page).to_not have_content("Order ##{order_5.id}")
+        expect(page).to_not have_content("Order ##{order_6.id}")
       end
     end
   end
