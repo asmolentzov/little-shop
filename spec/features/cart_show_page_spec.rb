@@ -94,5 +94,42 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to_not have_content(item_3.description)
     expect(page).to have_content("Grand Total: $0.00")
   end
-
+  
+  it 'allows a registered user to empty their cart' do
+    user = create(:user)
+    allow(ApplicationController).to receive(:current_user).and_return(user)
+    
+    merchant = create(:merchant)
+    item_1 = create(:item, user: merchant)
+    item_2 = create(:item, user: merchant)
+    item_3 = create(:item, user: merchant)
+    
+    visit items_path
+    within "#item-#{item_1.id}" do
+      click_button 'Add item'
+      click_button 'Add item'
+    end
+    within "#item-#{item_2.id}" do
+      click_button 'Add item'
+    end
+    within "#item-#{item_3.id}" do
+      click_button 'Add item'
+    end
+    
+    visit cart_path
+    
+    click_on "Empty Cart"
+    
+    expect(current_path).to eq(cart_path)
+    within "#nav" do
+      expect(page).to have_content("Cart: 0")
+    end
+    expect(page).to_not have_content(item_1.name)
+    expect(page).to_not have_content(item_2.name)
+    expect(page).to_not have_content(item_3.name)
+    expect(page).to_not have_content(item_1.description)
+    expect(page).to_not have_content(item_2.description)
+    expect(page).to_not have_content(item_3.description)
+    expect(page).to have_content("Grand Total: $0.00")
+  end
 end
