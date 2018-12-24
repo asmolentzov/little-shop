@@ -4,7 +4,6 @@ class CartsController < ApplicationController
     if current_merchant? || current_admin?
       render file: "public/404", status: 404, layout: false
     else
-      @cart = Cart.new(session[:cart])
       @cart_items = Item.find(@cart.contents.keys)
     end
   end
@@ -16,6 +15,11 @@ class CartsController < ApplicationController
     session[:cart][item_id_str] ||= 0
     session[:cart][item_id_str] += 1
     redirect_to items_path
+  end
+  
+  def destroy
+    @cart.empty
+    redirect_to cart_path
   end
 
 end

@@ -1,3 +1,56 @@
+<div id="statistics">
+  Statistics!
+  <p>Top Merchants by Quantity: 
+    <% @top_merchants_by_quantity.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Top Merchants by Price: 
+    <% @top_merchants_by_price.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Merchants with Fastest Fulfillment Times:
+    <% @top_merchants_by_time.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Merchants with Slowest Fulfillment Times:
+    <% @bottom_merchants_by_time.each do |merchant| %>
+    <ul>
+      <li><%= merchant.name %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Top 3 States with Most Orders:
+    <% @top_states.each do |state| %>
+    <ul>
+      <li><%= state %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Top 3 Cities with Most Orders:
+    <% @top_cities.each do |city, state| %>
+    <ul>
+      <li><%= city %>, <%= state %></li>
+    </ul>
+    <% end %>
+  </p>
+  <p>Biggest Orders by Quantity of Items:
+    <% @biggest_orders.each do |order| %>
+    <ul>
+      <li>Order #<%= order.id %></li>
+    </ul>
+    <% end %>
+  </p>
+</div>
+
 <% @merchants.each do |merchant| %>
     <ul id="merchant-<%= merchant.id %>">
       <li><%= merchant.name %></li>

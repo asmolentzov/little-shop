@@ -30,6 +30,30 @@ RSpec.describe Cart do
         expect(cart.grand_total).to eq(total)
       end
     end
+    
+    describe '#cart_count' do
+      it 'should return the count of items in the cart' do
+        cart = Cart.new({})
+        expect(cart.cart_count).to eq(0)
+        
+        cart = Cart.new({'1' => 1})
+        expect(cart.cart_count).to eq(1)
+        
+        cart = Cart.new({'1' => 2, '2' => 1})
+        expect(cart.cart_count).to eq(3)
+      end
+    end
+    
+    describe '#empty' do
+      it 'should empty the cart' do
+        cart = Cart.new({'1' => 2, '2' => 1})
+        expect(cart.cart_count).to eq(3)
+        
+        cart.empty
+        
+        expect(cart.cart_count).to eq(0)
+      end
+    end
   end
 
 end
