@@ -92,13 +92,13 @@ RSpec.describe Item, type: :model do
         order_item_3 = create(:unfulfilled_order_item, item: item_5)
         order_item_3 = create(:unfulfilled_order_item, item: item_7)
 
-        expect(Item.bottom_five_popular).to include(item_5)
-        expect(Item.bottom_five_popular).to include(item_7)
-        expect(Item.bottom_five_popular).to include(item_2)
-        expect(Item.bottom_five_popular).to include(item_4)
         expect(Item.bottom_five_popular).to include(item_6)
-        expect(Item.bottom_five_popular).to_not include(item_1)
-        expect(Item.bottom_five_popular).to_not include(item_3)
+        expect(Item.bottom_five_popular).to include(item_4)
+        expect(Item.bottom_five_popular).to include(item_3)
+        expect(Item.bottom_five_popular).to include(item_2)
+        expect(Item.bottom_five_popular).to include(item_1)
+        expect(Item.bottom_five_popular).to_not include(item_5)
+        expect(Item.bottom_five_popular).to_not include(item_7)
       end
     end
   end

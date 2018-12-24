@@ -12,6 +12,17 @@ class Item < ApplicationRecord
   end
 
   def self.top_five_popular
-    select("items.*, sum(order_items.id) AS total_orders").joins(:order_items).where("order_items.fulfilled = ?", true).group(:id).order("total_orders DESC").limit(5)
+    select("items.*, sum(order_items.id) AS total_orders")
+          .joins(:order_items)
+          .where("order_items.fulfilled = ?", true)
+          .group(:id).order("total_orders DESC")
+          .limit(5)
+  end
+  def self.bottom_five_popular
+    select("items.*, sum(order_items.id) AS total_orders")
+          .joins(:order_items)
+          .where("order_items.fulfilled = ?", true)
+          .group(:id).order("total_orders ASC")
+          .limit(5)
   end
 end
