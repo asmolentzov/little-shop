@@ -107,4 +107,35 @@ describe 'As an admin' do
 
     end
   end
+
+  it 'can disable a merchant' do
+
+    merchant_2 = User.create(name: 'Holden Butts', street: '5607 E County Rd.', city: 'bifftown', state: 'CO',
+        zip: '21154', email: 'Butts1045@aol.com', password: 'abc123', role: 1, enabled: true)
+
+
+    admin = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit merchants_path
+
+    within "#merchant-#{merchant_2.id}" do
+
+    click_on "disable"
+
+    end
+
+    expect(page).to have_content("#{merchant_2.name} is now disabled")
+
+    within "#merchant-#{merchant_2.id}" do
+
+    merchant = User.find(merchant_2.id)
+
+    expect(page).to have_button("enable")
+
+    expect(merchant.enabled).to be false
+
+    end
+  end
 end
