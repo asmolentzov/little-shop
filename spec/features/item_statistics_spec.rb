@@ -25,9 +25,70 @@ describe 'as any user' do
     @order_item_3 = create(:fulfilled_order_item, item: @item_5)
     @order_item_3 = create(:fulfilled_order_item, item: @item_7)
   end
-  describe 'when I visit the items index page' do
+  describe 'when I visit the items index page as a visitor' do
     it 'should see an area with item statistics, including the top 5 and bottom 5 popular items' do
 
+      visit items_path
+
+      expect(page).to have_content('Item Statistics')
+
+      within('#top-five-items') do
+        expect(page).to have_content("#{@item_1.name}")
+        expect(page).to have_content("#{@item_3.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to_not have_content("#{@item_5.name}")
+        expect(page).to_not have_content("#{@item_7.name}")
+      end
+
+      within('#bottom-five-items') do
+        expect(page).to have_content("#{@item_7.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to have_content("#{@item_5.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to_not have_content("#{@item_3.name}")
+        expect(page).to_not have_content("#{@item_1.name}")
+      end
+    end
+  end
+  describe 'when I visit the items index page as a default user' do
+    it 'should see an area with item statistics, including the top 5 and bottom 5 popular items' do
+      user_1 = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit items_path
+
+      expect(page).to have_content('Item Statistics')
+
+      within('#top-five-items') do
+        expect(page).to have_content("#{@item_1.name}")
+        expect(page).to have_content("#{@item_3.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to_not have_content("#{@item_5.name}")
+        expect(page).to_not have_content("#{@item_7.name}")
+      end
+
+      within('#bottom-five-items') do
+        expect(page).to have_content("#{@item_7.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to have_content("#{@item_5.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to_not have_content("#{@item_3.name}")
+        expect(page).to_not have_content("#{@item_1.name}")
+      end
+    end
+  end
+  describe 'when I visit the items index page as a merchant user' do
+    it 'should see an area with item statistics, including the top 5 and bottom 5 popular items' do
+      user_1 = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
       visit items_path
 
