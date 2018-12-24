@@ -99,8 +99,6 @@ describe 'as any user' do
 
       end
 
-      save_and_open_page
-
       expect(page).to have_content("You have added #{item_2.name} to your cart")
     end
   end

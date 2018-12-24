@@ -6,11 +6,6 @@ class ItemsController < ApplicationController
    else
      @items = Item.all
    end
-
-   if @cart.cart_count > 0
-     last_item = Item.find(@cart.contents.keys.last)
-     flash[:sucess] = "You have added #{last_item.name} to your cart"
-   end
   end
 
   def show
