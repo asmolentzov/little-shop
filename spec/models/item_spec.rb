@@ -37,8 +37,8 @@ RSpec.describe Item, type: :model do
         expect(item_1.avg_fulfill_time).to eq(18)
       end
     end
-    describe '#top_five_popular' do
-      it 'returns the top five most popular items' do
+    describe '#five_popular()' do
+      it 'returns the top five or bottom five most popular items' do
         item_1 = create(:item) #add a times loop to build these?
         item_2 = create(:item)
         item_3 = create(:item)
@@ -56,49 +56,27 @@ RSpec.describe Item, type: :model do
         order_item_3 = create(:fulfilled_order_item, item: item_2)
         order_item_3 = create(:fulfilled_order_item, item: item_2)
         order_item_3 = create(:fulfilled_order_item, item: item_4)
-        order_item_3 = create(:fulfilled_order_item, item: item_6)
-        order_item_3 = create(:unfulfilled_order_item, item: item_5)
-        order_item_3 = create(:unfulfilled_order_item, item: item_7)
-
-        expect(Item.top_five_popular).to include(item_1)
-        expect(Item.top_five_popular).to include(item_2)
-        expect(Item.top_five_popular).to include(item_3)
-        expect(Item.top_five_popular).to include(item_4)
-        expect(Item.top_five_popular).to include(item_6)
-        expect(Item.top_five_popular).to_not include(item_5)
-        expect(Item.top_five_popular).to_not include(item_7)
-      end
-    end
-    describe '#bottom_five_popular' do
-      it 'returns the top five most popular items' do
-        item_1 = create(:item) #add a times loop to build these?
-        item_2 = create(:item)
-        item_3 = create(:item)
-        item_4 = create(:item)
-        item_5 = create(:item)
-        item_6 = create(:item)
-        item_7 = create(:item)
-        order_item_1 = create(:fulfilled_order_item, item: item_1) #add a times loop to build these?
-        order_item_2 = create(:fulfilled_order_item, item: item_1)
-        order_item_3 = create(:fulfilled_order_item, item: item_1)
-        order_item_3 = create(:fulfilled_order_item, item: item_1)
-        order_item_3 = create(:fulfilled_order_item, item: item_3)
-        order_item_3 = create(:fulfilled_order_item, item: item_3)
-        order_item_3 = create(:fulfilled_order_item, item: item_3)
-        order_item_3 = create(:fulfilled_order_item, item: item_2)
-        order_item_3 = create(:fulfilled_order_item, item: item_2)
         order_item_3 = create(:fulfilled_order_item, item: item_4)
         order_item_3 = create(:fulfilled_order_item, item: item_6)
-        order_item_3 = create(:unfulfilled_order_item, item: item_5)
-        order_item_3 = create(:unfulfilled_order_item, item: item_7)
+        order_item_3 = create(:fulfilled_order_item, item: item_6)
+        order_item_3 = create(:fulfilled_order_item, item: item_5)
+        order_item_3 = create(:fulfilled_order_item, item: item_7)
 
-        expect(Item.bottom_five_popular).to include(item_6)
-        expect(Item.bottom_five_popular).to include(item_4)
-        expect(Item.bottom_five_popular).to include(item_3)
-        expect(Item.bottom_five_popular).to include(item_2)
-        expect(Item.bottom_five_popular).to include(item_1)
-        expect(Item.bottom_five_popular).to_not include(item_5)
-        expect(Item.bottom_five_popular).to_not include(item_7)
+        expect(Item.five_popular(desc)).to include(item_1)
+        expect(Item.five_popular(desc)).to include(item_2)
+        expect(Item.five_popular(desc)).to include(item_3)
+        expect(Item.five_popular(desc)).to include(item_4)
+        expect(Item.five_popular(desc)).to include(item_6)
+        expect(Item.five_popular(desc)).to_not include(item_5)
+        expect(Item.five_popular(desc)).to_not include(item_7)
+
+        expect(Item.five_popular(asc)).to include(item_7)
+        expect(Item.five_popular(asc)).to include(item_6)
+        expect(Item.five_popular(asc)).to include(item_5)
+        expect(Item.five_popular(asc)).to include(item_4)
+        expect(Item.five_popular(asc)).to include(item_2)
+        expect(Item.five_popular(asc)).to_not include(item_1)
+        expect(Item.five_popular(asc)).to_not include(item_3)
       end
     end
   end
