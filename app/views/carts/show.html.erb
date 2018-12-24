@@ -11,7 +11,7 @@
 <% end  %>
 <p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
   <% unless @cart.cart_count == 0 %>
-    <%= link_to "Empty Cart", cart_path %>
+    <%= link_to "Empty Cart", cart_path, method: :delete %>
   <% end %>
 
   <% unless current_user %>
