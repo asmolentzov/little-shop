@@ -24,7 +24,7 @@ class Admin::UsersController < ApplicationController
       user.update(:enabled => true)
       flash[:notice] = "#{user.name} is now enabled"
     end
-    redirect_to "/merchants"
+    redirect_to merchants_path
   end
 
 end
