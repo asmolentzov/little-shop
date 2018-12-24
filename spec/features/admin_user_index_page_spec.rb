@@ -26,26 +26,26 @@ describe 'ADMIN USER INDEX PAGE' do
       within "#user-links-#{user_1.id}" do
         expect(page).to have_link(user_1.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("Disable")
+        expect(page).to have_button("disable")
       end
       within "#user-links-#{user_2.id}" do
         expect(page).to have_link(user_2.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("Disable")
+        expect(page).to have_button("disable")
       end
       within "#user-links-#{user_3.id}" do
         expect(page).to have_link(user_3.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("Enable")
+        expect(page).to have_button("enable")
       end
       within "#user-links-#{user_4.id}" do
         expect(page).to have_link(user_4.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("Disable")
+        expect(page).to have_button("disable")
       end
     end
 
-    xit 'allows me to toggle between enabled and disabled statuses for users' do
+    it 'allows me to enable and disable users' do
       #Defaul Users
       user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
       zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
@@ -58,12 +58,18 @@ describe 'ADMIN USER INDEX PAGE' do
       visit admin_users_path
 
       within "#user-links-#{user_1.id}" do
-        click_button('Disable')
-        expect(page).to have_button("Enable")
-        expect(user_1.enabled).to eq(false)
-        click_button('Enable')
-        expect(page).to have_button("Disable")
-        expect(user_1.enabled).to eq(true)
+        click_button('disable')
+      end
+      within "#user-links-#{user_1.id}" do
+        expect(page).to have_button("enable")
+        comp_user = User.find(user_1.id)
+        expect(comp_user.enabled).to eq(false)
+        click_button('enable')
+      end
+      within "#user-links-#{user_1.id}" do
+        expect(page).to have_button("disable")
+        comp_user = User.find(user_1.id)
+        expect(comp_user.enabled).to eq(true)
       end
     end
   end

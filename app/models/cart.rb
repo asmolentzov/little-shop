@@ -21,4 +21,8 @@ class Cart
   def cart_count
     @contents.values.sum
   end
+  
+  def empty
+    @contents.clear
+  end
 end

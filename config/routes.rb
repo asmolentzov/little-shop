@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/cart', to: "carts#show"
+  delete '/cart', to: "carts#destroy"
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
   resources :carts, only: [:create]
 
   namespace :admin do
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show, :update]
     resources :users, as: :merchants, only: [:index, :show, :update]
   end
 
