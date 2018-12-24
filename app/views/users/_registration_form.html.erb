@@ -1,4 +1,9 @@
-<%= form_for @user do |f| %>
+<%= form_for @user do |f| %>  
+  <ul>
+  <% @user.errors.full_messages.each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+  </ul>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :street %>

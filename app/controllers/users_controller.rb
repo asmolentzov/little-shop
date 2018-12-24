@@ -51,8 +51,9 @@ class UsersController < ApplicationController
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
     else
-      flash[:field_alert] = 'Required fields are missing'
-      redirect_to profile_edit_path
+      # flash[:field_alert] = 'Required fields are missing'
+      @user = current_user
+      render :edit
     end
   end
 

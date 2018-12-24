@@ -123,8 +123,7 @@ describe 'USER SHOW PAGE' do
       fill_in :user_name, with: ''
       click_button 'Submit'
 
-      expect(current_path).to eq(profile_edit_path)
-      expect(page).to have_content('Required fields are missing')
+      expect(page).to have_content("Name can't be blank")
       expect(find_field("user[name]").value).to eq(user.name)
       expect(find_field("user[street]").value).to eq(user.street)
       expect(find_field("user[city]").value).to eq(user.city)
@@ -132,6 +131,17 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[zip]").value).to eq(user.zip)
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
+      
+      fill_in :user_street, with: ''
+      fill_in :user_city, with: ''
+      fill_in :user_state, with: ''
+      fill_in :user_zip, with: ''
+      click_button 'Submit'
+      
+      expect(page).to have_content("Street can't be blank")
+      expect(page).to have_content("City can't be blank")
+      expect(page).to have_content("State can't be blank")
+      expect(page).to have_content("Zip can't be blank")
     end
   end
 end
