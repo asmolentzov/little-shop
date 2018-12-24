@@ -42,6 +42,7 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
     end
+
     it 'allows me to edit some of my information' do
       old_name = 'User One'
       old_city = 'City One'
@@ -69,6 +70,7 @@ describe 'USER SHOW PAGE' do
       expect(page).to_not have_content(old_name)
       expect(page).to_not have_content(old_city)
     end
+
     it 'allows me to edit all of my information' do
       old_name = 'User One'
       old_street = 'Street One'
@@ -113,6 +115,7 @@ describe 'USER SHOW PAGE' do
       expect(page).to_not have_content(old_zip)
       expect(page).to_not have_content(old_email)
     end
+
     it 'does not allow me to leave fields blank' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
@@ -133,5 +136,23 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
     end
+
+    it 'shows all of my orders' do
+      user_1 = create(:user)
+      order_1 = create(:fulfilled_order, user: user_1)
+      order_2 = create(:fulfilled_order, user: user_1)
+      order_3 = create(:fulfilled_order, user: user_1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit profile_path
+
+      within "#order-listing" do
+        expect(page).to have_link(order_1.id)
+        expect(page).to have_link(order_2.id)
+        expect(page).to have_link(order_3.id)
+      end
+    end
+    
   end
 end

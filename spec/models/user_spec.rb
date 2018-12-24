@@ -61,28 +61,28 @@ RSpec.describe User, type: :model do
         4.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_1))
         end
-        
+
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2))
         create(:fulfilled_order_item, item: create(:item, user: merchant_2))
-        
+
         merchant_3 = create(:merchant)
-        
+
         merchant_4 = create(:merchant)
         3.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_4))
         end
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
-        
+
         merchant_5 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_5))
-        
+
         merchant_6 = create(:merchant, enabled: false)
         5.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_6))
         end
-        
+
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
     end
@@ -92,28 +92,28 @@ RSpec.describe User, type: :model do
         4.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_1),  order_price: 500)
         end
-        
+
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 4000)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), order_price: 5000)
-        
+
         merchant_3 = create(:merchant)
-        
+
         merchant_4 = create(:merchant)
         3.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_4),  order_price: 100)
         end
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
         create(:unfulfilled_order_item, item: create(:item, user: merchant_4))
-        
+
         merchant_5 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_5), order_price: 10000)
-        
+
         merchant_6 = create(:merchant, enabled: false)
         5.times do
           create(:fulfilled_order_item, item: create(:item, user: merchant_6), order_price: 10000)
         end
-        
+
         expect(User.merchants_by_price).to eq([merchant_5, merchant_2, merchant_1])
       end
     end
@@ -123,25 +123,25 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
         create(:unfulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.minute.ago)
-        
+
         merchant_2 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
-        
+
         merchant_3 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 2.days.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
-        
+
         merchant_4 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_4), created_at: 4.days.ago)
-        
+
         merchant_5 = create(:merchant, enabled: false)
         create(:fulfilled_order_item, item: create(:item, user: merchant_5), created_at: 1.minute.ago)
-        
-        
+
+
         sorted_merchants = [merchant_2, merchant_1, merchant_3, merchant_4]
-        
+
         expect(User.merchants_by_time).to eq(sorted_merchants)
       end
     end
@@ -150,32 +150,32 @@ RSpec.describe User, type: :model do
         user_1 = create(:user, state: 'CO')
         create(:fulfilled_order, user: user_1)
         create(:fulfilled_order, user: user_1)
-        
+
         user_2 = create(:user, state: 'HI')
         create(:fulfilled_order, user: user_2)
         create(:fulfilled_order, user: user_2)
         create(:fulfilled_order, user: user_2)
-        
+
         user_3 = create(:user, state: 'CA')
         create(:fulfilled_order, user: user_3)
-        
+
         user_4 = create(:user, state: 'NY')
-        
+
         user_5 = create(:user, state: 'HI')
         create(:fulfilled_order, user: user_5)
-        
+
         user_6 = create(:user, state: 'AK')
         5.times do
           create(:fulfilled_order, user: user_6, status: 0 )
         end
-        
+
         user_7 = create(:user, state: 'AK')
         5.times do
           create(:fulfilled_order, user: user_7, status: 2)
         end
-        
+
         states = ['HI', 'CO', 'CA']
-        
+
         expect(User.top_states).to eq(states)
       end
     end
@@ -184,51 +184,38 @@ RSpec.describe User, type: :model do
         user_1 = create(:user, city: 'Springfield', state: 'CO')
         create(:fulfilled_order, user: user_1)
         create(:fulfilled_order, user: user_1)
-        
+
         user_2 = create(:user, city: 'Honolulu', state: 'HI')
         4.times do
           create(:fulfilled_order, user: user_2)
         end
-        
+
         user_3 = create(:user, city: 'Claremont', state: 'CA')
         create(:fulfilled_order, user: user_3)
-        
+
         user_4 = create(:user, city: 'New York City', state: 'NY')
-        
+
         user_5 = create(:user, city: 'Honolulu', state: 'HI')
         create(:fulfilled_order, user: user_5)
-        
+
         user_6 = create(:user, city: 'Fairbanks', state: 'AK')
         6.times do
           create(:fulfilled_order, user: user_6, status: 0 )
         end
-        
+
         user_7 = create(:user, city: 'Fairbanks', state: 'AK')
         6.times do
           create(:fulfilled_order, user: user_7, status: 2)
         end
-        
+
         user_8 = create(:user, city: 'Springfield', state: 'MI')
         create(:fulfilled_order, user: user_8)
         create(:fulfilled_order, user: user_8)
         create(:fulfilled_order, user: user_8)
-        
+
         cities = [['Honolulu', 'HI'], ['Springfield', 'MI'], ['Springfield', 'CO']]
-        
+
         expect(User.top_cities).to eq(cities)
-      end
-    end
-  end
-  
-  describe 'Instance Methods' do
-    describe '#enabled_toggle' do
-      it 'toggles a user between enabled and disabled states' do
-        user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-          zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
-        user.enabled_toggle
-        expect(user.enabled).to eq(false)
-        user.enabled_toggle
-        expect(user.enabled).to eq(true)
       end
     end
   end
