@@ -6,6 +6,7 @@
       <li><%= merchant.created_at %></li>
         <% if current_admin? %>
         <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
+        <li>This merchant is <%= merchant.enabled %></li>
           <% if merchant.enabled %>
           <li><%= button_to "disable", admin_merchant_path(merchant.id), method: :patch %></li>
           <% else  %>
