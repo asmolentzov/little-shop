@@ -16,15 +16,19 @@ class Admin::UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    if user[:enabled] == true
+    if user.enabled == true
       user.update(:enabled => false)
       flash[:notice] = "#{user.name} is now disabled"
     elsif
-      user[:enabled] == false
+      user.enabled == false
       user.update(:enabled => true)
       flash[:notice] = "#{user.name} is now enabled"
     end
-    redirect_to "/merchants"
+    if user.role == "merchant"
+      redirect_to "/merchants"
+    else
+      redirect_to admin_users_path
+    end
   end
 
 end

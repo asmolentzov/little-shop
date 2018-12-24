@@ -70,7 +70,4 @@ class User < ApplicationRecord
     .map { |user| [user.city, user.state] }
   end
 
-  def enabled_toggle
-    enabled ? self.update(enabled: false) : self.update(enabled: true)
-  end
 end
