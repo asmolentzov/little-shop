@@ -1,3 +1,15 @@
+<h3>Item Statistics:</h3>
+<ul id="top_five_items">
+  <% @top_five_items.each do |item| %>
+  <li><%= item.name %></li>
+  <% end %>
+</ul>
+<ul id="bottom_five_items">
+  <% @bottom_five_items.each do |item| %>
+  <li><%= item.name %></li>
+  <% end %>
+</ul>
+
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>">
     <p><%= link_to item.name, item_path(item) %></p>

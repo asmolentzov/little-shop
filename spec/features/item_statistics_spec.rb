@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-descibe 'as any user' do
+describe 'as any user' do
   describe 'when I visit the items index page' do
     it 'should see an area with item statistics, including the top 5 and bottom 5 popular items' do
-      item_1 = create(:item)
+      item_1 = create(:item) #add a times loop to build these?
       item_2 = create(:item)
       item_3 = create(:item)
       item_4 = create(:item)
       item_5 = create(:item)
       item_6 = create(:item)
       item_7 = create(:item)
-      order_item_1 = create(:fulfilled_order_item, item: item_1)
+      order_item_1 = create(:fulfilled_order_item, item: item_1) #add a times loop to build these?
       order_item_2 = create(:fulfilled_order_item, item: item_1)
       order_item_3 = create(:fulfilled_order_item, item: item_1)
       order_item_3 = create(:fulfilled_order_item, item: item_1)
