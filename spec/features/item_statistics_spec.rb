@@ -115,4 +115,35 @@ describe 'as any user' do
       end
     end
   end
+  describe 'when I visit the items index page as an admin user' do
+    it 'should see an area with item statistics, including the top 5 and bottom 5 popular items' do
+      user_1 = create(:admin)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit items_path
+
+      expect(page).to have_content('Item Statistics')
+
+      within('#top-five-items') do
+        expect(page).to have_content("#{@item_1.name}")
+        expect(page).to have_content("#{@item_3.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to_not have_content("#{@item_5.name}")
+        expect(page).to_not have_content("#{@item_7.name}")
+      end
+
+      within('#bottom-five-items') do
+        expect(page).to have_content("#{@item_7.name}")
+        expect(page).to have_content("#{@item_6.name}")
+        expect(page).to have_content("#{@item_5.name}")
+        expect(page).to have_content("#{@item_4.name}")
+        expect(page).to have_content("#{@item_2.name}")
+        expect(page).to_not have_content("#{@item_3.name}")
+        expect(page).to_not have_content("#{@item_1.name}")
+      end
+    end
+  end
 end
