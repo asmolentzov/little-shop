@@ -97,10 +97,13 @@ describe 'As an admin' do
 
     expect(page).to have_content("#{merchant_2.name} is now enabled")
 
-
     within "#merchant-#{merchant_2.id}" do
 
+    merchant = User.find(merchant_2.id)
+
     expect(page).to have_button("disable")
+
+    expect(merchant.enabled).to be true
 
     end
   end
