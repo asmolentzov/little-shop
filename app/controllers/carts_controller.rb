@@ -5,6 +5,9 @@ class CartsController < ApplicationController
       render file: "public/404", status: 404, layout: false
     else
       @cart_items = Item.find(@cart.contents.keys)
+      if @cart.cart_count < 0
+        flash[:sucess] = "You have added #{@cart_items.last.name} to your cart"
+      end
     end
   end
 

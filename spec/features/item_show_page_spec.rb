@@ -34,8 +34,6 @@ describe 'as any user' do
 
       item_1 = create(:item)
       item_2 = create(:item)
-      item_3 = create(:item)
-      item_4 = create(:item)
 
       visit item_path(item_1.id)
 
@@ -51,21 +49,17 @@ describe 'as any user' do
 
       end
 
-      expect(page).to have_content(item_1.name)
-      expect(page).to have_content(item_2.name)
-      expect(page).to have_content(item_3.name)
-      expect(page).to have_content(item_4.name)
+      visit item_path(item_2.id)
 
-      expect(page).to have_content(item_1.description)
-      expect(page).to have_content(item_2.description)
-      expect(page).to have_content(item_3.description)
-      expect(page).to have_content(item_4.description)
+      click_on "Add item"
 
-      expect(page).to have_content(item_1.current_price)
-      expect(page).to have_content(item_2.current_price)
-      expect(page).to have_content(item_3.current_price)
-      expect(page).to have_content(item_4.current_price)
+      expect(current_path).to eq(items_path)
 
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 2")
+
+      end
     end
   end
 
@@ -78,8 +72,6 @@ describe 'as any user' do
 
       item_1 = create(:item)
       item_2 = create(:item)
-      item_3 = create(:item)
-      item_4 = create(:item)
 
       visit item_path(item_1.id)
 
@@ -95,22 +87,21 @@ describe 'as any user' do
 
       end
 
-      expect(page).to have_content(item_1.name)
-      expect(page).to have_content(item_2.name)
-      expect(page).to have_content(item_3.name)
-      expect(page).to have_content(item_4.name)
+      visit item_path(item_2.id)
 
-      expect(page).to have_content(item_1.description)
-      expect(page).to have_content(item_2.description)
-      expect(page).to have_content(item_3.description)
-      expect(page).to have_content(item_4.description)
+      click_on "Add item"
 
-      expect(page).to have_content(item_1.current_price)
-      expect(page).to have_content(item_2.current_price)
-      expect(page).to have_content(item_3.current_price)
-      expect(page).to have_content(item_4.current_price)
+        expect(current_path).to eq(items_path)
 
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 2")
+
+      end
+
+      save_and_open_page
+
+      expect(page).to have_content("You have added #{item_2.name} to your cart")
     end
   end
-
 end
