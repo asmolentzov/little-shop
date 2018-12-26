@@ -28,4 +28,78 @@ describe 'as any user' do
       expect(page).to have_button("Add item")
     end
   end
+
+  context 'when i visit the items show page as an unregistered user' do
+    it 'can click link to add item to cart' do
+
+      item_1 = create(:item)
+      item_2 = create(:item)
+
+      visit item_path(item_1.id)
+
+      expect(page).to have_button("Add item")
+
+      click_on "Add item"
+
+      expect(current_path).to eq(items_path)
+
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 1")
+
+      end
+
+      visit item_path(item_2.id)
+
+      click_on "Add item"
+
+      expect(current_path).to eq(items_path)
+
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 2")
+
+      end
+    end
+  end
+
+  context 'when i visit the items show page as a registered user' do
+    it 'can click link to add item to cart' do
+
+      user_1 = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      item_1 = create(:item)
+      item_2 = create(:item)
+
+      visit item_path(item_1.id)
+
+      expect(page).to have_button("Add item")
+
+      click_on "Add item"
+
+      expect(current_path).to eq(items_path)
+
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 1")
+
+      end
+
+      visit item_path(item_2.id)
+
+      click_on "Add item"
+
+        expect(current_path).to eq(items_path)
+
+      within '#nav' do
+
+        expect(page).to have_content("Cart: 2")
+
+      end
+
+      expect(page).to have_content("You have added #{item_2.name} to your cart")
+    end
+  end
 end
