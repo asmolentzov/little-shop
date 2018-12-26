@@ -14,7 +14,7 @@
   <div id="item-<%= item.id %>">
     <p><%= link_to item.name, item_path(item) %></p>
     <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
-        <img src="<%= "#{item.image_link}" %>"  %>-img">
+        <%= image_tag(item.image_link) %>
       <% end %>
     </p>
     <p><%= item.user.name %></p>
