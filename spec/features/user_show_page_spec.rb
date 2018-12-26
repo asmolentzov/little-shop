@@ -137,7 +137,7 @@ describe 'USER SHOW PAGE' do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-      visit(user_path(user))
+      visit(profile_path(user))
 
       expect(page).to_not have_link('Upgrade to Merchant')
     end
