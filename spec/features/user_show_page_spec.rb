@@ -133,5 +133,13 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
     end
+    it 'should not see a link to upgrade' do
+      user = create(:user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit(user_path(user))
+
+      expect(page).to_not have_link('Upgrade to Merchant')
+    end
   end
 end

@@ -46,4 +46,21 @@ describe 'As an admin user' do
       expect(page).to_not have_content(user_1.password)
     end
   end
+  describe 'I should see a link to upgrade the user account to a merchant account' do
+    it 'should upgrade the user to a merchant' do
+      admin = create(:admin)
+      user_1 = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_user_path(user_1)
+
+      expect(page).to have_link('Upgrade to Merchant')
+      click_on('Upgrade to Merchant')
+
+      expect(current_path).to eq(admin_merchant_path(user_1))
+      expect(user_1.role).to eq('merchant')
+      expect(page).to have_content('This user has been upgraded.')
+    end
+  end
 end
