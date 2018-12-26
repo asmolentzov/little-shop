@@ -57,12 +57,13 @@ describe 'As an admin user' do
 
       expect(page).to have_link('Upgrade to Merchant')
       click_on('Upgrade to Merchant')
-
       expect(current_path).to eq(admin_merchant_path(user_1))
-      expect(user_1.role).to eq('merchant')
+
+      updated_user = User.find(user_1.id)
+      expect(updated_user.role).to eq('merchant')
       expect(page).to have_content('This user has been upgraded.')
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(updated_user)
 
       visit(dashboard_path)
 
