@@ -4,45 +4,50 @@
     <title>LittleShop</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/latest/normalize.css" title="css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <%= javascript_include_tag 'application' %>
   </head>
 
-  <body>
+  <body class="grid-container">
     <div class="yield" id="nav">
       <div id="hello-message">
         <% if current_user %>
           <p>Logged in as <%= current_user.name %></p>
         <% end %>
-      <div id="cart-identity-nav">
-        <ul>
-          <% if current_default? || !(current_user) %>
-            <li><%= link_to "Cart: #{@cart.cart_count}", cart_path %></li>
-          <% end %>
-          <% if current_user %>
-            <li><%= link_to "Log Out", logout_path, method: :delete %></li>
-          <% else %>
-            <li><%= link_to "Register", registration_path %></li>
-            <li><%= link_to "Log In", login_path %></li>
-          <% end %>
-          <% if current_default? %>
-            <li><%= link_to "Profile", profile_path %></li>
-          <% end %>
-        </ul>
       </div>
-      <div id="user-functions">
-        <ul>
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "Items", items_path %></li>
-          <li><%= link_to "Merchants", merchants_path %></li>
-          <% if current_user %>
-            <li><%= link_to "Orders", profile_orders_path %></li>
-          <% end %>
-          <% if current_merchant? %>
-            <li><%= link_to "Dashboard", dashboard_path %></li>
-          <% elsif current_admin? %>
-            <li><%= link_to "All Users", admin_users_path %></li>
-          <% end %>
-        </ul>
+        <div class="nav-flex-container">
+          <div id="cart-identity-nav" class="nav-flex-items">
+            <ul>
+              <% if current_default? || !(current_user) %>
+                <li><%= link_to "Cart: #{@cart.cart_count}", cart_path %></li>
+              <% end %>
+              <% if current_user %>
+                <li><%= link_to "Log Out", logout_path, method: :delete %></li>
+              <% else %>
+                <li><%= link_to "Register", registration_path %></li>
+                <li><%= link_to "Log In", login_path %></li>
+              <% end %>
+              <% if current_default? %>
+                <li><%= link_to "Profile", profile_path %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div id="user-functions" class="nav-flex-items">
+            <ul>
+              <li><%= link_to "Home", root_path %></li>
+              <li><%= link_to "Items", items_path %></li>
+              <li><%= link_to "Merchants", merchants_path %></li>
+              <% if current_user %>
+                <li><%= link_to "Orders", profile_orders_path %></li>
+              <% end %>
+              <% if current_merchant? %>
+                <li><%= link_to "Dashboard", dashboard_path %></li>
+              <% elsif current_admin? %>
+                <li><%= link_to "All Users", admin_users_path %></li>
+              <% end %>
+            </ul>
+          </div>
       </div>
     </div>
     <% if flash.any? %>
@@ -50,6 +55,10 @@
         <%= value %>
       <% end %>
     <% end %>
-    <%= yield %>
+    <div class="main">
+      <div class-="flex-container">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
