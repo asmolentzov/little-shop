@@ -177,6 +177,7 @@ describe 'USER SHOW PAGE' do
         expect(page).to have_content("Item count: 2")
         expect(page).to have_content("Grand total: $8.00")
       end
+    end 
     it 'should not see a link to upgrade' do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
