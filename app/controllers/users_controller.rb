@@ -51,7 +51,8 @@ class UsersController < ApplicationController
       flash[:success] = 'You have updated your profile'
       redirect_to profile_path
     else
-      @user = current_user
+      @user = User.find(params[:id])
+      @errors = current_user.errors
       render :edit
     end
   end

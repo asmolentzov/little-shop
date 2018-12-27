@@ -122,7 +122,8 @@ describe 'USER SHOW PAGE' do
 
       fill_in :user_name, with: ''
       click_button 'Submit'
-
+      
+      user = User.find(user.id)
       expect(page).to have_content("Name can't be blank")
       expect(find_field("user[name]").value).to eq(user.name)
       expect(find_field("user[street]").value).to eq(user.street)
@@ -137,7 +138,8 @@ describe 'USER SHOW PAGE' do
       fill_in :user_state, with: ''
       fill_in :user_zip, with: ''
       click_button 'Submit'
-      
+
+      user = User.find(user.id)      
       expect(page).to have_content("Street can't be blank")
       expect(page).to have_content("City can't be blank")
       expect(page).to have_content("State can't be blank")
@@ -157,6 +159,8 @@ describe 'USER SHOW PAGE' do
 
       fill_in :user_email, with: other_email
       click_button 'Submit'
+      
+      user = User.find(user.id)
 
       expect(page).to have_content('Email has already been taken')
       expect(find_field("user[name]").value).to eq(user.name)
