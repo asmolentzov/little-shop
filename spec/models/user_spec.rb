@@ -211,16 +211,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-  describe 'Instance Methods' do
-    describe '#enabled_toggle' do
-      it 'toggles a user between enabled and disabled states' do
-        user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-          zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
-        user.enabled_toggle
-        expect(user.enabled).to eq(false)
-        user.enabled_toggle
-        expect(user.enabled).to eq(true)
-      end
-    end
-  end
 end
