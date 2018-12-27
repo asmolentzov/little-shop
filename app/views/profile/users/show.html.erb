@@ -7,13 +7,15 @@
 
 <%= link_to 'Edit Profile', profile_edit_path %>
 
-<div id="order-listing" >
-  <% @orders.each do |order| %>
-    <%= link_to "Order: #{order.id} ", profile_orders_path(order.id) %>
-    <%= "Placed on: #{order.created_at} " %>
-    <%= "Last update: #{order.updated_at} " %>
-    <%= "Status: #{order.status} " %>
-    <%= "Item count: #{order.item_quantity} " %>
-    <%= "Grand total: #{number_to_currency(order.grand_total/100)} " %>
-  <% end %>
-</div>
+<% @orders.each do |order| %>
+  <div id="order-<%=order.id%>">
+    <ul>
+      <li><%= link_to "Order: #{order.id} ", profile_orders_path(order.id) %></li>
+      <li><%= "Placed on: #{order.created_at} " %></li>
+      <li><%= "Last update: #{order.updated_at} " %></li>
+      <li><%= "Status: #{order.status} " %>
+      <li><%= "Item count: #{order.item_quantity} " %></li>
+      <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
+    </ul>
+  </div>
+<% end %>
