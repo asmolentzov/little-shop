@@ -42,6 +42,7 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
     end
+
     it 'allows me to edit some of my information' do
       old_name = 'User One'
       old_city = 'City One'
@@ -69,6 +70,7 @@ describe 'USER SHOW PAGE' do
       expect(page).to_not have_content(old_name)
       expect(page).to_not have_content(old_city)
     end
+
     it 'allows me to edit all of my information' do
       old_name = 'User One'
       old_street = 'Street One'
@@ -113,6 +115,7 @@ describe 'USER SHOW PAGE' do
       expect(page).to_not have_content(old_zip)
       expect(page).to_not have_content(old_email)
     end
+
     it 'does not allow me to leave fields blank' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
         zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
@@ -133,6 +136,47 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
     end
+
+    it 'shows all of my orders' do
+      user_1 = create(:user)
+
+      order_1 = create(:fulfilled_order, user: user_1)
+      order_2 = create(:fulfilled_order, user: user_1)
+      order_3 = create(:order, user: user_1)
+
+      create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 100)
+      create(:fulfilled_order_item, order: order_2, quantity: 1, order_price: 200)
+      create(:fulfilled_order_item, order: order_2, quantity: 2, order_price: 300)
+      create(:unfulfilled_order_item, order: order_3, quantity: 2, order_price: 400)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit profile_path
+
+      within "#order-#{order_1.id}" do
+        expect(page).to have_link("Order: #{order_1.id}")
+        expect(page).to have_content("Placed on: #{order_1.created_at}")
+        expect(page).to have_content("Last update: #{order_1.updated_at}")
+        expect(page).to have_content("Status: #{order_1.status}")
+        expect(page).to have_content("Item count: 1")
+        expect(page).to have_content("Grand total: $1.00")
+      end
+      within "#order-#{order_2.id}" do
+        expect(page).to have_link("Order: #{order_2.id}")
+        expect(page).to have_content("Placed on: #{order_2.created_at}")
+        expect(page).to have_content("Last update: #{order_2.updated_at}")
+        expect(page).to have_content("Status: #{order_2.status}")
+        expect(page).to have_content("Item count: 3")
+        expect(page).to have_content("Grand total: $8.00")
+      end
+      within "#order-#{order_3.id}" do
+        expect(page).to have_link("Order: #{order_3.id}")
+        expect(page).to have_content("Placed on: #{order_3.created_at}")
+        expect(page).to have_content("Last update: #{order_3.updated_at}")
+        expect(page).to have_content("Status: #{order_3.status}")
+        expect(page).to have_content("Item count: 2")
+        expect(page).to have_content("Grand total: $8.00")
+      end
     it 'should not see a link to upgrade' do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
