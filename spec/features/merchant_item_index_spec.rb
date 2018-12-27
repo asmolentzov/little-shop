@@ -3,11 +3,13 @@ require 'rails_helper'
 describe 'as a merchant user' do
   context 'when I visit /dashboard/items' do
     it 'should see a link to add an item, and I see each item I have, along with information for each item' do
-      merch = create(:merchant)
-      item_1 = create(:item, user: merch)
-      item_2 = create(:item, user: merch)
+      merch1 = create(:merchant)
+      merch2 = create(:merchant)
+      item_1 = create(:item, user: merch1)
+      item_2 = create(:item, user: merch1)
+      item_3 = create(:item, user: merch2)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch1)
 
       visit '/dashboard/items'
 
@@ -28,6 +30,12 @@ describe 'as a merchant user' do
       expect(page).to have_link('Edit this item')
       expect(page).to have_link('Disable this item')
       expect(page).to_not have_link('Enable this item')
+
+      expect(page).to_not have_content(item_3.id)
+      expect(page).to_not have_content(item_3.name)
+      expect(page).to_not have_css("img[src*='#{item_3.image_link}']")
+      expect(page).to_not have_content(item_3.price)
+      expect(page).to_not have_content(item_3.inventory)
     end
     it 'should see a link to delete the item if no user has ordered the item' do
       merch = create(:merchant)
