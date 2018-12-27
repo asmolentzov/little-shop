@@ -63,6 +63,17 @@ RSpec.describe Order, type: :model do
 
       expect(order_1.item_quantity).to eq(6)
     end
+    it 'returns the grand total for an order' do
+      order_1 = create(:fulfilled_order)
+
+      create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 100)
+      create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 200)
+      create(:fulfilled_order_item, order: order_1, quantity: 2, order_price: 300)
+      create(:unfulfilled_order_item, order: order_1, quantity: 2, order_price: 400)
+
+      expect(order_1.grand_total).to eq(1700)
+    end
+
   end
 
 end

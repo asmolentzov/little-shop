@@ -137,7 +137,7 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[password]").value).to eq(nil)
     end
 
-    xit 'shows all of my orders' do
+    it 'shows all of my orders' do
       user_1 = create(:user)
 
       order_1 = create(:fulfilled_order, user: user_1)
@@ -162,10 +162,11 @@ describe 'USER SHOW PAGE' do
         expect(page).to have_content("Last update: #{order_2.updated_at}")
         expect(page).to have_content("Status: #{order_2.status}")
 
-        expect(page).to have_content("Total items: 1")
-        expect(page).to have_content("Total items: 3")
-        expect(page).to have_content("Total items: 2")
-        #expect(page).to have_content(order_2.grand_total)
+        expect(page).to have_content("Item count: 1")
+        expect(page).to have_content("Item count: 3")
+        expect(page).to have_content("Item count: 2")
+
+        expect(page).to have_content("Grand total: $8.00")
       end
     end
   end

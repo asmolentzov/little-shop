@@ -22,4 +22,8 @@ class Order < ApplicationRecord
     OrderItem.where(order_id: id).sum(:quantity)
   end
 
+  def grand_total
+    OrderItem.where(order_id: id).sum("quantity * order_price")
+  end
+
 end

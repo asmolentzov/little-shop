@@ -13,5 +13,7 @@
     <%= "Placed on: #{order.created_at} " %>
     <%= "Last update: #{order.updated_at} " %>
     <%= "Status: #{order.status} " %>
+    <%= "Item count: #{order.item_quantity} " %>
+    <%= "Grand total: #{number_to_currency(order.grand_total/100)} " %>
   <% end %>
 </div>
