@@ -47,7 +47,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_password, with: "password1"
         click_on 'Submit'
 
-        expect(page).to have_content('Email address is already in use')
+        expect(page).to have_content('Email has already been taken')
         expect(find_field("user[name]").value).to eq("User One")
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")

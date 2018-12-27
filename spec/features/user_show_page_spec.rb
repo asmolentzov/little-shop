@@ -143,5 +143,29 @@ describe 'USER SHOW PAGE' do
       expect(page).to have_content("State can't be blank")
       expect(page).to have_content("Zip can't be blank")
     end
+    
+    it 'does not allow me to update my email address to one that is already in use' do
+      other_email = 'other@aol.com'
+
+      create(:user, email: other_email)
+
+      user = create(:user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit profile_edit_path
+
+      fill_in :user_email, with: other_email
+      click_button 'Submit'
+
+      expect(page).to have_content('Email has already been taken')
+      expect(find_field("user[name]").value).to eq(user.name)
+      expect(find_field("user[street]").value).to eq(user.street)
+      expect(find_field("user[city]").value).to eq(user.city)
+      expect(find_field("user[state]").value).to eq(user.state)
+      expect(find_field("user[zip]").value).to eq(user.zip)
+      expect(find_field("user[email]").value).to eq(user.email)
+      expect(find_field("user[password]").value).to eq(nil)
+    end
   end
 end
