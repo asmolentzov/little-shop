@@ -36,20 +36,12 @@ RSpec.describe User, type: :model do
     describe '.default_users' do
       it 'returns all default users' do
         #Default Users
-        user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
-        user_2 = User.create(name: 'User Two', street: 'Street Two', city: 'City Two', state: 'State2',
-        zip: 'ZIP2', email: 'email2@aol.com', password: 'password2', role: 0, enabled: true)
-        user_3 = User.create(name: 'User Three', street: 'Street Three', city: 'City Three', state: 'State3',
-        zip: 'ZIP3', email: 'email3@aol.com', password: 'password3', role: 0, enabled: false)
-        user_4 = User.create(name: 'User Four', street: 'Street Four', city: 'City Four', state: 'State4',
-        zip: 'ZIP4', email: 'email4@aol.com', password: 'password4', role: 0, enabled: true)
-        #Merchant User
-        user_5 = User.create(name: 'User Five', street: 'Street Five', city: 'City Five', state: 'State5',
-        zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
-        #Admin User
-        user_6 = User.create(name: 'User Six', street: 'Street Six', city: 'City Six', state: 'State6',
-        zip: 'ZIP6', email: 'email6@aol.com', password: 'password6', role: 2, enabled: true)
+        user_1 = create(:user)
+        user_2 = create(:user)
+        user_3 = create(:user)
+        user_4 = create(:user)
+        user_5 = create(:merchant)
+        user_5 = create(:admin)
 
         expect(User.default_users).to eq([user_1, user_2, user_3, user_4])
       end
@@ -216,6 +208,18 @@ RSpec.describe User, type: :model do
         cities = [['Honolulu', 'HI'], ['Springfield', 'MI'], ['Springfield', 'CO']]
 
         expect(User.top_cities).to eq(cities)
+      end
+    end
+  end
+  describe 'Instance Methods' do
+    describe '#enabled_toggle' do
+      it 'toggles a user between enabled and disabled states' do
+        user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
+          zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
+        user.enabled_toggle
+        expect(user.enabled).to eq(false)
+        user.enabled_toggle
+        expect(user.enabled).to eq(true)
       end
     end
   end
