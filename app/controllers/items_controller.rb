@@ -6,6 +6,8 @@ class ItemsController < ApplicationController
    else
      @items = Item.all
    end
+   @top_five_items = Item.five_popular('desc')
+   @bottom_five_items = Item.five_popular('asc')
   end
 
   def show

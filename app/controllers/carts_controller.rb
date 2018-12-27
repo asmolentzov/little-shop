@@ -15,6 +15,7 @@ class CartsController < ApplicationController
     session[:cart][item_id_str] ||= 0
     session[:cart][item_id_str] += 1
     redirect_to items_path
+    flash[:sucess] = "You have added #{item.name} to your cart"
   end
   
   def destroy
