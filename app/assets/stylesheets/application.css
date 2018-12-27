@@ -49,18 +49,19 @@
   grid-row: 2 / span 7;
 }
 
-.flex-container, .nav-flex-container{
+div.flex-container, div.nav-flex-container{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.nav-flex-container {
+div.nav-flex-container {
   justify-content: space-between;
 }
 
 div.flex-items, div.nav-flex-items {
   flex: 0 1 auto;
+  border: 1px solid red;
 }
 
 div#nav {
