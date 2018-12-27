@@ -137,11 +137,17 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[password]").value).to eq(nil)
     end
 
-    it 'shows all of my orders' do
+    xit 'shows all of my orders' do
       user_1 = create(:user)
+
       order_1 = create(:fulfilled_order, user: user_1)
       order_2 = create(:fulfilled_order, user: user_1)
-      order_3 = create(:fulfilled_order, user: user_1)
+      order_3 = create(:order, user: user_1)
+
+      oi_1 = create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 100)
+      oi_2 = create(:fulfilled_order_item, order: order_2, quantity: 1, order_price: 200)
+      oi_3 = create(:fulfilled_order_item, order: order_2, quantity: 2, order_price: 300)
+      oi_4 = create(:unfulfilled_order_item, order: order_3, quantity: 2, order_price: 400)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
@@ -155,7 +161,10 @@ describe 'USER SHOW PAGE' do
         expect(page).to have_content("Placed on: #{order_2.created_at}")
         expect(page).to have_content("Last update: #{order_2.updated_at}")
         expect(page).to have_content("Status: #{order_2.status}")
-        #expect(page).to have_content(order_2.item_quantity)
+
+        expect(page).to have_content("Total items: 1")
+        expect(page).to have_content("Total items: 3")
+        expect(page).to have_content("Total items: 2")
         #expect(page).to have_content(order_2.grand_total)
       end
     end
