@@ -211,7 +211,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
   describe 'Instance Methods' do
     describe '#enabled_toggle' do
       it 'toggles a user between enabled and disabled states' do
