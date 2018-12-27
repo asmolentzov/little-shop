@@ -9,6 +9,9 @@
 
 <div id="order-listing" >
   <% @orders.each do |order| %>
-    <%= link_to order.id, profile_orders_path(order.id) %>
+    <%= link_to "Order: #{order.id} ", profile_orders_path(order.id) %>
+    <%= "Placed on: #{order.created_at} " %>
+    <%= "Last update: #{order.updated_at} " %>
+    <%= "Status: #{order.status} " %>
   <% end %>
 </div>

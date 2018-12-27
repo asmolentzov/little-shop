@@ -148,9 +148,15 @@ describe 'USER SHOW PAGE' do
       visit profile_path
 
       within "#order-listing" do
-        expect(page).to have_link(order_1.id)
+        expect(page).to have_link("Order: #{order_1.id}")
         expect(page).to have_link(order_2.id)
         expect(page).to have_link(order_3.id)
+
+        expect(page).to have_content("Placed on: #{order_2.created_at}")
+        expect(page).to have_content("Last update: #{order_2.updated_at}")
+        expect(page).to have_content("Status: #{order_2.status}")
+        #expect(page).to have_content(order_2.item_quantity)
+        #expect(page).to have_content(order_2.grand_total)
       end
     end
   end
