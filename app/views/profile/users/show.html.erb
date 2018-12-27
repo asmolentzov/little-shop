@@ -6,3 +6,9 @@
 <%= current_user.email %>
 
 <%= link_to 'Edit Profile', profile_edit_path %>
+
+<div id="order-listing" >
+  <% @orders.each do |order| %>
+    <%= link_to order.id, profile_orders_path(order.id) %>
+  <% end %>
+</div>

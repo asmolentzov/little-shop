@@ -153,6 +153,5 @@ describe 'USER SHOW PAGE' do
         expect(page).to have_link(order_3.id)
       end
     end
-    
   end
 end
