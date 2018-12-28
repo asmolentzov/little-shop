@@ -35,6 +35,7 @@ describe 'As an admin user' do
 
     expect(current_path).to eq(admin_merchant_path(merchant.id))
 
+    expect(page).to have_link("My Items")
     end
   end
 
