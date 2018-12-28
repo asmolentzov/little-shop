@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/dashboard/items', to: "items#index"
   put '/dashboard/item', to: "items#update"
   delete '/dashboard/item', to: "items#destroy"
+  get '/dashboard/items/new', to: "items#new"
+  post '/dashboard/items/new', to: "items#create"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]

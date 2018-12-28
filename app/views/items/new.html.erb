@@ -1,0 +1,20 @@
+<%= form_for [@user, @item] do |f| %>
+  <ul>
+  <% if @errors %>
+    <% @errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  <% end %>
+  </ul>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <%= f.label :image_link %>
+  <%= f.text_field :image_link %>
+  <%= f.label :price %>
+  <%= f.number_field :price %>
+  <%= f.label :inventory %>
+  <%= f.number_field :inventory %>
+  <%= f.submit 'Create Item', dashboard_new_item_path %>
+<% end %>

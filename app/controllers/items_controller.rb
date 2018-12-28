@@ -16,4 +16,14 @@ class ItemsController < ApplicationController
 
   def destroy
   end
+
+  def new
+    @user = current_user
+    @item = Item.new
+  end
+
+  def create
+
+
+  end
 end
