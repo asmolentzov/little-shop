@@ -58,6 +58,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
+        expect(page).to_not have_link('Delete this item')
         expect(page).to_not have_link('Enable this item')
       end
 

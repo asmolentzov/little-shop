@@ -28,14 +28,14 @@
       <%= button_to 'Add item', carts_path(item_id: item.id) %>
     <% end %>
     <% if current_merchant? %>
-      <%= link_to 'Edit this item', dashboard_item_edit_path(item) %>
-      <% unless !(item.order_items) %>
+      <%= link_to 'Edit this item', dashboard_item_path(item), method: :put %>
+      <% if item.order_items.empty? %>
         <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
       <% end %>
-      <% if item.enabled == true %>
-        <%= link_to 'Disable this item', dashboard_item_edit_path(item) %>
+      <% if item.enabled %>
+        <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
       <% else %>
-        <%= link_to 'Enable this item', dashboard_item_edit_path(item) %>
+        <%= link_to 'Enable this item', dashboard_item_path(item), method: :put %>
       <% end %>
     <% end %>
   </div>
