@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'as a merchant user' do
+  include ActionView::Helpers::NumberHelper
+  
   context 'when I visit my dashboard' do
     it 'should show me my profile data, but I cannot edit it' do
       merch = create(:merchant)
@@ -49,27 +51,33 @@ describe 'as a merchant user' do
       
       within "#pending-order-#{order_1.id}" do
         expect(page).to have_link("Order ##{order_1.id}")
-        expect(page).to have_content("Placed on: #{order_1.created_at}")
+        expect(page).to have_content("Placed on: #{order_1.created_at.strftime('%B %d, %Y')}")
+        save_and_open_page
+        
         expect(page).to have_content("My items in order: #{order_1.merchant_items_quantity(merchant.id)}")
-        expect(page).to have_content("My items value: #{order_1.merchant_items_value(merchant.id)}")
+        expect(page).to have_content("My items value: #{number_to_currency(order_1.merchant_items_value(merchant.id) / 100)}")
         click_link "Order ##{order_1.id}"
       end
       
       expect(current_path).to eq(dashboard_orders_path(order_1))
+      expect(current_path).to eq("/dashboard/orders/#{order_1.id}")
       
       visit dashboard_path
       
       expect(page).to_not have_css("#pending-order-#{order_2.id}")
+      expect(page).to_not have_css("#pending-order-#{order_4.id}")
       
       within "#pending-order-#{order_3.id}" do
         expect(page).to have_link("Order ##{order_3.id}")
-        expect(page).to have_content("Placed on: #{order_3.created_at}")
+        expect(page).to have_content("Placed on: #{order_3.created_at.to_date}")
+        
         expect(page).to have_content("My items in order: #{order_3.merchant_items_quantity(merchant.id)}")
-        expect(page).to have_content("My items value: #{order_3.merchant_items_value(merchant.id)}")
+        expect(page).to have_content("My items value: #{number_to_currency(order_3.merchant_items_value(merchant.id) / 100)}")
         click_link "Order ##{order_3.id}"
       end
       
-      expect(page).to_not have_css("#pending-order-#{order_4.id}")
+      expect(current_path).to eq(dashboard_orders_path(order_3))
+      
       
     end
   end
