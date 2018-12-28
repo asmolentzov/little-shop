@@ -59,13 +59,13 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to have_content("Grand Total: #{number_to_currency(subtotal_1 + subtotal_2)}")
     expect(page).to have_link("Empty Cart")
   end
-  
+
   it 'allows a visitor to empty their cart' do
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant)
     item_2 = create(:item, user: merchant)
     item_3 = create(:item, user: merchant)
-    
+
     visit items_path
     within "#item-#{item_1.id}" do
       click_button 'Add item'
@@ -77,11 +77,11 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_3.id}" do
       click_button 'Add item'
     end
-    
+
     visit cart_path
-    
+
     click_on "Empty Cart"
-    
+
     expect(current_path).to eq(cart_path)
     within "#nav" do
       expect(page).to have_content("Cart: 0")
@@ -94,16 +94,16 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to_not have_content(item_3.description)
     expect(page).to have_content("Grand Total: $0.00")
   end
-  
+
   it 'allows a registered user to empty their cart' do
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    
+
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant)
     item_2 = create(:item, user: merchant)
     item_3 = create(:item, user: merchant)
-    
+
     visit items_path
     within "#item-#{item_1.id}" do
       click_button 'Add item'
@@ -115,11 +115,11 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_3.id}" do
       click_button 'Add item'
     end
-    
+
     visit cart_path
-    
+
     click_on "Empty Cart"
-    
+
     expect(current_path).to eq(cart_path)
     within "#nav" do
       expect(page).to have_content("Cart: 0")
@@ -131,5 +131,51 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to_not have_content(item_2.description)
     expect(page).to_not have_content(item_3.description)
     expect(page).to have_content("Grand Total: $0.00")
+  end
+
+  it 'allows user to a user to remove and adjust item quantity in their cart' do
+    user = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    merchant = create(:merchant)
+    item_1 = create(:item, user: merchant)
+    item_2 = create(:item, user: merchant)
+    item_3 = create(:item, user: merchant)
+
+    visit items_path
+    within "#item-#{item_1.id}" do
+      click_button 'Add item'
+    end
+    within "#item-#{item_2.id}" do
+      click_button 'Add item'
+      click_button 'Add item'
+    end
+    within "#item-#{item_3.id}" do
+      click_button 'Add item'
+    end
+
+    visit cart_path
+
+    within  "#item-#{item_3.id}" do
+      click_button 'Remove item'
+    end
+
+    expect(page).to have_content(item_2.name)
+    expect(page).to have_content(item_1.name)
+    expect(page).to_not have_content(item_3.name)
+
+    within "#item-#{item_2.id}" do
+      click_button 'Add one'
+    expect(page).to have_content("Quantity: 3")
+    end
+
+    within "#item-#{item_1.id}" do
+      click_button 'Remove one'
+    end
+
+    expect(page).to have_content(item_2.name)
+    expect(page).to_not have_content(item_3.name)
+    expect(page).to_not have_content(item_1.name)
+
   end
 end
