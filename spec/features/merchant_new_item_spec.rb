@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe 'as a merchant user' do
-  context 'when I click on the add new item link' do 
+  context 'when I click on the add new item link' do
     it 'should see a link to add a new item. when I click it, I am taken to a new item page with a form where I can create a new item' do
       merch = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
       visit dashboard_items_path
 
@@ -40,6 +42,8 @@ describe 'as a merchant user' do
     it 'should not let me create a new item without required fields filled out' do
       merch = create(:merchant)
 
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+
       visit dashboard_items_path
 
       expect(page).to have_link('Add New Item')
@@ -58,6 +62,8 @@ describe 'as a merchant user' do
     end
     it 'I can create a new item without an image and a placeholder image will display' do
       merch = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
       visit dashboard_items_path
 
