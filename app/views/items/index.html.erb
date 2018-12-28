@@ -12,6 +12,9 @@
 
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>" class="flex-items">
+    <% if current_user.merchant? %>
+      <p><%= item.id %></p>
+    <% end %>
     <p><%= link_to item.name, item_path(item) %></p>
     <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
         <%= image_tag(item.image_link, class:"thumbnails") %>
@@ -21,6 +24,19 @@
     <p><%= item.description %></p>
     <p><%= item.inventory %></p>
     <p><%= item.current_price %></p>
-    <%= button_to 'Add item', carts_path(item_id: item.id) %>
+    <% if current_user.default? %>
+      <%= button_to 'Add item', carts_path(item_id: item.id) %>
+    <% end %>
+    <% if current_user.merchant? %>
+      <%= link_to 'Edit this item', dashboard_item_edit_path(item) %>
+      <% unless !(item.order_items) %>
+        <%= link_to 'Delete this item', dashboard_item_delete_path(item) %>
+      <% end %>
+      <% if item.enabled? %>
+        <%= link_to 'Disable this item', dashboard_item_edit_path(item, :enable => true) %>
+      <% else %>
+        <%= link_to 'Enable this item', dashboard_item_edit_path(item, :disable => true) %>
+      <% end %>
+    <% end %>
   </div>
 <% end  %>
