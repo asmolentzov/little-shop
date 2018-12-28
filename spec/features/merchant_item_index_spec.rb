@@ -74,5 +74,30 @@ describe 'as a merchant user' do
         expect(page).to_not have_link('Enable this item')
       end
     end
+    
+    it 'should allow me to delete items' do
+      merchant = create(:merchant)
+      
+      item_1 = create(:item, user: merchant)
+      item_2 = create(:item, user: merchant)
+      item_3 = create(:item, user: merchant)
+      
+      visit dashboard_items_path
+      
+      expect(page).to have_content(item_1.name)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
+      
+      within "#item-#{item_1.id}" do
+        click_on 'Delete this item' 
+      end
+      
+      expect(current_path).to eq(dashboard_items_path)
+      expect(page).to have_content("Item ##{item_1.id}, #{item_1.name}, has been deleted")
+      expect(page).to_not have_content(item_1.name)
+      expect(page).to_not have_content(item_1.description)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
+    end
   end
 end
