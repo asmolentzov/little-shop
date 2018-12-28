@@ -15,8 +15,8 @@
       <ul>
         <li>Order #<%= order.id %></li>
         <li>Order #<%= order.created_at %></li>
-        <li>Order #<%= order.merchant_items_quantity %></li>
-        <li>Order #<%= order.merchant_items_value %></li>
+        <li>Order #<%= order.merchant_items_quantity(current_user.id) %></li>
+        <li>Order #<%= order.merchant_items_value(current_user.id) %></li>
       </ul>
     </div>
   <% end %>
