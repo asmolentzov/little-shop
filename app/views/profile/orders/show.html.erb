@@ -1,0 +1,20 @@
+
+<%= "Order: #{@order.id} " %>
+<%= "Placed on: #{@order.created_at} " %>
+<%= "Last update: #{@order.updated_at} " %>
+<%= "Status: #{@order.status} " %>
+
+<% @order.order_items.each do |order_item| %>
+  <div id="order-item-<%=order_item.id%>">
+    <%= "Item: #{order_item.item.name}" %>
+    <%= "Description: #{order_item.item.description}" %>
+    <%= "Thumbnail: #{order_item.item.image_link}" %>
+    <%= image_tag(order_item.item.image_link, class:"thumbnails") %>
+    <%= "Quantity: #{order_item.quantity}" %>
+    <%= "Order Price: #{order_item.order_price}" %>
+    <%= "Subtotal: #{order_item.order_price * order_item.quantity}" %>
+  </div>
+<% end %>
+
+<%= "Total items in order: #{@order.item_quantity} " %>
+<%= "Grand total: #{number_to_currency(@order.grand_total/100)} " %>
