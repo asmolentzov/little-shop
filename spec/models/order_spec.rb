@@ -114,11 +114,36 @@ RSpec.describe Order, type: :model do
       
       order_3 = create(:order)
       item_3 = create(:item, user: merchant)
-      create(:fulfilled_order_item, order: order_3, item: item_2)
+      create(:fulfilled_order_item, order: order_3, item: item_3)
       
       expect(order_1.merchant_items_quantity(merchant.id)).to eq(2)
       expect(order_2.merchant_items_quantity(merchant.id)).to eq(0)
       expect(order_3.merchant_items_quantity(merchant.id)).to eq(1)
+    end
+  end
+  
+  describe '#merchant_items_value' do
+    it 'returns the value of all of a merchants items in an order' do
+      merchant = create(:merchant)
+      
+      order_1 = create(:order)
+      item_1 = create(:item, user: merchant)
+      item_2 = create(:item, user: merchant)
+      o_i_1 = create(:unfulfilled_order_item, order: order_1, item: item_1)
+      o_i_2 = create(:unfulfilled_order_item, order: order_1, item: item_2) 
+      total_1 = o_i_1.order_price + o_i_2.order_price
+      
+      order_2 = create(:order)
+      create(:unfulfilled_order_item, order: order_2)
+      
+      order_3 = create(:order)
+      item_3 = create(:item, user: merchant)
+      o_i_3 = create(:fulfilled_order_item, order: order_3, item: item_3)
+      create(:unfulfilled_order_item, order: order_3)
+      total_2 = o_i_3.order_price
+      
+      expect(order_1.merchant_items_value(merchant.id)).to eq(total_1)
+      expect(order_2.merchant_items_value(merchant.id)).to eq(total_2)
     end
   end
 
