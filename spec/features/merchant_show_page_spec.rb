@@ -24,8 +24,20 @@ describe 'as a merchant user' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
       
       order_1 = create(:order)
-      item_1 = create(:unfulfilled_order_item, order: order_1)
-      item_2 = create(:unfulfilled_order_item, order: order_1)      
+      item_1 = create(:item, user: merchant)
+      create(:unfulfilled_order_item, order: order_1, item: item_1)
+      create(:unfulfilled_order_item, order: order_1) 
+      
+      order_2 = create(:order)
+      create(:unfulfilled_order_item, order: order_2)
+      
+      order_3 = create(:order)
+      item_2 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_3, item: item_2)
+      
+      order_4 = create(:fulfilled_order)
+      item_3 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_4, item: item_3)     
       
       visit dashboard_path
       
