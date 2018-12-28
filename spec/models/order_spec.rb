@@ -143,7 +143,8 @@ RSpec.describe Order, type: :model do
       total_2 = o_i_3.order_price
       
       expect(order_1.merchant_items_value(merchant.id)).to eq(total_1)
-      expect(order_2.merchant_items_value(merchant.id)).to eq(total_2)
+      expect(order_2.merchant_items_value(merchant.id)).to eq(0)
+      expect(order_3.merchant_items_value(merchant.id)).to eq(total_2)
     end
   end
 
