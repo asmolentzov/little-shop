@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   namespace :profile do
-    resources :orders, only: [:index]
+    resources :orders, only: [:index, :show]
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
   end
