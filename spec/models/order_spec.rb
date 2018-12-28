@@ -65,7 +65,9 @@ RSpec.describe Order, type: :model do
         
         order_3 = create(:order)
         item_2 = create(:item, user: merchant)
+        item_4 = create(:item, user: merchant)
         create(:fulfilled_order_item, order: order_3, item: item_2)
+        create(:fulfilled_order_item, order: order_3, item: item_4)
         
         order_4 = create(:fulfilled_order)
         item_3 = create(:item, user: merchant)

@@ -22,6 +22,7 @@ class Order < ApplicationRecord
     joins(:items)
     .where("items.user_id = ?", merchant_id)
     .where(status: :pending)
+    .group(:id)
   end
 
   def item_quantity
