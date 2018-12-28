@@ -13,4 +13,9 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
   end
+
+  def destroy
+    Item.destroy(params[:id])
+    redirect_to dashboard_items_path
+  end
 end

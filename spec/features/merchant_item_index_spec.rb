@@ -35,7 +35,6 @@ describe 'as a merchant user' do
       expect(page).to_not have_content(item_3.name)
       expect(page).to_not have_css("img[src*='#{item_3.image_link}']")
       expect(page).to_not have_content(item_3.current_price)
-      expect(page).to_not have_content(item_3.inventory)
     end
     it 'should see a link to delete the item if no user has ordered the item' do
       merch = create(:merchant)
@@ -65,6 +64,22 @@ describe 'as a merchant user' do
       expect(page).to have_link('Disable this item')
       expect(page).to have_link('Delete this item')
       expect(page).to_not have_link('Enable this item')
+    end
+    it 'can delete an item with no orders' do
+      merch = create(:merchant)
+      item_1 = create(:item, user: merch)
+      fulfilled_1 = create(:fulfilled_order_item, item: item_1)
+      item_2 = create(:item, user: merch)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+
+      visit '/dashboard/items'
+
+      within("#item-#{item_2.id}") do
+        expect(page).to have_link('Delete this item')
+        click_on('Delete this item')
+        expect(Item.find(item_2.id)).to eq(nil)
+      end
     end
   end
 end

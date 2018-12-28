@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get '/dashboard', as: :dashboard, to: "users#show"
   get '/dashboard/items', to: "items#index"
   get '/dashboard/item/edit', to: "items#update"
-  get '/dashboard/item/delete', to: "items#delete"
+  delete '/dashboard/item', to: "items#destroy"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
