@@ -157,7 +157,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     visit cart_path
 
     within  "#item-#{item_3.id}" do
-      click_button 'Remove item'
+      click_on 'Remove item'
     end
 
     expect(page).to have_content(item_2.name)
@@ -165,12 +165,12 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to_not have_content(item_3.name)
 
     within "#item-#{item_2.id}" do
-      click_button 'Add one'
+      click_on 'Add one'
     expect(page).to have_content("Quantity: 3")
     end
 
     within "#item-#{item_1.id}" do
-      click_button 'Remove one'
+      click_on 'Remove one'
     end
 
     expect(page).to have_content(item_2.name)
