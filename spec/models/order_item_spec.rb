@@ -13,4 +13,11 @@ RSpec.describe OrderItem, type: :model do
     it { should validate_presence_of(:order_price)}
     it { should validate_inclusion_of(:fulfilled).in_array([true, false])}
   end
+
+  describe 'instance methods' do
+    it 'provides the order_item subtotal' do
+      order_item_1 = create(:fulfilled_order_item, quantity: 3, order_price: 300)
+      expect(order_item_1.subtotal).to equal(900)
+    end
+  end
 end

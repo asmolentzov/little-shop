@@ -10,7 +10,7 @@
 <% @orders.each do |order| %>
   <div id="order-<%=order.id%>">
     <ul>
-      <li><%= link_to "Order: #{order.id} ", profile_orders_path(order.id) %></li>
+      <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
       <li><%= "Placed on: #{order.created_at} " %></li>
       <li><%= "Last update: #{order.updated_at} " %></li>
       <li><%= "Status: #{order.status} " %>

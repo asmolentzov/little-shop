@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   get '/dashboard', as: :dashboard, to: "users#show"
   get '/dashboard/items', to: "items#index"
   get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
-
+  put '/dashboard/item', to: "items#update"
+  delete '/dashboard/item', to: "items#destroy"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
@@ -26,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   namespace :profile do
-    resources :orders, only: [:index]
+    resources :orders, only: [:index, :show]
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
   end

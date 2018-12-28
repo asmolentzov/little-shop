@@ -47,7 +47,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_password, with: "password1"
         click_on 'Submit'
 
-        expect(page).to have_content('Email address is already in use')
+        expect(page).to have_content('Email has already been taken')
         expect(find_field("user[name]").value).to eq("User One")
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
@@ -74,7 +74,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_password, with: "password1"
         click_on 'Submit'
 
-        expect(page).to have_content('Email address is already in use')
+        expect(page).to have_content('Email has already been taken')
         expect(find_field("user[name]").value).to eq("User One")
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
@@ -96,7 +96,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_password, with: "password1"
         click_on 'Submit'
 
-        expect(page).to have_content('Required fields are missing')
+        expect(page).to have_content("Zip can't be blank")
         expect(find_field("user[name]").value).to eq("User One")
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
@@ -105,6 +105,17 @@ describe 'as a visitor, when I visit /' do
 
         expect(find_field("user[zip]").value).to eq("")
         expect(find_field("user[password]").value).to eq(nil)
+        
+        visit registration_path
+        click_on 'Submit'
+        
+        expect(page).to have_content("Name can't be blank")
+        expect(page).to have_content("Street can't be blank")
+        expect(page).to have_content("City can't be blank")
+        expect(page).to have_content("State can't be blank")
+        expect(page).to have_content("Zip can't be blank")
+        expect(page).to have_content("Email can't be blank")
+        expect(page).to have_content("Password can't be blank")
       end
     end
   end
