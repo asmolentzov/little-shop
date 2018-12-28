@@ -30,9 +30,9 @@
     <% if current_user.merchant? %>
       <%= link_to 'Edit this item', dashboard_item_edit_path(item) %>
       <% unless !(item.order_items) %>
-        <%= link_to 'Delete this item', dashboard_item_path(item), method: :delete %>
+        <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
       <% end %>
-      <% if item.enabled? %>
+      <% if item.enabled == true %>
         <%= link_to 'Disable this item', dashboard_item_edit_path(item, :enable => true) %>
       <% else %>
         <%= link_to 'Enable this item', dashboard_item_edit_path(item, :disable => true) %>

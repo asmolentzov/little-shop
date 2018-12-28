@@ -15,7 +15,5 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    Item.destroy(params[:id])
-    redirect_to dashboard_items_path
   end
 end
