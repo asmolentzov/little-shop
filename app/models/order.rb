@@ -31,5 +31,11 @@ class Order < ApplicationRecord
   def grand_total
     OrderItem.where(order_id: id).sum("quantity * order_price")
   end
+  
+  def merchant_items_quantity(merchant_id)
+    items
+    .where("items.user_id = ?", merchant_id)
+    .count
+  end
 
 end
