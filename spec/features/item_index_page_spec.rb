@@ -66,7 +66,7 @@ describe 'as a visitor' do
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
         visit items_path
-        
+
         within("#item-#{item_1.id}") do
           expect(page).to have_content(item_1.name)
           expect(page).to have_link("#{item_1.name}")
@@ -79,7 +79,6 @@ describe 'as a visitor' do
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_link("#{item_2.name}")
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
-        expect(page).to_not have_content(item_2.inventory)
         expect(page).to_not have_content(item_2.current_price)
 
         within("#item-#{item_3.id}") do
