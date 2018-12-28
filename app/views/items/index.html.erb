@@ -12,7 +12,7 @@
 
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>" class="flex-items">
-    <% if current_user.merchant? %>
+    <% if current_merchant? %>
       <p><%= item.id %></p>
     <% end %>
     <p><%= link_to item.name, item_path(item) %></p>
@@ -24,10 +24,10 @@
     <p><%= item.description %></p>
     <p><%= item.inventory %></p>
     <p><%= item.current_price %></p>
-    <% if current_user.default? %>
+    <% if current_default? || !(current_user) %>
       <%= button_to 'Add item', carts_path(item_id: item.id) %>
     <% end %>
-    <% if current_user.merchant? %>
+    <% if current_merchant? %>
       <%= link_to 'Edit this item', dashboard_item_edit_path(item) %>
       <% unless !(item.order_items) %>
         <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
