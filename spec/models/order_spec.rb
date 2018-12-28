@@ -50,6 +50,30 @@ RSpec.describe Order, type: :model do
         expect(Order.biggest_orders).to eq(orders)
       end
     end
+    
+    describe '.merchant_pending_orders' do
+      it 'should return all the pending orders for a merchant where they have items' do
+        merchant = create(:merchant)
+        
+        order_1 = create(:order)
+        item_1 = create(:item, user: merchant)
+        create(:unfulfilled_order_item, order: order_1, item: item_1)
+        create(:unfulfilled_order_item, order: order_1) 
+        
+        order_2 = create(:order)
+        create(:unfulfilled_order_item, order: order_2)
+        
+        order_3 = create(:order)
+        item_2 = create(:item, user: merchant)
+        create(:fulfilled_order_item, order: order_3, item: item_2)
+        
+        order_4 = create(:fulfilled_order)
+        item_3 = create(:item, user: merchant)
+        create(:fulfilled_order_item, order: order_4, item: item_3)
+        
+        expect(Order.merchant_pending_orders(merchant.id)).to eq([order_1, order_3])
+      end
+    end
   end
 
   describe 'instance methods' do
