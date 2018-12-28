@@ -7,7 +7,17 @@
 
 
 <% if current_default? %>
-<%= link_to 'Edit Profile', profile_edit_path %>
+  <%= link_to 'Edit Profile', profile_edit_path %>
 <% elsif current_merchant? %>
-<%= link_to 'My Items', dashboard_items_path %>
+  <%= link_to 'My Items', dashboard_items_path %>
+  <% @merchant_pending_orders.each do |order| %>
+    <div id="pending-order-<%= order.id %>">
+      <ul>
+        <li>Order #<%= order.id %></li>
+        <li>Order #<%= order.created_at %></li>
+        <li>Order #<%= order.merchant_items_quantity %></li>
+        <li>Order #<%= order.merchant_items_value %></li>
+      </ul>
+    </div>
+  <% end %>
 <% end %>

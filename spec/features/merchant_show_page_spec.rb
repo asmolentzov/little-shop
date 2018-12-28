@@ -21,7 +21,7 @@ describe 'as a merchant user' do
     
     it 'should show me a list of pending orders containing my items' do
       merchant = create(:merchant)
-      allow_any_instance_of(ApplicationController).to recieve(current_user).and_return(merchant)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
       
       order_1 = create(:order)
       item_1 = create(:unfulfilled_order_item, order: order_1)
@@ -32,8 +32,8 @@ describe 'as a merchant user' do
       within "#pending-order-#{order_1.id}" do
         expect(page).to have_link("Order ##{order_1.id}")
         expect(page).to have_content("Placed on: #{order_1.created_at}")
-        expect(page).to have_content("My items in order: #{order_1.my_items_quantity}")
-        expect(page).to have_content("My items value: #{order_1.my_items_value}")
+        expect(page).to have_content("My items in order: #{order_1.merchant_items_quantity}")
+        expect(page).to have_content("My items value: #{order_1.merchant_items_value}")
         click_link "Order ##{order_1.id}"
       end
       
