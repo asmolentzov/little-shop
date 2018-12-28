@@ -69,7 +69,7 @@ describe 'as a merchant user' do
       
       within "#pending-order-#{order_3.id}" do
         expect(page).to have_link("Order ##{order_3.id}")
-        expect(page).to have_content("Placed on: #{order_3.created_at.to_date}")
+        expect(page).to have_content("Placed on: #{order_3.created_at.strftime('%B %d, %Y')}")
         
         expect(page).to have_content("My items in order: #{order_3.merchant_items_quantity(merchant.id)}")
         expect(page).to have_content("My items value: #{number_to_currency(order_3.merchant_items_value(merchant.id) / 100)}")
