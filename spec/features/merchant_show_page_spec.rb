@@ -23,18 +23,24 @@ describe 'as a merchant user' do
       merchant = create(:merchant)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
       
+      # Pending order with one item from the merchant and one not
       order_1 = create(:order)
       item_1 = create(:item, user: merchant)
       create(:unfulfilled_order_item, order: order_1, item: item_1)
       create(:unfulfilled_order_item, order: order_1) 
       
+      # Pending order with no items from merchant
       order_2 = create(:order)
       create(:unfulfilled_order_item, order: order_2)
       
+      # Pending order with 2 items from merchant
       order_3 = create(:order)
       item_2 = create(:item, user: merchant)
+      item_4 = create(:item, user: merchant)
       create(:fulfilled_order_item, order: order_3, item: item_2)
+      create(:fulfilled_order_item, order: order_3, item: item_4)
       
+      # Fulfilled order item with item from merchant
       order_4 = create(:fulfilled_order)
       item_3 = create(:item, user: merchant)
       create(:fulfilled_order_item, order: order_4, item: item_3)     
@@ -50,6 +56,20 @@ describe 'as a merchant user' do
       end
       
       expect(current_path).to eq(dashboard_orders_path(order_1))
+      
+      visit dashboard_path
+      
+      expect(page).to_not have_css("#pending-order-#{order_2.id}")
+      
+      within "#pending-order-#{order_3.id}" do
+        expect(page).to have_link("Order ##{order_3.id}")
+        expect(page).to have_content("Placed on: #{order_3.created_at}")
+        expect(page).to have_content("My items in order: #{order_3.merchant_items_quantity(merchant.id)}")
+        expect(page).to have_content("My items value: #{order_3.merchant_items_value(merchant.id)}")
+        click_link "Order ##{order_3.id}"
+      end
+      
+      expect(page).to_not have_css("#pending-order-#{order_4.id}")
       
     end
   end
