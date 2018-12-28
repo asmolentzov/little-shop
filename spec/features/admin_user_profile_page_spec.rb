@@ -24,6 +24,20 @@ describe 'As an admin user' do
     end
   end
 
+  describe 'when i visit the user_path of a merchant' do
+    it 'is redirected to merchant_path' do
+    admin = create(:admin)
+    merchant = create(:merchant)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit admin_user_path(merchant.id)
+
+    expect(current_path).to eq(admin_merchant_path(merchant.id))
+
+    end
+  end
+
   describe  'when I visit a merchant user profile page' do
     it 'should see the same information that a user sees' do
       user_1 = create(:merchant)
