@@ -12,7 +12,7 @@
     <%= image_tag(order_item.item.image_link, class:"thumbnails") %>
     <%= "Quantity: #{order_item.quantity}" %>
     <%= "Order Price: #{order_item.order_price}" %>
-    <%= "Subtotal: #{order_item.order_price * order_item.quantity}" %>
+    <%= "Subtotal: #{number_to_currency(order_item.subtotal/100)}" %>
   </div>
 <% end %>
 
