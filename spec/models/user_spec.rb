@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
         user_3 = create(:user)
         user_4 = create(:user)
         user_5 = create(:merchant)
-        user_5 = create(:admin)
+        user_6 = create(:admin)
 
         expect(User.default_users).to eq([user_1, user_2, user_3, user_4])
       end

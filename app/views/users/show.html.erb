@@ -20,4 +20,12 @@
       </ul>
     </div>
   <% end %>
+  <%= "MERCHANT STATISTICS" %>
+  <%= "Top 5 items by quantity: #{@merchant_top_five_items}" %>
+  <%= "Sold #{@merchant_units_sold} items, which is #{@merchant_percent_sold} of your total inventory" %>
+  <%= "Top 3 shipment states: #{@merchant_top_states}" %>
+  <%= "Top 3 shipment cities: #{@merchant_top_cities}" %>
+  <%= "User with the most orders: #{@merchant_top_order_user}" %>
+  <%= "User buying the most items: #{@merchant_top_units_user}" %>
+  <%= "Three highest spending users: #{@merchant_highest_spending_users}" %>
 <% end %>
