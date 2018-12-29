@@ -8,9 +8,7 @@ describe 'as a merchant user' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
       visit dashboard_items_path
-
       expect(page).to have_link('Add New Item')
-
       click_on('Add New Item')
 
       expect(current_path).to eq('/dashboard/items/new')
@@ -59,7 +57,7 @@ describe 'as a merchant user' do
       click_on('Create Item')
 
       expect(current_path).to eq('/dashboard/items/new')
-      expect(page).to have_content('You must enter a price')
+      expect(page).to have_content("Current price can't be blank")
     end
     it 'I can create a new item without an image and a placeholder image will display' do
       merch = create(:merchant)
