@@ -20,7 +20,7 @@ describe 'As a merchant' do
       
       within "#customer-info" do
         expect(page).to have_content("Name: #{customer.name}")
-        expect(page).to have_content("Address: #{customer.street}\n#{customer.city} #{customer.state} #{customer.zip}")
+        expect(page).to have_content("Address: #{customer.street} #{customer.city} #{customer.state} #{customer.zip}")
       end
       
       expect(page).to have_content(item_1.name)
