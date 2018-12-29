@@ -17,6 +17,13 @@ class Order < ApplicationRecord
     .order("item_count DESC")
     .limit(3)
   end
+  
+  def self.merchant_pending_orders(merchant_id)
+    joins(:items)
+    .where("items.user_id = ?", merchant_id)
+    .where(status: :pending)
+    .group(:id)
+  end
 
   def item_quantity
     OrderItem.where(order_id: id).sum(:quantity)
@@ -25,5 +32,16 @@ class Order < ApplicationRecord
   def grand_total
     OrderItem.where(order_id: id).sum("quantity * order_price")
   end
-
+  
+  def merchant_items_quantity(merchant_id)
+    items
+    .where("items.user_id = ?", merchant_id)
+    .count
+  end
+  
+  def merchant_items_value(merchant_id)
+    items
+    .where("items.user_id = ?", merchant_id)
+    .sum("order_items.order_price")
+  end
 end
