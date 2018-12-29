@@ -7,5 +7,15 @@ class Profile::OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
   end
-
+  
+  def create
+    order = Order.create(status: :pending, user: current_user)
+    @cart.contents.each do |item_id, quantity|
+      item = Item.find(item_id)
+      order.order_items.create(item: item, quantity: quantity, order_price: item.current_price, fulfilled: false)
+    end
+    flash[:notice] = "Your order has been created!"
+    @cart.empty
+    redirect_to profile_path
+  end
 end
