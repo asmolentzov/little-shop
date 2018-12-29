@@ -162,6 +162,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to have_content("Item count: #{order.item_quantity}")
     expect(page).to have_content("Grand total: #{number_to_currency(order.grand_total/100)}")
     expect(page).to have_content("Cart: 0")
+  end
 
   it 'allows user to a user to remove and adjust item quantity in their cart' do
     user = create(:user)
@@ -169,7 +170,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant, inventory: 2)
-    item_2 = create(:item, user: merchant)
+    item_2 = create(:item, user: merchant, inventory: 1)
     item_3 = create(:item, user: merchant)
 
     visit items_path
@@ -196,7 +197,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_2.id}" do
       click_on 'Add one'
     end
-
+    
     expect(page).to have_content("The merchant does not have enough inventory")
 
     within "#item-#{item_2.id}" do
@@ -214,6 +215,5 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to have_content(item_2.name)
     expect(page).to have_content(item_1.name)
     expect(page).to_not have_content(item_3.name)
-
   end
 end
