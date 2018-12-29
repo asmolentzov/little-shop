@@ -1,7 +1,8 @@
 class Item < ApplicationRecord
-  validates_presence_of :name, :image_link, :inventory, :description,
+  validates_presence_of :name, :image_link, :description,
                         :current_price, :user_id
   validates :enabled, inclusion: {in: [true, false]}
+  validates :inventory, inclusion: {in: (1..1000000)}
   belongs_to :user
 
   has_many :order_items
