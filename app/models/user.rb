@@ -81,6 +81,9 @@ class User < ApplicationRecord
   def merchant_top_five_items
   end
   def merchant_units_sold
+    OrderItem.joins(:item)
+    .where("items.user_id = ?", self.id)
+    .sum(:quantity)
   end
   def merchant_percent_sold
   end
