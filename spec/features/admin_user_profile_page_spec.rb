@@ -24,6 +24,37 @@ describe 'As an admin user' do
     end
   end
 
+  describe 'when i visit the user_path of a merchant' do
+    it 'i am redirected to merchant_path' do
+    admin = create(:admin)
+    merchant = create(:merchant)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit admin_user_path(merchant.id)
+
+    expect(current_path).to eq(admin_merchant_path(merchant.id))
+
+    expect(page).to have_link("My Items")
+    end
+  end
+
+  describe 'when i visit the merchant_path of a user who is not a merchant' do
+    it 'i am redirected to the user_path' do
+    admin = create(:admin)
+    user = create(:user)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit admin_merchant_path(user.id)
+
+    expect(current_path).to eq(admin_user_path(user.id))
+
+    expect(page).to_not have_link("My Items")
+    expect(page).to have_link("Upgrade to Merchant")
+    end
+  end
+
   describe  'when I visit a merchant user profile page' do
     it 'should see the same information that a user sees' do
       user_1 = create(:merchant)
