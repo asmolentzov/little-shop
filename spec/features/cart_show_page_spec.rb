@@ -135,10 +135,10 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
   it 'allows user to a user to remove and adjust item quantity in their cart' do
     user = create(:user)
-    
+
 
     merchant = create(:merchant)
-    item_1 = create(:item, user: merchant)
+    item_1 = create(:item, user: merchant, inventory: 2)
     item_2 = create(:item, user: merchant)
     item_3 = create(:item, user: merchant)
 
@@ -147,7 +147,6 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
       click_button 'Add item'
     end
     within "#item-#{item_2.id}" do
-      click_button 'Add item'
       click_button 'Add item'
     end
     within "#item-#{item_3.id}" do
@@ -166,16 +165,25 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     within "#item-#{item_2.id}" do
       click_on 'Add one'
-    expect(page).to have_content("Quantity: 3")
+    end
+    
+    expect(page).to have_content("The merchant does not have enough inventory")
+
+    within "#item-#{item_2.id}" do
+      expect(page).to have_content("Quantity: 1")
     end
 
     within "#item-#{item_1.id}" do
-      click_on 'Remove one'
+      click_on 'Add one'
+    end
+
+    within "#item-#{item_1.id}" do
+      expect(page).to have_content("Quantity: 2")
     end
 
     expect(page).to have_content(item_2.name)
+    expect(page).to have_content(item_1.name)
     expect(page).to_not have_content(item_3.name)
-    expect(page).to_not have_content(item_1.name)
 
   end
 end
