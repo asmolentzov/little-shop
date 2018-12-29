@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   validates_presence_of :name, :image_link, :inventory, :description,
-                        :current_price, :enabled, :user_id
-
+                        :current_price, :user_id
+  validates :enabled, inclusion: {in: [true, false]}
   belongs_to :user
 
   has_many :order_items
@@ -20,5 +20,9 @@ class Item < ApplicationRecord
           .group(:id)
           .order("total_orders #{var}")
           .limit(5)
+  end
+
+  def self.enabled_items
+    Item.all.where(enabled: true)
   end
 end
