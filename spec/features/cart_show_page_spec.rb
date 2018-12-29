@@ -161,6 +161,6 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to have_content("Status: pending")
     expect(page).to have_content("Item count: #{order.item_quantity}")
     expect(page).to have_content("Grand total: #{number_to_currency(order.grand_total/100)}")
-    save_and_open_page
+    expect(page).to have_content("Cart: 0")
   end
 end

@@ -16,6 +16,7 @@ class Profile::OrdersController < ApplicationController
     end
     order.order_items << order_items
     flash[:notice] = "Your order has been created!"
+    @cart.empty
     redirect_to profile_path
   end
 end
