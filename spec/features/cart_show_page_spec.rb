@@ -149,8 +149,6 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     end
     
     visit cart_path
-    
-    expect(page).to have_content("Check Out")
     click_on("Check Out")
     
     order = Order.last

@@ -7,5 +7,8 @@ class Profile::OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
   end
-
+  
+  def create
+    
+  end
 end
