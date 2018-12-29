@@ -92,5 +92,14 @@ RSpec.describe Item, type: :model do
         expect(Item.five_popular('asc')).to_not include(item_3)
       end
     end
+    describe '#set_default_image' do
+      it 'sets a default image path before saving if one is not present' do
+        user = create(:merchant)
+        item = user.items.create(name: 'apple1',
+        inventory: 3, description: 'apple one', current_price: 200, enabled: true)
+        real_item = Item.find(item)
+        expect(real_item.image_link).to eq('https://picsum.photos/200/300?image=0')
+      end
+    end
   end
 end
