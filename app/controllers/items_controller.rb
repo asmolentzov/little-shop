@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
       redirect_to dashboard_items_path
       flash[:sucess] = "Your new item has been created"
     else
+      flash[:sucess] = "Your new item was NOT created"
       @errors = @item.errors
       render :new
     end
