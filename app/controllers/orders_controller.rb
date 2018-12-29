@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   
   def show
-    @customer = Order.find(params[:id]).user
+    order = Order.find(params[:id])
+    @customer = order.user
+    @items = order.merchant_items(current_user)
   end
 end

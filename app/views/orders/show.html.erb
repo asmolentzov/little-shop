@@ -6,3 +6,10 @@
     <%= @customer.city %> <%= @customer.state %> <%= @customer.zip %>
   </p>
 </div>
+<% @items.each do |item| %>
+  <div id="item-<%= item.id %>">
+    <ul>
+      <li><%= item.name %></li>
+    </ul>
+  </div>
+<% end %>
