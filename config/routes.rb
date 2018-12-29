@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/merchants', as: :merchants, to: "users#index"
   get '/dashboard', as: :dashboard, to: "users#show"
   get '/dashboard/items', to: "items#index"
+  get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
   put '/dashboard/item', to: "items#update"
   delete '/dashboard/item', to: "items#destroy"
 
