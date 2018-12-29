@@ -13,9 +13,11 @@ Rails.application.routes.draw do
   get '/merchants', as: :merchants, to: "users#index"
   get '/dashboard', as: :dashboard, to: "users#show"
   get '/dashboard/items', to: "items#index"
+  post '/dashboard/items', to: "items#create"
   get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
   put '/dashboard/item', to: "items#update"
   delete '/dashboard/item', to: "items#destroy"
+  get '/dashboard/items/new', to: "items#new"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]

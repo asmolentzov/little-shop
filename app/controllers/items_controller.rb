@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
    if current_merchant?
      @items = current_user.items
    else
-     @items = Item.all
+     @items = Item.enabled_items
    end
    @top_five_items = Item.five_popular('desc')
    @bottom_five_items = Item.five_popular('asc')
@@ -19,5 +19,29 @@ class ItemsController < ApplicationController
     Item.delete(item)
     flash[:notice] = "Item ##{item.id} has been deleted"
     redirect_to dashboard_items_path
+  end
+
+  def new
+    @user = current_user
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(item_params)
+    @item.user_id = current_user.id
+    if @item.save
+      redirect_to dashboard_items_path
+      flash[:sucess] = "Your new item has been created"
+    else
+      flash[:sucess] = "Your new item was NOT created"
+      @errors = @item.errors
+      render :new
+    end
+  end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:name, :image_link, :inventory, :description, :current_price)
   end
 end
