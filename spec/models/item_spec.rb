@@ -12,11 +12,24 @@ RSpec.describe Item, type: :model do
     it { should validate_presence_of(:image_link)}
     it { should validate_presence_of(:inventory)}
     it { should validate_presence_of(:description)}
-    it { should validate_presence_of(:enabled)}
+    it  {should validate_inclusion_of(:enabled).in_array([true, false])}
     it { should validate_presence_of(:current_price)}
     it { should validate_presence_of(:user_id)}
   end
 
+  describe 'class methods' do
+    describe '.enabled_items' do
+      it 'should return all enabled items' do
+        merch = create(:merchant)
+        user = create(:user)
+        item_1 = create(:item, user: merch)
+        item_2 = create(:item, user: merch)
+        item_3 = create(:disabled_item, user: merch)
+
+        expect(Item.enabled_items).to eq([item_1, item_2])
+      end
+    end
+  end
   describe 'instance methods' do
     describe '#avg_fulfill_time' do
       it 'should return the average time it took for an item to be fulfilled' do
