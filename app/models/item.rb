@@ -7,6 +7,8 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
+  before_validation :set_default_image
+
   def avg_fulfill_time
     self.order_items.where(fulfilled: true)
         .average("order_items.updated_at - order_items.created_at")
@@ -24,5 +26,13 @@ class Item < ApplicationRecord
 
   def self.enabled_items
     Item.all.where(enabled: true)
+  end
+
+  def set_default_image
+    if self.image_link == ""
+      self.image_link = "https://picsum.photos/200/300?image=0"
+    else
+      self.image_link
+    end
   end
 end
