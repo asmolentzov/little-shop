@@ -26,7 +26,7 @@ class Item < ApplicationRecord
   end
 
   def self.enabled_items
-    Item.all.where(enabled: true)
+    Item.where(enabled: true)
   end
 
   def set_default_image

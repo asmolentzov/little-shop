@@ -1,4 +1,4 @@
-<%= form_for @item, :url => dashboard_items_new_path(@item) do |f| %>
+<%= form_for @item, :url => dashboard_items_path(@item) do |f| %>
   <ul>
   <% if @errors %>
     <% @errors.full_messages.each do |error| %>

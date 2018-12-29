@@ -11,7 +11,7 @@
 </ul>
 
 <% if current_merchant? %>
-  <%= link_to 'Add New Item', '/dashboard/items/new' %>
+  <%= link_to 'Add New Item', dashboard_items_new_path %>
 <% end %>
 
 <% @items.each do |item| %>
