@@ -5,6 +5,9 @@
     <img src="<%= "#{item.image_link}" %> id="item-<%= item.id %>-img">
     <p><%= item.user.name %></p>
     <p><%= number_to_currency(item.current_price/100) %></p>
+    <%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %>
+    <%= button_to "Add one", cart_item_path(item, quantity: 1), method: :patch %>
+    <%= button_to "Remove one", cart_item_path(item, quantity: -1), method: :patch %>
     <p>Quantity: <%= quantity %></p>
     <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
   </div>
