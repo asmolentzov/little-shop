@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get '/cart', to: "carts#show"
   delete '/cart', to: "carts#destroy"
-  patch '/cart/item', to: "carts#update_quantity"
+  put '/cart/item', to: "carts#update"
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
