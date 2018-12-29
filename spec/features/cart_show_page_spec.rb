@@ -135,7 +135,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
   it 'allows user to a user to remove and adjust item quantity in their cart' do
     user = create(:user)
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    
 
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant)

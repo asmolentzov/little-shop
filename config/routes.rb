@@ -5,10 +5,12 @@ Rails.application.routes.draw do
 
   get '/cart', to: "carts#show"
   delete '/cart', to: "carts#destroy"
+  patch '/cart/item', to: "carts#remove"
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
+
 
   get '/merchants', as: :merchants, to: "users#index"
   get '/dashboard', as: :dashboard, to: "users#show"

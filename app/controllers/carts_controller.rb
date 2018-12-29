@@ -17,9 +17,15 @@ class CartsController < ApplicationController
     redirect_to items_path
     flash[:sucess] = "You have added #{item.name} to your cart"
   end
-  
+
   def destroy
     @cart.empty
+    redirect_to cart_path
+  end
+
+  def remove
+    id = params[:format]
+    @cart.contents.except!(id)
     redirect_to cart_path
   end
 
