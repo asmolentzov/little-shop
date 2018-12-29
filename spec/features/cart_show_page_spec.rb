@@ -156,10 +156,11 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(order.status).to eq('pending')
     
     expect(current_path).to eq(profile_path)
-    expect(current_page).to have_content("Your order has been created!")
-    expect(current_page).to have_content("Order: #{order.id}")
-    expect(current_page).to have_content("Status: pending")
-    expect(current_page).to have_content("Item count: order.item_quantity")
-    expect(current_page).to have_content("Grand total: #{number_to_currency(order.grand_total/100)}")
+    expect(page).to have_content("Your order has been created!")
+    expect(page).to have_content("Order: #{order.id}")
+    expect(page).to have_content("Status: pending")
+    expect(page).to have_content("Item count: #{order.item_quantity}")
+    expect(page).to have_content("Grand total: #{number_to_currency(order.grand_total/100)}")
+    save_and_open_page
   end
 end
