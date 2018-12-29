@@ -135,7 +135,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
   it 'allows user to a user to remove and adjust item quantity in their cart' do
     user = create(:user)
-
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant, inventory: 2)
@@ -166,7 +166,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_2.id}" do
       click_on 'Add one'
     end
-    
+
     expect(page).to have_content("The merchant does not have enough inventory")
 
     within "#item-#{item_2.id}" do
