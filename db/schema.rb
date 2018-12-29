@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20181215212910) do
     t.integer "inventory"
     t.string "description"
     t.integer "current_price"
-    t.boolean "enabled"
+    t.boolean "enabled", default: true
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -15,11 +15,11 @@ describe 'as a merchant user' do
 
       expect(current_path).to eq('/dashboard/items/new')
 
-      fill_in :name, with: 'item_1'
-      fill_in :description, with: 'this is a great item_1'
-      fill_in :image_link, with: 'https://picsum.photos/200'
-      fill_in :price, with: 3000
-      fill_in :inventory, with: 1
+      fill_in :item_name, with: 'item_1'
+      fill_in :item_description, with: 'this is a great item_1'
+      fill_in :item_image_link, with: 'https://picsum.photos/200'
+      fill_in :item_current_price, with: 3000
+      fill_in :item_inventory, with: 1
       click_on('Create Item')
 
       expect(current_path).to eq(dashboard_items_path)
@@ -52,9 +52,10 @@ describe 'as a merchant user' do
 
       expect(current_path).to eq('/dashboard/items/new')
 
-      fill_in :name, with: 'item_1'
-      fill_in :description, with: 'this is a great item_1'
-      fill_in :inventory, with: 1
+      fill_in :item_name, with: 'item_1'
+      fill_in :item_description, with: 'this is a great item_1'
+      fill_in :item_image_link, with: 'https://picsum.photos/200'
+      fill_in :item_inventory, with: 1
       click_on('Create Item')
 
       expect(current_path).to eq('/dashboard/items/new')
@@ -73,10 +74,10 @@ describe 'as a merchant user' do
 
       expect(current_path).to eq('/dashboard/items/new')
 
-      fill_in :name, with: 'item_1'
-      fill_in :description, with: 'this is a great item_1'
-      fill_in :price, with: 3000
-      fill_in :inventory, with: 1
+      fill_in :item_name, with: 'item_1'
+      fill_in :item_description, with: 'this is a great item_1'
+      fill_in :item_current_price, with: 3000
+      fill_in :item_inventory, with: 1
       click_on('Create Item')
 
       expect(current_path).to eq(dashboard_items_path)

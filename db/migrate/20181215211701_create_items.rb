@@ -6,7 +6,7 @@ class CreateItems < ActiveRecord::Migration[5.1]
       t.integer :inventory
       t.string :description
       t.integer :current_price
-      t.boolean :enabled
+      t.boolean :enabled, default: true
       t.references :user, foreign_key: true
 
       t.timestamps
