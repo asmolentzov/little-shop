@@ -17,7 +17,7 @@
     </ul>
     <% if order_item.fulfilled == false %>
       <% if item.inventory >= quantity %>
-        <%= link_to "Fulfill", dashboard_order_items_path(order_item) %>
+        <%= link_to "Fulfill", dashboard_order_item_path(order_item), method: :put %>
       <% else %>
         <p class="cannot_fulfill">Cannot Fulfill!</p>
       <% end %>

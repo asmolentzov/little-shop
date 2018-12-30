@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
+  
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     resources :items, only: [:index, :edit, :update, :new, :create, :destroy]
     resources :orders, only: [:show]
+    resources :order_items, only: [:update]
     get '/', to: "users#show"
   end
 
