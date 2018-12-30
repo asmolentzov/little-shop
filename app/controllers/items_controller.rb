@@ -33,9 +33,17 @@ class ItemsController < ApplicationController
       redirect_to dashboard_items_path
       flash[:sucess] = "Your new item has been created"
     else
-      flash[:sucess] = "Your new item was NOT created"
       @errors = @item.errors
       render :new
+    end
+  end
+
+  def update
+    item = Item.find(params[:format])
+    if item.enabled?
+      item.update(:enabled => false)
+      flash[:success] = "#{item.name} is no longer for sale."
+      redirect_to dashboard_items_path
     end
   end
 

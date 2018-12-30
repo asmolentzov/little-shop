@@ -94,7 +94,6 @@ describe 'as a merchant user' do
       click_on('Create Item')
 
       expect(current_path).to eq('/dashboard/items')
-      expect(page).to have_content('Your new item was NOT created')
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Description can't be blank")
       expect(page).to have_content("Current price can't be blank")
@@ -123,7 +122,6 @@ describe 'as a merchant user' do
       click_on('Create Item')
 
       expect(current_path).to eq('/dashboard/items')
-      expect(page).to have_content('Your new item was NOT created')
       expect(page).to have_content('Inventory is not included in the list')
     end
   end

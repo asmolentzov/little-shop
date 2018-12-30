@@ -39,6 +39,7 @@
       <% if item.enabled %>
         <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
       <% else %>
+        <p>This item is disabled.</p>
         <%= link_to 'Enable this item', dashboard_item_path(item), method: :put %>
       <% end %>
     <% end %>
