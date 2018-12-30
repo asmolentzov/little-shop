@@ -121,7 +121,7 @@ describe 'As a merchant' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
       visit dashboard_orders_path(order_1)
-      save_and_open_page
+
       within("#item-#{item_1.id}") do
         expect(page).to have_link('Fulfill')
         expect(page).to_not have_content('Cannot Fulfill!')
