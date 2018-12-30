@@ -129,6 +129,7 @@ describe 'as a merchant user' do
       within("#item-#{item_2.id}") do
         expect(page).to have_content(item_2.id)
         expect(page).to have_content('This item is disabled')
+        expect(page).to_not have_content('This item is enabled')
         expect(page).to have_content(item_2.name)
         expect(page).to have_css("img[src*='#{item_2.image_link}']")
         expect(page).to have_content(item_2.current_price)
@@ -136,6 +137,44 @@ describe 'as a merchant user' do
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Enable this item')
         expect(page).to_not have_link('Disable this item')
+        expect(page).to have_link('Delete this item')
+      end
+    end
+  end
+  context 'when I click on the enable button for an item' do
+    it 'should return me to my items page, I should see a message notifying me the item is now available for sale,
+      and I see the item is now enabled' do
+      merch = create(:merchant)
+      item_1 = create(:item, user: merch)
+      fulfilled_1 = create(:fulfilled_order_item, item: item_1)
+      item_2 = create(:disabled_item, user: merch)
+
+      visit login_path
+      fill_in :email, with: merch.email
+      fill_in :password, with: merch.password
+      click_button 'Log In'
+
+      visit dashboard_items_path
+
+      within("#item-#{item_2.id}") do
+       expect(page).to have_link('Enable this item')
+       click_on('Enable this item')
+      end
+
+      expect(current_path).to eq(dashboard_items_path)
+      expect(page).to have_content("#{item_2.name} is now available for sale.")
+
+      within("#item-#{item_2.id}") do
+        expect(page).to have_content(item_2.id)
+        expect(page).to_not have_content('This item is disabled')
+        expect(page).to have_content('This item is enabled')
+        expect(page).to have_content(item_2.name)
+        expect(page).to have_css("img[src*='#{item_2.image_link}']")
+        expect(page).to have_content(item_2.current_price)
+        expect(page).to have_content(item_2.inventory)
+        expect(page).to have_link('Edit this item')
+        expect(page).to_not have_link('Enable this item')
+        expect(page).to have_link('Disable this item')
         expect(page).to have_link('Delete this item')
       end
     end
