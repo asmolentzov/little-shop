@@ -14,6 +14,7 @@ RSpec.describe Item, type: :model do
     it { should validate_inclusion_of(:enabled).in_array([true, false])}
     it { should validate_inclusion_of(:inventory).in_range(1..1000000)}
     it { should validate_presence_of(:current_price)}
+    it { should validate_numericality_of(:current_price).only_integer.is_greater_than_or_equal_to(0)}
     it { should validate_presence_of(:user_id)}
   end
 
