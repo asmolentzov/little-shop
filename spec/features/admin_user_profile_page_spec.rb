@@ -59,6 +59,8 @@ describe 'As an admin user' do
         expect(page).to have_content("Subtotal: $4.00")
       end
 
+      expect(page).to have_content("Total items in order: 3")
+      expect(page).to have_content("Grand total: $5.00")
     end
   end
 
