@@ -58,6 +58,7 @@ describe 'As an admin user' do
         expect(page).to have_content("Order Price: #{order_item_2.order_price}")
         expect(page).to have_content("Subtotal: $4.00")
       end
+
     end
   end
 
