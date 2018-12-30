@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index, :show, :update]
     resources :orders, only: [:show, :update]
-    resources :users, as: :merchants, only: [:index, :show, :update]
+    resources :merchants, only: [:index, :show, :update]
   end
 
   namespace :profile do
