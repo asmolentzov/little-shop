@@ -131,4 +131,55 @@ describe 'As an admin user' do
       expect(page).to have_link('My Items')
     end
   end
+
+    it 'allows admin to edit all user information' do
+      old_name = 'User One'
+      old_street = 'Street One'
+      old_city = 'City One'
+      old_state = 'State1'
+      old_zip = 'ZIP1'
+      old_email = 'email1@aol.com'
+
+      user_1 = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
+        zip: old_zip, email: old_email, password: 'password1')
+
+      new_name = 'NEW NAME'
+      new_street = 'New Street'
+      new_city = 'NEW CITY'
+      new_state = 'New State'
+      new_zip = 'zip2'
+      new_email = 'email2@aol.com'
+
+      admin = create(:admin)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_user_path(user_1)
+
+      click_link 'Edit Profile'
+      fill_in :user_name, with: new_name
+      fill_in :user_street, with: new_street
+      fill_in :user_city, with: new_city
+      fill_in :user_state, with: new_state
+      fill_in :user_zip, with: new_zip
+      fill_in :user_email, with: new_email
+
+      click_button 'Submit'
+
+      expect(current_path).to eq(admin_user_path(user_1))
+
+      expect(page).to have_content('Profile Updated')
+      expect(page).to have_content(new_name)
+      expect(page).to have_content(new_city)
+      expect(page).to have_content(new_street)
+      expect(page).to have_content(new_state)
+      expect(page).to have_content(new_zip)
+      expect(page).to have_content(new_email)
+      expect(page).to_not have_content(old_name)
+      expect(page).to_not have_content(old_street)
+      expect(page).to_not have_content(old_city)
+      expect(page).to_not have_content(old_state)
+      expect(page).to_not have_content(old_zip)
+      expect(page).to_not have_content(old_email)
+    end
 end
