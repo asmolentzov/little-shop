@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post '/dashboard/items', to: "items#create"
   get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
   put '/dashboard/item', to: "items#update"
+  patch '/dashboard/items', to: "items#update"
   delete '/dashboard/item', to: "items#destroy"
   get '/dashboard/items/new', to: "items#new"
   get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"

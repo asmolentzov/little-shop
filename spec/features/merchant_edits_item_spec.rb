@@ -29,7 +29,7 @@ describe 'As a registered merchant' do
       visit dashboard_items_edit_path(@item)
       
       new_name = "New Name!"
-      save_and_open_page
+      
       fill_in :item_name, with: new_name
       click_button 'Update Item' 
       
