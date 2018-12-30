@@ -26,7 +26,25 @@ describe 'As a registered merchant' do
     end
     
     it 'lets me edit any information' do
+      visit dashboard_items_edit_path(@item)
       
+      new_name = "New Name!"
+      save_and_open_page
+      fill_in :item_name, with: new_name
+      click_button 'Update Item' 
+      
+      expect(current_path).to eq(dashboard_items_path)
+      expect(current_page).to have_content("Item ##{@item.id} has been updated")
+      
+      within "#item-#{@item.id}" do
+        expect(page).to have_content(new_name)
+        expect(page).to have_content(item.description)
+        expect(page).to have_css("img[src='#{item.image_link}']")
+        expect(page).to have_content(item.current_price)
+        expect(page).to have_content(item.inventory)
+        expect(page).to have_button("disable")
+      end
+      expect(Item.find(item.id).status).to eq('enabled')
     end
   end
 end
