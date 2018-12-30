@@ -89,8 +89,8 @@ describe 'As a merchant' do
     it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
       merch = create(:merchant)
       user = create(:user)
-      item_1 = create(:item, inventory: 3)
-      item_2 = create(:item, inventory: 3)
+      item_1 = create(:item, inventory: 3, user: merch)
+      item_2 = create(:item, inventory: 3, user: merch)
       order_1 = create(:order, user: user)
       order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 3, order: order_1)
       order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 4, order: order_1)
@@ -99,12 +99,12 @@ describe 'As a merchant' do
 
       visit dashboard_orders_path(order_1)
 
-      within("item-#{item_2.id}") do
+      within("#item-#{item_2.id}") do
         expect(page).to_not have_link('Fulfill')
         expect(page).to have_content('Cannot Fulfill!')
         expect(page).to have_css('p.cannot_fulfill')
       end
-      within("item-#{item_1.id}") do
+      within("#item-#{item_1.id}") do
         expect(page).to_not have_content('Cannot Fulfill!')
         expect(page).to_not have_css('p.cannot_fulfill')
       end
