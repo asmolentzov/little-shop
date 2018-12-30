@@ -18,9 +18,9 @@ describe 'As a merchant' do
       create(:fulfilled_order_item, order: order, item: item_1)
       create(:unfulfilled_order_item, order: order, item: item_2)
       create(:fulfilled_order_item, order: order, item: item_3)
-      
+
       visit dashboard_order_path(order)
-      
+
       within "#customer-info" do
         expect(page).to have_content("Name: #{customer.name}")
         expect(page).to have_content("Address: #{customer.street} #{customer.city} #{customer.state} #{customer.zip}")
@@ -45,9 +45,9 @@ describe 'As a merchant' do
       order = create(:order)
       oi_1 = create(:fulfilled_order_item, order: order, item: item_1)
       oi_2 = create(:unfulfilled_order_item, order: order, item: item_2)
-      
+
       visit dashboard_order_path(order)
-      
+
       within "#item-#{item_1.id}" do
         expect(page).to have_link("#{item_1.name}")
         expect(page).to have_css("img[src='#{item_1.image_link}']")
@@ -56,9 +56,9 @@ describe 'As a merchant' do
         click_link "#{item_1.name}"
       end
       expect(current_path).to eq(item_path(item_1))
-      
+
       visit dashboard_order_path(order)
-      
+
       within "#item-#{item_2.id}" do
         expect(page).to have_link("#{item_2.name}")
         expect(page).to have_css("img[src='#{item_2.image_link}']")
@@ -79,14 +79,14 @@ describe 'As a merchant' do
 
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-      
+
       visit dashboard_order_path(order)
-      
+
       expect(page.status_code).to eq(404)
       expect(page).to_not have_content(item_1.name)
       expect(page).to_not have_content(item_2.name)
     end
-    it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
+    it 'should show me a red error message if I do not have enough inventory' do
       merch = create(:merchant)
       user = create(:user)
       item_1 = create(:item, inventory: 3, user: merch)
@@ -107,6 +107,45 @@ describe 'As a merchant' do
       within("#item-#{item_1.id}") do
         expect(page).to_not have_content('Cannot Fulfill!')
         expect(page).to_not have_css('p.cannot_fulfill')
+      end
+    end
+    it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
+      merch = create(:merchant)
+      user = create(:user)
+      item_1 = create(:item, inventory: 6, user: merch)
+      item_2 = create(:item, inventory: 3, user: merch)
+      order_1 = create(:order, user: user)
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 3, order: order_1)
+      order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 4, order: order_1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+
+      visit dashboard_order_path(order_1)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to have_link('Fulfill')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+        click_on('Fulfill')
+      end
+
+      expect(page).to have_content("Order item ##{order_item_1.id} has been fulfilled!")
+
+      merchant = User.find(merch.id)
+
+      expect(merchant.items.where(id: item_1.id).first.inventory).to be(3)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Already Fulfilled!')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+      end
+
+      within("#item-#{item_2.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Cannot Fulfill!')
+        expect(page).to have_css('p.cannot_fulfill')
       end
     end
   end
