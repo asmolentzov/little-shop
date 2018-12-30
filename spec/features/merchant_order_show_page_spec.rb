@@ -98,7 +98,7 @@ describe 'As a merchant' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
       visit dashboard_orders_path(order_1)
-
+      
       within("#item-#{item_2.id}") do
         expect(page).to_not have_link('Fulfill')
         expect(page).to have_content('Cannot Fulfill!')
@@ -133,14 +133,13 @@ describe 'As a merchant' do
 
       merchant = User.find(merch.id)
 
-      expect(merchant.items.where(id: item_1.id).inventory).to be(3)
+      expect(merchant.items.where(id: item_1.id).first.inventory).to be(3)
 
       within("#item-#{item_1.id}") do
         expect(page).to_not have_link('Fulfill')
         expect(page).to have_content('Already Fulfilled!')
         expect(page).to_not have_content('Cannot Fulfill!')
         expect(page).to_not have_css('p.cannot_fulfill')
-        click_on('Fulfill')
       end
 
       within("#item-#{item_2.id}") do
