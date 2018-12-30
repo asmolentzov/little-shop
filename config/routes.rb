@@ -11,15 +11,10 @@ Rails.application.routes.draw do
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
-  get '/dashboard', as: :dashboard, to: "users#show"
-  get '/dashboard/items', to: "items#index"
-  post '/dashboard/items', to: "items#create"
-  get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
-  put '/dashboard/item', to: "items#update"
-  patch '/dashboard/items', to: "items#update"
-  delete '/dashboard/item', to: "items#destroy"
-  get '/dashboard/items/new', to: "items#new"
-  get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"
+
+  # post '/dashboard/items', to: "items#create"
+
+  # patch '/dashboard/items', to: "items#update"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
@@ -35,5 +30,17 @@ Rails.application.routes.draw do
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
   end
+  
+  namespace :dashboard do
+    resources :items, only: [:index, :update, :create, :destroy]
+  end
+  
+  get '/dashboard', as: :dashboard, to: "users#show"
+  # get '/dashboard/items', to: "items#index"
+  get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
+  put '/dashboard/item', to: "items#update"
+  get '/dashboard/items/new', to: "items#new"
+  get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"
+  # delete '/dashboard/item', to: "items#destroy"
 
 end
