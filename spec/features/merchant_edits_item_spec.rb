@@ -86,12 +86,28 @@ describe 'As a registered merchant' do
       expect(page).to have_content("Name can't be blank")
       expect(@item.name).to_not eq(nil)
       expect(find_field("item[name]").value).to eq(@item.name)
+      expect(find_field("item[description]").value).to eq(@item.description)
+      expect(find_field("item[image_link]").value).to eq(@item.image_link)
+      expect(find_field("item[current_price]").value).to eq(@item.current_price.to_s)
+      expect(find_field("item[inventory]").value).to eq(@item.inventory.to_s)
       
       fill_in :item_description, with: nil
       click_button 'Update Item'
       expect(page).to have_content("Description can't be blank")
       expect(@item.description).to_not eq(nil)
       expect(find_field("item[description]").value).to eq(@item.description)
+      
+      fill_in :item_current_price, with: nil
+      click_button 'Update Item'
+      expect(page).to have_content("Current price can't be blank")
+      expect(@item.current_price).to_not eq(nil)
+      expect(find_field("item[current_price]").value).to eq(@item.current_price.to_s)
+      
+      fill_in :item_current_price, with: '$10'
+      click_button 'Update Item'
+      expect(page).to have_content("Current price is not a number")
+      expect(@item.current_price).to_not eq('$10')
+      expect(find_field("item[current_price]").value).to eq(@item.current_price.to_s)
       
       fill_in :item_current_price, with: -200
       click_button 'Update Item'
@@ -110,6 +126,12 @@ describe 'As a registered merchant' do
       click_button 'Update Item'
       expect(page).to have_content("Inventory must be greater than or equal to 0")
       expect(@item.inventory).to_not eq(-4)
+      expect(find_field("item[inventory]").value).to eq(@item.inventory.to_s)
+      
+      fill_in :item_inventory, with: nil
+      click_button 'Update Item'
+      expect(page).to have_content("Inventory is not a number")
+      expect(@item.inventory).to_not eq(nil)
       expect(find_field("item[inventory]").value).to eq(@item.inventory.to_s)
     end
     
