@@ -2,7 +2,7 @@ class Item < ApplicationRecord
   validates_presence_of :name, :image_link, :description,
                         :current_price, :user_id
   validates :enabled, inclusion: {in: [true, false]}
-  validates :inventory, inclusion: {in: (1..1000000)}
+  validates :inventory, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :current_price, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   belongs_to :user
 
