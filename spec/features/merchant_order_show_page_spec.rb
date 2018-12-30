@@ -18,9 +18,9 @@ describe 'As a merchant' do
       create(:fulfilled_order_item, order: order, item: item_1)
       create(:unfulfilled_order_item, order: order, item: item_2)
       create(:fulfilled_order_item, order: order, item: item_3)
-
-      visit dashboard_orders_path(order)
-
+      
+      visit dashboard_order_path(order)
+      
       within "#customer-info" do
         expect(page).to have_content("Name: #{customer.name}")
         expect(page).to have_content("Address: #{customer.street} #{customer.city} #{customer.state} #{customer.zip}")
@@ -45,9 +45,9 @@ describe 'As a merchant' do
       order = create(:order)
       oi_1 = create(:fulfilled_order_item, order: order, item: item_1)
       oi_2 = create(:unfulfilled_order_item, order: order, item: item_2)
-
-      visit dashboard_orders_path(order)
-
+      
+      visit dashboard_order_path(order)
+      
       within "#item-#{item_1.id}" do
         expect(page).to have_link("#{item_1.name}")
         expect(page).to have_css("img[src='#{item_1.image_link}']")
@@ -56,9 +56,9 @@ describe 'As a merchant' do
         click_link "#{item_1.name}"
       end
       expect(current_path).to eq(item_path(item_1))
-
-      visit dashboard_orders_path(order)
-
+      
+      visit dashboard_order_path(order)
+      
       within "#item-#{item_2.id}" do
         expect(page).to have_link("#{item_2.name}")
         expect(page).to have_css("img[src='#{item_2.image_link}']")
@@ -79,9 +79,9 @@ describe 'As a merchant' do
 
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-
-      visit dashboard_orders_path(order)
-
+      
+      visit dashboard_order_path(order)
+      
       expect(page.status_code).to eq(404)
       expect(page).to_not have_content(item_1.name)
       expect(page).to_not have_content(item_2.name)
@@ -97,7 +97,7 @@ describe 'As a merchant' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
 
-      visit dashboard_orders_path(order_1)
+      visit dashboard_order_path(order_1)
 
       within("#item-#{item_2.id}") do
         expect(page).to_not have_link('Fulfill')

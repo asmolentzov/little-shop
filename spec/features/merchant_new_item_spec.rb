@@ -97,7 +97,7 @@ describe 'as a merchant user' do
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Description can't be blank")
       expect(page).to have_content("Current price can't be blank")
-      expect(page).to have_content("Inventory is not included in the list")
+      expect(page).to have_content("Inventory is not a number")
     end
     it 'I cannot create an item with inventory less than 0' do
       merch = create(:merchant)
@@ -122,7 +122,7 @@ describe 'as a merchant user' do
       click_on('Create Item')
 
       expect(current_path).to eq('/dashboard/items')
-      expect(page).to have_content('Inventory is not included in the list')
+      expect(page).to have_content('Inventory must be greater than or equal to 0')
     end
     it 'should not let me create a new item without required fields filled out, and will keep correct data in the form fields' do
       merch = create(:merchant)

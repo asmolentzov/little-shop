@@ -1,6 +1,5 @@
-class OrdersController < ApplicationController
-  
-  before_action :require_merchant_user, only: [:show]
+class Dashboard::OrdersController < ApplicationController
+  before_action :require_merchant_user
   
   def show
     order = Order.find(params[:id])
