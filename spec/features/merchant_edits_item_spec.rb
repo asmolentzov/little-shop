@@ -80,6 +80,13 @@ describe 'As a registered merchant' do
     it 'will have certain restrictions for editing information' do
       visit edit_dashboard_item_path(@item)
       
+      fill_in :item_name, with: nil
+      click_button 'Update Item'
+      
+      expect(page).to have_content("Name can't be blank")
+      expect(@item.name).to_not eq(nil)
+      expect(find_field("item[name]").value).to eq(@item.name)
+      
       
     end
   end

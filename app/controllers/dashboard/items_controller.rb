@@ -31,8 +31,14 @@ class Dashboard::ItemsController < ApplicationController
   def update
     item = Item.find(params[:id])
     if params[:item]
-      item.update(item_params)
-      flash[:success] = "Item ##{item.id} has been updated"
+      if item.update(item_params)
+        flash[:success] = "Item ##{item.id} has been updated"
+      else
+        @item = Item.find(params[:id])
+        @errors = item.errors
+        render :edit
+        return
+      end
     else
       if item.enabled?
         item.update(:enabled => false)
