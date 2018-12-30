@@ -3,7 +3,7 @@
 <%= "Last update: #{@order.updated_at} " %>
 <%= "Status: #{@order.status} " %>
 <% if @order.status == "pending" %>
-<%= link_to "Cancel Order", profile_order_path(@order.id), method: :put %>
+<%= link_to "Cancel Order", admin_order_path(@order.id), method: :put %>
 <% end %>
 
 <% @order.order_items.each do |order_item| %>
