@@ -1,13 +1,13 @@
 <div id="statistics">
   Statistics!
-  <p>Top Merchants by Quantity: 
+  <p>Top Merchants by Quantity:
     <% @top_merchants_by_quantity.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
   </p>
-  <p>Top Merchants by Price: 
+  <p>Top Merchants by Price:
     <% @top_merchants_by_price.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
@@ -60,9 +60,9 @@
         <% if current_admin? %>
         <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
           <% if merchant.enabled %>
-          <li><%= button_to "disable", admin_merchant_path(merchant.id), method: :patch %></li>
+          <li><%= button_to "disable", admin_user_enable_path(merchant.id), method: :patch %></li>
           <% else  %>
-          <li><%= button_to "enable", admin_merchant_path(merchant.id), method: :patch %></li>
+          <li><%= button_to "enable", admin_user_enable_path(merchant.id), method: :patch %></li>
           <% end %>
         <% end %>
     </ul>
