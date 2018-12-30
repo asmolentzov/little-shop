@@ -112,5 +112,34 @@ describe 'As a registered merchant' do
       expect(@item.inventory).to_not eq(-4)
       expect(find_field("item[inventory]").value).to eq(@item.inventory.to_s)
     end
+    
+    it 'will let the image field be blank and replace with placeholder image' do
+      visit edit_dashboard_item_path(@item)
+      
+      fill_in :item_image_link, with: nil
+      click_button 'Update Item'
+      expect(page).to have_content("Item ##{@item.id} has been updated")
+      expect(current_path).to eq(dashboard_items_path)
+      within "#item-#{@item.id}" do
+        expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
+      end
+    end
+    
+    it 'will keep an items disabled state when updating' do
+      disabled_item = create(:disabled_item, user: @merchant)
+      visit edit_dashboard_item_path(disabled_item)
+      new_name = "New!"
+      
+      fill_in :item_name, with: new_name
+      click_button 'Update Item'
+      
+      expect(page).to have_content("Item ##{disabled_item.id} has been updated")
+      expect(current_path).to eq(dashboard_items_path)
+      within "#item-#{disabled_item.id}" do
+        expect(page).to have_content(new_name)
+        expect(page).to have_content('Enable this item')
+      end
+      expect(disabled_item.enabled).to eq(false)
+    end
   end
 end
