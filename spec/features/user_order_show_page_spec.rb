@@ -65,8 +65,10 @@ describe 'USER ORDER SHOW PAGE' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
       visit profile_order_path(order_1)
-  
+
       expect(page).to have_link("Cancel Order")
+      
+      click_on "Cancel Order"
 
     end
   end
