@@ -86,7 +86,7 @@ describe 'As a merchant' do
       expect(page).to_not have_content(item_1.name)
       expect(page).to_not have_content(item_2.name)
     end
-    it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
+    it 'should show me a red error message if I do not have enough inventory' do
       merch = create(:merchant)
       user = create(:user)
       item_1 = create(:item, inventory: 3, user: merch)
@@ -105,6 +105,53 @@ describe 'As a merchant' do
         expect(page).to have_css('p.cannot_fulfill')
       end
       within("#item-#{item_1.id}") do
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+      end
+    end
+    it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
+      merch = create(:merchant)
+      user = create(:user)
+      item_1 = create(:item, inventory: 6, user: merch)
+      item_2 = create(:item, inventory: 3, user: merch)
+      order_1 = create(:order, user: user)
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 3, order: order_1)
+      order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 4, order: order_1)
+      order_item_3 = create(:fulfilled_order_item, item: item_1, quantity: 2, order: order_1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+
+      visit dashboard_orders_path(order_1)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to have_link('Fulfill')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+        click_on('Fulfill')
+      end
+
+      expect(page).to have_content("Order item ##{order_item_1.id} has been fulfilled!")
+
+      merchant = User.find(merch.id)
+
+      expect(merchant.items.where(id: item_1.id).inventory).to be(1)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Already Fulfilled!')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+        click_on('Fulfill')
+      end
+
+      within("#item-#{item_2.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Cannot Fulfill!')
+        expect(page).to have_css('p.cannot_fulfill')
+      end
+      within("#item-#{item_3.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Already Fulfilled!')
         expect(page).to_not have_content('Cannot Fulfill!')
         expect(page).to_not have_css('p.cannot_fulfill')
       end
