@@ -124,5 +124,29 @@ describe 'as a merchant user' do
       expect(current_path).to eq('/dashboard/items')
       expect(page).to have_content('Inventory is not included in the list')
     end
+    it 'should not let me create a new item without required fields filled out, and will keep correct data in the form fields' do
+      merch = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merch)
+
+      visit dashboard_items_path
+
+      expect(page).to have_link('Add New Item')
+
+      click_on('Add New Item')
+
+      expect(current_path).to eq('/dashboard/items/new')
+
+      fill_in :item_description, with: 'this is a great item_1'
+      fill_in :item_current_price, with: 3000
+      fill_in :item_inventory, with: 1
+      click_on('Create Item')
+
+      expect(current_path).to eq('/dashboard/items')
+      expect(page).to have_content("Name can't be blank")
+      expect(find_field("item[description]").value).to eq("this is a great item_1")
+      expect(find_field("item[current_price]").value).to eq("3000")
+      expect(find_field("item[inventory]").value).to eq("1")
+    end
   end
 end
