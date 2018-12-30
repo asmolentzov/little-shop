@@ -82,6 +82,7 @@ describe 'USER ORDER SHOW PAGE' do
         expect(page).to have_content("Status: cancelled")
         order_1.order_items.each do |item|
           expect(item.fulfilled).to eq(false)
+          expect(Item.find(item.item_id).inventory).to eq(10)
         end
       end
     end
