@@ -102,6 +102,15 @@ describe 'As a registered merchant' do
       fill_in :item_inventory, with: 0
       click_button 'Update Item'
       expect(page).to have_content("Item ##{@item.id} has been updated")
+      
+      visit edit_dashboard_item_path(@item)
+      @item = Item.find(@item.id)
+      
+      fill_in :item_inventory, with: -4
+      click_button 'Update Item'
+      expect(page).to have_content("Inventory must be greater than or equal to 0")
+      expect(@item.inventory).to_not eq(-4)
+      expect(find_field("item[inventory]").value).to eq(@item.inventory.to_s)
     end
   end
 end
