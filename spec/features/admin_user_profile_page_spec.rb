@@ -22,6 +22,23 @@ describe 'As an admin user' do
 
       expect(page).to_not have_content(user_1.password)
     end
+
+    it 'shows me that users order data' do
+      user_1 = create(:user)
+      admin = create(:admin)
+
+      order_1 = create(:order, user: user_1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_user_path(user_1)
+
+      expect(page).to have_content("Order: #{order_1.id}")
+      expect(page).to have_content("Placed on: #{order_1.created_at}")
+      expect(page).to have_content("Last update: #{order_1.updated_at}")
+      expect(page).to have_content("Status: #{order_1.status}")
+
+    end
   end
 
   describe 'when i visit the user_path of a merchant' do
@@ -77,6 +94,7 @@ describe 'As an admin user' do
       expect(page).to_not have_content(user_1.password)
     end
   end
+
   describe 'I should see a link to upgrade the user account to a merchant account' do
     it 'should upgrade the user to a merchant' do
       admin = create(:admin)

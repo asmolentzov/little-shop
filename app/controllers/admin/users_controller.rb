@@ -8,6 +8,7 @@ class Admin::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @user_role = @user.role
+    @orders = @user.orders
   end
 
   def create
@@ -36,7 +37,7 @@ class Admin::UsersController < ApplicationController
     else
       redirect_to admin_users_path
     end
-    
+
   end
 
 end

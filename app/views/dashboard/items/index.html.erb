@@ -30,6 +30,7 @@
       <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
     <% end %>
     <% if item.enabled %>
+      <p>This item is enabled.</p>
       <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
     <% else %>
       <p>This item is disabled.</p>
