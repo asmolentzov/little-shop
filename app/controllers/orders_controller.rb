@@ -3,6 +3,6 @@ class OrdersController < ApplicationController
   def show
     order = Order.find(params[:id])
     @customer = order.user
-    @items = order.merchant_items(current_user.id)
+    @items_with_quantity = order.merchant_items_with_quantity(current_user.id)
   end
 end

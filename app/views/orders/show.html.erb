@@ -6,10 +6,13 @@
     <%= @customer.city %> <%= @customer.state %> <%= @customer.zip %>
   </p>
 </div>
-<% @items.each do |item| %>
+<% @items_with_quantity.each do |item, quantity| %>
   <div id="item-<%= item.id %>">
+    <%= image_tag(item.image_link, class:"thumbnails") %>
     <ul>
-      <li><%= item.name %></li>
+      <li><%= link_to item.name, item_path(item) %></li>
+      <li>Price: <%= item.current_price %></li>
+      <li>Quantity: <%= quantity %></li>
     </ul>
   </div>
 <% end %>
