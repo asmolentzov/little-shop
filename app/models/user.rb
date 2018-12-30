@@ -79,6 +79,12 @@ class User < ApplicationRecord
     .group(:id)
   end
   def merchant_top_five_items
+    self.items
+    .joins(:order_items)
+    .group(:id)
+    .select("items.*, SUM(order_items.quantity) AS item_count")
+    .order("item_count DESC")
+    .limit(5)
   end
   def merchant_units_sold
     units = OrderItem.joins(:item)
@@ -103,12 +109,13 @@ class User < ApplicationRecord
   def merchant_top_order_user
   end
   def merchant_top_units_user
-  #  User.joins(:orders).joins(items: :order_items)
-  #  .where("items.user_id = ?", self.id)
-  #  .group(:id)
-  #  .select("users.id, SUM(order_items.quantity) AS units_purchased")
-  #  .order("units_purchased DESC")
-  #  .first.name
+    merchant_items = self.items.map { |item| item.id }
+    User.joins(orders: :order_items)
+    .where("order_items.item_id IN (?)", (merchant_items))
+    .group(:id)
+    .select("users.*, SUM(order_items.quantity) AS units_purchased")
+    .order("units_purchased DESC")
+    .first
   end
   def merchant_highest_spending_users
   end
