@@ -1,0 +1,40 @@
+<h3>Item Statistics:</h3>
+<ul id="top-five-items">
+  <% @top_five_items.each do |item| %>
+  <li><%= item.name %></li>
+  <% end %>
+</ul>
+<ul id="bottom-five-items">
+  <% @bottom_five_items.each do |item| %>
+  <li><%= item.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Add New Item', new_dashboard_item_path %>
+
+<% @items.each do |item| %>
+  <div id="item-<%= item.id %>" class="flex-items">
+    <p><%= item.id %></p>
+    <p><%= link_to item.name, item_path(item) %></p>
+    <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
+        <%= image_tag(item.image_link, class:"thumbnails") %>
+      <% end %>
+    </p>
+    <p><%= item.user.name %></p>
+    <p><%= item.description %></p>
+    <p><%= item.inventory %></p>
+    <p><%= item.current_price %></p>
+
+    <%= link_to 'Edit this item', edit_dashboard_item_path(item) %>
+    <% if item.order_items.empty? %>
+      <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
+    <% end %>
+    <% if item.enabled %>
+      <p>This item is enabled.</p>
+      <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
+    <% else %>
+      <p>This item is disabled.</p>
+      <%= link_to 'Enable this item', dashboard_item_path(item), method: :put %>
+    <% end %>
+  </div>
+<% end  %>
