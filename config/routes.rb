@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   put '/dashboard/item', to: "items#update"
   delete '/dashboard/item', to: "items#destroy"
   get '/dashboard/items/new', to: "items#new"
+  get '/dashboard/order_items/:id', as: :dashboard_order_items, to: "order_items#update"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
