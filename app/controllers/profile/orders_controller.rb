@@ -22,7 +22,7 @@ class Profile::OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
       order.order_items.each do |item|
-        item.update(fulfilled: false)
+        item.cancel
       end
     order.update(status: "cancelled")
     flash[:notice] = "Your order has been cancelled"
