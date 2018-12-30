@@ -95,9 +95,13 @@ describe 'As a registered merchant' do
       
       fill_in :item_current_price, with: -200
       click_button 'Update Item'
-      expect(page).to have_content("Something in range")
+      expect(page).to have_content("Current price must be greater than or equal to 0")
       expect(@item.current_price).to_not eq(-200)
-      expect(find_field("item[current_price].").value).to eq(@item.current_price)
+      expect(find_field("item[current_price]").value).to eq(@item.current_price.to_s)
+      
+      fill_in :item_inventory, with: 0
+      click_button 'Update Item'
+      expect(page).to have_content("Item ##{@item.id} has been updated")
     end
   end
 end
