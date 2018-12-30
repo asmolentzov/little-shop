@@ -10,8 +10,8 @@
   <%= link_to 'Edit Profile', profile_edit_path %>
   <%= link_to 'Upgrade to Merchant', admin_merchant_path(@user, :upgrade => true), method: :put %>
 <h1> Orders </h1>
-<div>
   <% @orders.each do |order| %>
+  <div id="order-<%order.id %>">
     <%= "Order: #{order.id} " %>
     <%= "Placed on: #{order.created_at} " %>
     <%= "Last update: #{order.updated_at} " %>
