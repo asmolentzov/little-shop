@@ -32,7 +32,7 @@
       <%= button_to 'Add item', carts_path(item_id: item.id) %>
     <% end %>
     <% if current_merchant? %>
-      <%= link_to 'Edit this item', dashboard_item_path(item), method: :put %>
+      <%= link_to 'Edit this item', dashboard_items_edit_path(item) %>
       <% if item.order_items.empty? %>
         <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
       <% end %>

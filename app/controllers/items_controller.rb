@@ -46,6 +46,10 @@ class ItemsController < ApplicationController
       redirect_to dashboard_items_path
     end
   end
+  
+  def edit
+    @item = Item.find(params[:id])
+  end
 
   private
 
