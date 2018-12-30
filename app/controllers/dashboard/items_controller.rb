@@ -15,7 +15,7 @@ class Dashboard::ItemsController < ApplicationController
   end
   
   def update
-    item = Item.find(params[:format])
+    item = Item.find(params[:id])
     if item.enabled?
       item.update(:enabled => false)
       flash[:success] = "#{item.name} is no longer for sale."

@@ -25,15 +25,15 @@
     <p><%= item.inventory %></p>
     <p><%= item.current_price %></p>
 
-    <%= link_to 'Edit this item', dashboard_items_edit_path(item) %>
+    <%= link_to 'Edit this item', edit_dashboard_item_path(item) %>
     <% if item.order_items.empty? %>
       <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
+    <% end %>
     <% if item.enabled %>
       <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
     <% else %>
       <p>This item is disabled.</p>
       <%= link_to 'Enable this item', dashboard_item_path(item), method: :put %>
-    <% end %>
     <% end %>
   </div>
 <% end  %>

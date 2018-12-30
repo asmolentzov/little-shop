@@ -15,7 +15,7 @@ describe 'As a registered merchant' do
         click_on 'Edit this item'
       end
       
-      expect(current_path).to eq(edit_dashboard_item__path(@item))
+      expect(current_path).to eq(edit_dashboard_item_path(@item))
       expect(current_path).to eq("/dashboard/items/#{@item.id}/edit")
       
       expect(find_field("item[name]").value).to eq(@item.name)
@@ -34,7 +34,7 @@ describe 'As a registered merchant' do
       click_button 'Update Item' 
       
       expect(current_path).to eq(dashboard_items_path)
-      expect(current_page).to have_content("Item ##{@item.id} has been updated")
+      expect(page).to have_content("Item ##{@item.id} has been updated")
       
       within "#item-#{@item.id}" do
         expect(page).to have_content(new_name)
