@@ -10,27 +10,18 @@
   <%= link_to 'Edit Profile', profile_edit_path %>
   <%= link_to 'Upgrade to Merchant', admin_merchant_path(@user, :upgrade => true), method: :put %>
 <h1> Orders </h1>
-  <% @orders.each do |order| %>
-  <div id="order-<%order.id %>">
-    <%= "Order: #{order.id} " %>
-    <%= "Placed on: #{order.created_at} " %>
-    <%= "Last update: #{order.updated_at} " %>
-    <%= "Status: #{order.status} " %>
-    <% order.order_items.each do |order_item| %>
-      <div id="order-item-<%=order_item.id%>">
-        <%= "Item: #{order_item.item.name}" %>
-        <%= "Description: #{order_item.item.description}" %>
-        <%= "Thumbnail: #{order_item.item.image_link}" %>
-        <%= image_tag(order_item.item.image_link, class:"thumbnails") %>
-        <%= "Quantity: #{order_item.quantity}" %>
-        <%= "Order Price: #{order_item.order_price}" %>
-        <%= "Subtotal: #{number_to_currency(order_item.subtotal/100)}" %>
-      </div>
-    <% end %>
-
-    <%= "Total items in order: #{order.item_quantity} " %>
-    <%= "Grand total: #{number_to_currency(order.grand_total/100)} " %>
-  <% end %>
+<% @orders.each do |order| %>
+  <div id="order-<%=order.id%>">
+    <ul>
+      <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
+      <li><%= "Placed on: #{order.created_at} " %></li>
+      <li><%= "Last update: #{order.updated_at} " %></li>
+      <li><%= "Status: #{order.status} " %>
+      <li><%= "Item count: #{order.item_quantity} " %></li>
+      <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
+    </ul>
+  </div>
+<% end %>
 </div>
 <% elsif @user_role == 'merchant' %>
   <%= link_to 'My Items', dashboard_items_path %>

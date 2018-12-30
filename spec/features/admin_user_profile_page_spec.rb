@@ -29,9 +29,6 @@ describe 'As an admin user' do
 
       order_1 = create(:order, user: user_1)
 
-      order_item_1 = create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 100)
-      order_item_2 = create(:fulfilled_order_item, order: order_1, quantity: 2, order_price: 200)
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
       visit admin_user_path(user_1)
@@ -41,26 +38,6 @@ describe 'As an admin user' do
       expect(page).to have_content("Last update: #{order_1.updated_at}")
       expect(page).to have_content("Status: #{order_1.status}")
 
-      within "#order-item-#{order_item_1.id}" do
-        expect(page).to have_content("Item: #{order_item_1.item.name}")
-        expect(page).to have_content("Description: #{order_item_1.item.description}")
-        expect(page).to have_css("img[src*='#{order_item_1.item.image_link}']")
-        expect(page).to have_content("Quantity: #{order_item_1.quantity}")
-        expect(page).to have_content("Order Price: #{order_item_1.order_price}")
-        expect(page).to have_content("Subtotal: $1.00")
-      end
-
-      within "#order-item-#{order_item_2.id}" do
-        expect(page).to have_content("Item: #{order_item_2.item.name}")
-        expect(page).to have_content("Description: #{order_item_2.item.description}")
-        expect(page).to have_css("img[src*='#{order_item_2.item.image_link}']")
-        expect(page).to have_content("Quantity: #{order_item_2.quantity}")
-        expect(page).to have_content("Order Price: #{order_item_2.order_price}")
-        expect(page).to have_content("Subtotal: $4.00")
-      end
-
-      expect(page).to have_content("Total items in order: 3")
-      expect(page).to have_content("Grand total: $5.00")
     end
   end
 
@@ -117,6 +94,7 @@ describe 'As an admin user' do
       expect(page).to_not have_content(user_1.password)
     end
   end
+
   describe 'I should see a link to upgrade the user account to a merchant account' do
     it 'should upgrade the user to a merchant' do
       admin = create(:admin)
