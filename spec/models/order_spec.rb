@@ -150,8 +150,8 @@ RSpec.describe Order, type: :model do
       end
     end
     
-    describe '#merchant_items' do
-      it 'returns the items in an order that belong to the specified merchant' do
+    describe '#merchant_items_with_quantity' do
+      it 'returns the items in an order that belong to the specified merchant, with the quantity' do
         merchant = create(:merchant)
         item_1 = create(:item, user: merchant)
         item_2 = create(:item, user: merchant)
@@ -160,11 +160,11 @@ RSpec.describe Order, type: :model do
         item_4 = create(:item, user: merchant)
         
         order = create(:order)
-        create(:fulfilled_order_item, order: order, item: item_1)
-        create(:unfulfilled_order_item, order: order, item: item_2)
+        create(:fulfilled_order_item, order: order, item: item_1, quantity: 2)
+        create(:unfulfilled_order_item, order: order, item: item_2, quantity: 1)
         create(:fulfilled_order_item, order: order, item: item_3)
         
-        expect(order.merchant_items(merchant.id)).to eq([item_1, item_2])
+        expect(order.merchant_items_with_quantity(merchant.id)).to eq([[item_1, 2], [item_2, 1]])
       end
     end
   end

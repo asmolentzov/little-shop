@@ -45,7 +45,10 @@ class Order < ApplicationRecord
     .sum("order_items.order_price")
   end
   
-  def merchant_items(merchant_id)
-    items.where("items.user_id = ?", merchant_id)
+  def merchant_items_with_quantity(merchant_id)
+    items = self.items.where("items.user_id = ?", merchant_id)
+    items.map do |item|
+      [item, self.order_items.find_by(item_id: item.id).quantity]
+    end
   end
 end
