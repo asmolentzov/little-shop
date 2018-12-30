@@ -11,14 +11,6 @@ Rails.application.routes.draw do
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
-  get '/dashboard', as: :dashboard, to: "users#show"
-  get '/dashboard/items', to: "items#index"
-  post '/dashboard/items', to: "items#create"
-  get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
-  put '/dashboard/item', to: "items#update"
-  delete '/dashboard/item', to: "items#destroy"
-  get '/dashboard/items/new', to: "items#new"
-  get '/dashboard/order_items/:id', as: :dashboard_order_items, to: "order_items#update"
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
@@ -26,6 +18,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :show, :update]
+    resources :orders, only: [:show, :update]
     resources :users, as: :merchants, only: [:index, :show, :update]
   end
 
@@ -33,6 +26,12 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :create, :update]
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
+  end
+
+  namespace :dashboard do
+    resources :items, only: [:index, :edit, :update, :new, :create, :destroy]
+    resources :orders, only: [:show]
+    get '/', to: "users#show"
   end
 
 end
