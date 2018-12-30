@@ -2,8 +2,7 @@ class Admin::MerchantsController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @user_role = @user.role
-    if @user_role == 'default' 
+    if @user.role == 'default' 
       redirect_to admin_user_path(@user)
     end
     @orders = @user.orders
