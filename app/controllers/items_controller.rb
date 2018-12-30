@@ -44,6 +44,10 @@ class ItemsController < ApplicationController
       item.update(:enabled => false)
       flash[:success] = "#{item.name} is no longer for sale."
       redirect_to dashboard_items_path
+    else
+      item.update(:enabled => true)
+      flash[:success] = "#{item.name} is now available for sale."
+      redirect_to dashboard_items_path
     end
   end
 
