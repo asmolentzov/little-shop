@@ -38,13 +38,13 @@ describe 'As a registered merchant' do
       
       within "#item-#{@item.id}" do
         expect(page).to have_content(new_name)
-        expect(page).to have_content(item.description)
-        expect(page).to have_css("img[src='#{item.image_link}']")
-        expect(page).to have_content(item.current_price)
-        expect(page).to have_content(item.inventory)
-        expect(page).to have_button("disable")
+        expect(page).to have_content(@item.description)
+        expect(page).to have_css("img[src='#{@item.image_link}']")
+        expect(page).to have_content(@item.current_price)
+        expect(page).to have_content(@item.inventory)
+        expect(page).to have_link("Disable this item")
       end
-      expect(Item.find(item.id).status).to eq('enabled')
+      expect(Item.find(@item.id).enabled).to eq(true)
     end
   end
 end

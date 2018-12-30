@@ -30,11 +30,16 @@ class Dashboard::ItemsController < ApplicationController
   
   def update
     item = Item.find(params[:id])
-    if item.enabled?
-      item.update(:enabled => false)
-      flash[:success] = "#{item.name} is no longer for sale."
-      redirect_to dashboard_items_path
+    if params[:item]
+      item.update(item_params)
+      flash[:success] = "Item ##{item.id} has been updated"
+    else
+      if item.enabled?
+        item.update(:enabled => false)
+        flash[:success] = "#{item.name} is no longer for sale."
+      end
     end
+    redirect_to dashboard_items_path
   end
   
   def destroy
