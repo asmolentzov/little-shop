@@ -68,5 +68,23 @@ describe 'As a merchant' do
       end
       expect(current_path).to eq(item_path(item_2))
     end
+    
+    it 'should not let a non-merchant see the above info' do
+      merchant = create(:merchant)
+      item_1 = create(:item, user: merchant)
+      item_2 = create(:item, user: merchant)
+      order = create(:order)
+      oi_1 = create(:fulfilled_order_item, order: order, item: item_1)
+      oi_2 = create(:unfulfilled_order_item, order: order, item: item_2)
+      
+      user = create(:user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      
+      visit dashboard_orders_path(order)
+      
+      expect(page.status_code).to eq(404)
+      expect(page).to_not have_content(item_1.name)
+      expect(page).to_not have_content(item_2.name)
+    end
   end
 end

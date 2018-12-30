@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   
+  before_action :require_merchant_user, only: [:show]
+  
   def show
     order = Order.find(params[:id])
     @customer = order.user
