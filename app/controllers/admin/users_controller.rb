@@ -16,6 +16,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    binding.pry
     user = User.find(params[:id])
     if params[:upgrade]
       User.find(params[:id]).update(:role => 1)
