@@ -41,7 +41,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    
+    @user = User.find(params[:format])
   end
 
 end
