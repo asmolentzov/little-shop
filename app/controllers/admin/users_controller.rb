@@ -37,6 +37,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def enable
+    user = User.find(params[:format])
     if user.enabled == true
       user.update(:enabled => false)
       flash[:notice] = "#{user.name} is now disabled"

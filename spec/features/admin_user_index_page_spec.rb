@@ -26,22 +26,22 @@ describe 'ADMIN USER INDEX PAGE' do
       within "#user-links-#{user_1.id}" do
         expect(page).to have_link(user_1.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("disable")
+        expect(page).to have_link("disable")
       end
       within "#user-links-#{user_2.id}" do
         expect(page).to have_link(user_2.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("disable")
+        expect(page).to have_link("disable")
       end
       within "#user-links-#{user_3.id}" do
         expect(page).to have_link(user_3.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("enable")
+        expect(page).to have_link("enable")
       end
       within "#user-links-#{user_4.id}" do
         expect(page).to have_link(user_4.name)
         expect(page).to have_content(user_1.created_at)
-        expect(page).to have_button("disable")
+        expect(page).to have_link("disable")
       end
     end
 
@@ -58,16 +58,16 @@ describe 'ADMIN USER INDEX PAGE' do
       visit admin_users_path
 
       within "#user-links-#{user_1.id}" do
-        click_button('disable')
+        click_link('disable')
       end
       within "#user-links-#{user_1.id}" do
-        expect(page).to have_button("enable")
+        expect(page).to have_link("enable")
         comp_user = User.find(user_1.id)
         expect(comp_user.enabled).to eq(false)
-        click_button('enable')
+        click_link('enable')
       end
       within "#user-links-#{user_1.id}" do
-        expect(page).to have_button("disable")
+        expect(page).to have_link("disable")
         comp_user = User.find(user_1.id)
         expect(comp_user.enabled).to eq(true)
       end
