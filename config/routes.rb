@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   namespace :profile do
-    resources :orders, only: [:index, :show, :create]
+    resources :orders, only: [:index, :show, :create, :update]
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
   end
