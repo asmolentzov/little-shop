@@ -6,16 +6,23 @@
     <%= @customer.city %> <%= @customer.state %> <%= @customer.zip %>
   </p>
 </div>
-<% @items_with_quantity.each do |item, quantity| %>
+<% @items_with_quantity.each do |order_item, item, quantity| %>
   <div id="item-<%= item.id %>">
     <%= image_tag(item.image_link, class:"thumbnails") %>
     <ul>
+      <li>Order Item #<%= order_item.id %></li>
       <li><%= link_to item.name, item_path(item) %></li>
       <li>Price: <%= number_to_currency(item.current_price / 100) %></li>
       <li>Quantity: <%= quantity %></li>
     </ul>
-    <% if item.inventory < quantity %>
-      <p class="cannot_fulfill">Cannot Fulfill!</p>
+    <% if order_item.fulfilled == false %>
+      <% if item.inventory >= quantity %>
+        <%= link_to "Fulfill", dashboard_order_items_path(order_item) %>
+      <% else %>
+        <p class="cannot_fulfill">Cannot Fulfill!</p>
+      <% end %>
+    <% else %>
+    <p>Already Fulfilled!</p>
     <% end %>
   </div>
 <% end %>
