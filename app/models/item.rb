@@ -3,6 +3,7 @@ class Item < ApplicationRecord
                         :current_price, :user_id
   validates :enabled, inclusion: {in: [true, false]}
   validates :inventory, inclusion: {in: (1..1000000)}
+  validates :current_price, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   belongs_to :user
 
   has_many :order_items
