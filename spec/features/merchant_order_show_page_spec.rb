@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'As a merchant' do
+  include ActionView::Helpers::NumberHelper
+  
   context 'when I visit an order show page' do
     it 'shows information about the customer and my items that are being purchased' do
       merchant = create(:merchant)
@@ -49,15 +51,22 @@ describe 'As a merchant' do
       within "#item-#{item_1.id}" do
         expect(page).to have_link("#{item_1.name}")
         expect(page).to have_css("img[src='#{item_1.image_link}']")
-        expect(page).to have_content("Price: #{item_1.current_price}")
+        expect(page).to have_content("Price: #{number_to_currency(item_1.current_price / 100)}")
         expect(page).to have_content("Quantity: #{oi_1.quantity}")
+        click_link "#{item_1.name}"
       end
+      expect(current_path).to eq(item_path(item_1))
+      
+      visit dashboard_orders_path(order)
+      
       within "#item-#{item_2.id}" do
         expect(page).to have_link("#{item_2.name}")
         expect(page).to have_css("img[src='#{item_2.image_link}']")
-        expect(page).to have_content("Price: #{item_2.current_price}")
+        expect(page).to have_content("Price: #{number_to_currency(item_2.current_price / 100)}")
         expect(page).to have_content("Quantity: #{oi_2.quantity}")
+        click_link "#{item_2.name}"
       end
+      expect(current_path).to eq(item_path(item_2))
     end
   end
 end

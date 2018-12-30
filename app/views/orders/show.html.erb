@@ -11,7 +11,7 @@
     <%= image_tag(item.image_link, class:"thumbnails") %>
     <ul>
       <li><%= link_to item.name, item_path(item) %></li>
-      <li>Price: <%= item.current_price %></li>
+      <li>Price: <%= number_to_currency(item.current_price / 100) %></li>
       <li>Quantity: <%= quantity %></li>
     </ul>
   </div>
