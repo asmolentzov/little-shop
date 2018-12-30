@@ -16,7 +16,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-
+    
     user = User.find(params[:id])
 
     if user.update(user_params)
@@ -27,29 +27,32 @@ class Admin::UsersController < ApplicationController
       @errors = current_user.errors
       render :edit
     end
+  end
 
-    # if params[:upgrade]
-    #   User.find(params[:id]).update(:role => 1)
-    #   flash[:notice] = 'This user has been upgraded.'
-    #   redirect_to admin_merchant_path(user)
-    #   return
-    # end
-    #
-    # if user.enabled == true
-    #   user.update(:enabled => false)
-    #   flash[:notice] = "#{user.name} is now disabled"
-    # elsif
-    #   user.enabled == false
-    #   user.update(:enabled => true)
-    #   flash[:notice] = "#{user.name} is now enabled"
-    # end
-    #
-    # if user.role == "merchant"
-    #   redirect_to merchants_path
-    # else
-    #   redirect_to admin_users_path
-    # end
+  def upgrade
+    if params[:upgrade]
+      User.find(params[:id]).update(:role => 1)
+      flash[:notice] = 'This user has been upgraded.'
+      redirect_to admin_merchant_path(user)
+      return
+    end
+  end
 
+  def enable
+    if user.enabled == true
+      user.update(:enabled => false)
+      flash[:notice] = "#{user.name} is now disabled"
+    elsif
+      user.enabled == false
+      user.update(:enabled => true)
+      flash[:notice] = "#{user.name} is now enabled"
+    end
+
+    if user.role == "merchant"
+      redirect_to merchants_path
+    else
+      redirect_to admin_users_path
+    end
   end
 
   def edit
