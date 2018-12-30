@@ -52,5 +52,32 @@ describe 'USER ORDER SHOW PAGE' do
       expect(page).to have_content("Total items in order: 6")
       expect(page).to have_content("Grand total: $14.00")
     end
+
+    it 'can cancel the order' do
+
+      user_1 = create(:user)
+      order_1 = create(:order, user: user_1)
+
+      order_item_1 = create(:fulfilled_order_item, order: order_1, quantity: 1, order_price: 100)
+      order_item_2 = create(:fulfilled_order_item, order: order_1, quantity: 2, order_price: 200)
+      order_item_3 = create(:fulfilled_order_item, order: order_1, quantity: 3, order_price: 300)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
+
+      visit profile_order_path(order_1)
+
+      expect(page).to have_button("Cancel Order")
+
+    end
   end
 end
+#     As a registered user
+# When I visit an order's show page
+# If the order is still "pending", I see a button or link to cancel the order
+# When I click the cancel button for an order, the following happens:
+# - Each row in the "order items" table is given a status of "unfulfilled"
+# - The order itself is given a status of "cancelled"
+# - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
+# - I am returned to my profile page
+# - I see a flash message telling me the order is now cancelled
+# - And I see that this order now has an updated status of "cancelled"
