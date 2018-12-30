@@ -12,10 +12,6 @@ Rails.application.routes.draw do
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
 
-  # post '/dashboard/items', to: "items#create"
-
-  # patch '/dashboard/items', to: "items#update"
-
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
   resources :carts, only: [:create]
@@ -37,12 +33,4 @@ Rails.application.routes.draw do
     get '/', to: "users#show"
   end
   
-  # get '/dashboard', as: :dashboard, to: "users#show"
-  # get '/dashboard/items', to: "items#index"
-  # get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
-  # put '/dashboard/item', to: "items#update"
-  # get '/dashboard/items/new', to: "items#new"
-  # get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"
-  # delete '/dashboard/item', to: "items#destroy"
-
 end
