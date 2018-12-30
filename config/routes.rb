@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     get '/edit', to: "users#edit"
     resources :orders, only: [:show, :update]
     resources :users, as: :merchants, only: [:index, :show, :update]
+    patch '/merchant/upgrade', to: "users#upgrade"
   end
 
   namespace :profile do
