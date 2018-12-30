@@ -10,4 +10,16 @@ class Dashboard::ItemsController < ApplicationController
    @bottom_five_items = Item.five_popular('asc')
   end
   
+  def edit
+    @item = Item.find(params[:id])
+  end
+  
+  def update
+    item = Item.find(params[:format])
+    if item.enabled?
+      item.update(:enabled => false)
+      flash[:success] = "#{item.name} is no longer for sale."
+      redirect_to dashboard_items_path
+    end
+  end
 end

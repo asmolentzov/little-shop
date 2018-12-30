@@ -15,7 +15,7 @@ describe 'As a registered merchant' do
         click_on 'Edit this item'
       end
       
-      expect(current_path).to eq(dashboard_items_edit_path(@item))
+      expect(current_path).to eq(edit_dashboard_item__path(@item))
       expect(current_path).to eq("/dashboard/items/#{@item.id}/edit")
       
       expect(find_field("item[name]").value).to eq(@item.name)
@@ -26,7 +26,7 @@ describe 'As a registered merchant' do
     end
     
     it 'lets me edit any information' do
-      visit dashboard_items_edit_path(@item)
+      visit edit_dashboard_item_path(@item)
       
       new_name = "New Name!"
       

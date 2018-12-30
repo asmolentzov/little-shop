@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   end
   
   namespace :dashboard do
-    resources :items, only: [:index, :update, :create, :destroy]
+    resources :items, only: [:index, :edit, :update, :create, :destroy]
   end
   
   get '/dashboard', as: :dashboard, to: "users#show"
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
   put '/dashboard/item', to: "items#update"
   get '/dashboard/items/new', to: "items#new"
-  get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"
+  # get '/dashboard/items/:id/edit', as: :dashboard_items_edit, to: "items#edit"
   # delete '/dashboard/item', to: "items#destroy"
 
 end

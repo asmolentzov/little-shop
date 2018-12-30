@@ -1,6 +1,10 @@
 class ItemsController < ApplicationController
 
-
+  def index
+   @items = Item.enabled_items
+   @top_five_items = Item.five_popular('desc')
+   @bottom_five_items = Item.five_popular('asc')
+  end
 
   def show
     @item = Item.find(params[:id])
@@ -28,19 +32,6 @@ class ItemsController < ApplicationController
       @errors = @item.errors
       render :new
     end
-  end
-
-  def update
-    item = Item.find(params[:format])
-    if item.enabled?
-      item.update(:enabled => false)
-      flash[:success] = "#{item.name} is no longer for sale."
-      redirect_to dashboard_items_path
-    end
-  end
-  
-  def edit
-    @item = Item.find(params[:id])
   end
 
   private
