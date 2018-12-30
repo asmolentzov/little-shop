@@ -107,11 +107,9 @@ describe 'as a merchant user' do
     it 'should return me to my items page, I should see a message notifying me the item is no longer for sale,
       and I see the item is now disabled' do
       merch1 = create(:merchant)
-      merch2 = create(:merchant)
       item_1 = create(:item, user: merch1)
       fulfilled_1 = create(:fulfilled_order_item, item: item_1)
       item_2 = create(:item, user: merch1)
-      item_3 = create(:item, user: merch2)
 
       visit login_path
       fill_in :email, with: merch1.email
