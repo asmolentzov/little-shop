@@ -27,7 +27,7 @@ describe 'As an admin user' do
 
       click_on "Cancel Order"
 
-      expect(current_path).to eq(profile_order_path(order_1))
+      expect(current_path).to eq(admin_user_path(user_1))
       expect(page).to have_content("Your order has been cancelled")
 
       within "#order-#{order_1.id}" do
