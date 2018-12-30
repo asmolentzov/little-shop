@@ -7,7 +7,7 @@
 
 
 <% if @user_role == 'default' %>
-  <%= link_to 'Edit Profile', admin_edit_path %>
+  <%= link_to 'Edit Profile', admin_edit_path(@user.id)%>
   <%= link_to 'Upgrade to Merchant', admin_merchant_path(@user, :upgrade => true), method: :put %>
 <h1> Orders </h1>
 <% @orders.each do |order| %>
