@@ -247,22 +247,22 @@ RSpec.describe User, type: :model do
     before(:each) do
       @merchant_1 = create(:merchant)
       #All items belong to merchant_1. Total inventory = 300
-      @@item_1 = create(:item, inventory: 1, user: @merchant_1)
-      @@item_2 = create(:item, inventory: 2, user: @merchant_1)
-      @@item_3 = create(:item, inventory: 3, user: @merchant_1)
-      @@item_4 = create(:item, inventory: 4, user: @merchant_1)
-      @@item_5 = create(:item, inventory: 50, user: @merchant_1)
-      @@item_6 = create(:item, inventory: 60, user: @merchant_1)
-      @@item_7 = create(:item, inventory: 70, user: @merchant_1)
-      @@item_8 = create(:item, inventory: 110, user: @merchant_1)
+      @item_1 = create(:item, inventory: 1, user: @merchant_1)
+      @item_2 = create(:item, inventory: 2, user: @merchant_1)
+      @item_3 = create(:item, inventory: 3, user: @merchant_1)
+      @item_4 = create(:item, inventory: 4, user: @merchant_1)
+      @item_5 = create(:item, inventory: 50, user: @merchant_1)
+      @item_6 = create(:item, inventory: 60, user: @merchant_1)
+      @item_7 = create(:item, inventory: 70, user: @merchant_1)
+      @item_8 = create(:item, inventory: 110, user: @merchant_1)
       #Users from 6 states & 6 cities. Identical city names from two states.
-      @@user_1 = create(:user, city: 'Manhattan', state: 'KS')
-      @@user_2 = create(:user, city: 'Manhattan', state: 'KS')
-      @@user_3 = create(:user, city: 'Manhattan', state: 'NY')
-      @@user_4 = create(:user, city: 'Buttermilk', state: 'KS')
-      @@user_5 = create(:user, city: 'Brigham', state: 'UT')
-      @@user_6 = create(:user, city: 'Austin', state: 'NV')
-      @@user_7 = create(:user, city: 'Smackover', state: 'AK')
+      @user_1 = create(:user, city: 'Manhattan', state: 'KS')
+      @user_2 = create(:user, city: 'Manhattan', state: 'KS')
+      @user_3 = create(:user, city: 'Manhattan', state: 'NY')
+      @user_4 = create(:user, city: 'Buttermilk', state: 'KS')
+      @user_5 = create(:user, city: 'Brigham', state: 'UT')
+      @user_6 = create(:user, city: 'Austin', state: 'NV')
+      @user_7 = create(:user, city: 'Smackover', state: 'AK')
 
       #User_1 orders - Manhattan, KS -- 2nd shipped to city, 1st state
       order_1 = create(:order, user: @user_1)
@@ -289,7 +289,7 @@ RSpec.describe User, type: :model do
       order_8 = create(:order, user: @user_3)
         create(:fulfilled_order_item, order: order_8, item: @item_5, quantity: 2, order_price: 500)
       order_9 = create(:order, user: @user_3)
-        create(:fulfilled_order_item, order: order_9, item: item_6, quantity: 3, order_price: 600)
+        create(:fulfilled_order_item, order: order_9, item: @item_6, quantity: 3, order_price: 600)
 
       #User_4 orders - Buttermilk, KS -- 3rd shipped to city
       order_10 = create(:order, user: @user_4)
@@ -330,10 +330,15 @@ RSpec.describe User, type: :model do
     end
     describe 'merchant_units_sold' do
       it 'returns the total units the merchant has sold' do
-        expect(@@merchant_1.merchant_units_sold).to eq(52)
+        expect(@merchant_1.merchant_units_sold).to eq(52)
       end
     end
-    xdescribe 'merchant_percent_sold' do
+    describe 'merchant_units_inventory' do
+      it 'returns the number of units of all items the merchant has in inventory' do
+        expect(@merchant_1.merchant_units_inventory).to eq(300)
+      end
+    end
+    describe 'merchant_percent_sold' do
       it 'returns the percentage of unit sales over inventory' do
         expect(@merchant_1.merchant_percent_sold).to eq(17)
       end

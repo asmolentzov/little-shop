@@ -81,11 +81,20 @@ class User < ApplicationRecord
   def merchant_top_five_items
   end
   def merchant_units_sold
-    OrderItem.joins(:item)
+    units = OrderItem.joins(:item)
     .where("items.user_id = ?", self.id)
     .sum(:quantity)
+    units ? units : 0
+  end
+  def merchant_units_inventory
+    units = Item.where("items.user_id = ?", self.id)
+    .sum(:inventory)
+    units ? units : 0
   end
   def merchant_percent_sold
+    inventory = merchant_units_inventory
+    return 0 if inventory == 0
+    ((merchant_units_sold.to_f / inventory).round(2) * 100).to_i
   end
   def merchant_top_states
   end
@@ -94,6 +103,12 @@ class User < ApplicationRecord
   def merchant_top_order_user
   end
   def merchant_top_units_user
+  #  User.joins(:orders).joins(items: :order_items)
+  #  .where("items.user_id = ?", self.id)
+  #  .group(:id)
+  #  .select("users.id, SUM(order_items.quantity) AS units_purchased")
+  #  .order("units_purchased DESC")
+  #  .first.name
   end
   def merchant_highest_spending_users
   end
