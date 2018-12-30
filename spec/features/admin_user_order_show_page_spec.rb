@@ -15,6 +15,8 @@ describe 'As an admin user' do
 
       visit admin_order_path(order_1)
 
+      expect(current_path).to eq("/admin/orders/#{order_1.id}")
+
       expect(page).to have_content("Order: #{order_1.id}")
       expect(page).to have_content("Placed on: #{order_1.created_at}")
       expect(page).to have_content("Last update: #{order_1.updated_at}")
