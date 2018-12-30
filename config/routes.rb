@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :show, :update]
+    get '/edit', to: "users#edit"
     resources :orders, only: [:show, :update]
     resources :users, as: :merchants, only: [:index, :show, :update]
   end
@@ -27,11 +28,11 @@ Rails.application.routes.draw do
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
   end
-  
+
   namespace :dashboard do
     resources :items, only: [:index, :edit, :update, :new, :create, :destroy]
     resources :orders, only: [:show]
     get '/', to: "users#show"
   end
-  
+
 end
