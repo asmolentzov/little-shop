@@ -20,4 +20,19 @@ RSpec.describe OrderItem, type: :model do
       expect(order_item_1.subtotal).to equal(900)
     end
   end
+
+  describe 'cancel' do
+    it 'changes fulfilled status to false' do
+      order_item_1 = create(:order_item, fulfilled: true)
+      order_item_2 = create(:order_item, fulfilled: true)
+      order_item_3 = create(:order_item, fulfilled: true)
+
+      order_item_1.cancel
+      order_item_2.cancel
+
+      expect(order_item_1.fulfilled).to eq(false)
+      expect(order_item_2.fulfilled).to eq(false)
+      expect(order_item_3.fulfilled).to eq(true)
+    end
+  end
 end

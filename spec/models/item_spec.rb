@@ -79,20 +79,5 @@ RSpec.describe Item, type: :model do
         expect(Item.five_popular('asc')).to_not include(item_3)
       end
     end
-
-    describe 'cancel' do
-      it 'changes fulfilled status to false' do
-        item_1 = create(:item)
-        item_2 = create(:item)
-        item_3 = create(:item)
-
-        item_1.cancel
-        item_2.cancel
-
-        expect(item_1.fulfilled).to eq(false)
-        expect(item_2.fulfilled).to eq(false)
-        expect(item_3.fulfilled).to eq(true)
-      end
-    end
   end
 end
