@@ -157,13 +157,14 @@ RSpec.describe Order, type: :model do
         item_2 = create(:item, user: merchant)
         
         item_3 = create(:item)
+        item_4 = create(:item, user: merchant)
         
         order = create(:order)
         create(:fulfilled_order_item, order: order, item: item_1)
         create(:unfulfilled_order_item, order: order, item: item_2)
         create(:fulfilled_order_item, order: order, item: item_3)
         
-        expect(order.merchant_items(merchant).to eq([item_1, item_2]))
+        expect(order.merchant_items(merchant.id)).to eq([item_1, item_2])
       end
     end
   end

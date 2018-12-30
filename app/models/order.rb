@@ -44,4 +44,8 @@ class Order < ApplicationRecord
     .where("items.user_id = ?", merchant_id)
     .sum("order_items.order_price")
   end
+  
+  def merchant_items(merchant_id)
+    items.where("items.user_id = ?", merchant_id)
+  end
 end
