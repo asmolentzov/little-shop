@@ -1,11 +1,8 @@
 class Dashboard::ItemsController < ApplicationController
+  before_action :require_merchant_user
   
   def index
-   if current_merchant?
-     @items = current_user.items
-   else
-     @items = Item.enabled_items
-   end
+   @items = current_user.items
    @top_five_items = Item.five_popular('desc')
    @bottom_five_items = Item.five_popular('asc')
   end
