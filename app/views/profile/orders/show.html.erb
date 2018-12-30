@@ -3,6 +3,9 @@
 <%= "Placed on: #{@order.created_at} " %>
 <%= "Last update: #{@order.updated_at} " %>
 <%= "Status: #{@order.status} " %>
+<% if @order.status == "pending" %>
+<%= link_to "Cancel Order", profile_order_path(@order.id), method: :delete %>
+<% end %>
 
 <% @order.order_items.each do |order_item| %>
   <div id="order-item-<%=order_item.id%>">
