@@ -10,7 +10,7 @@
   <% end %>
 </ul>
 
-<%= link_to 'Add New Item', dashboard_items_new_path %>
+<%= link_to 'Add New Item', new_dashboard_item_path %>
 
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>" class="flex-items">
