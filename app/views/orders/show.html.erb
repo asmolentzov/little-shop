@@ -14,5 +14,8 @@
       <li>Price: <%= number_to_currency(item.current_price / 100) %></li>
       <li>Quantity: <%= quantity %></li>
     </ul>
+    <% if item.inventory < quantity %>
+      <p class="cannot_fulfill">Cannot Fulfill!</p>
+    <% end %>
   </div>
 <% end %>
