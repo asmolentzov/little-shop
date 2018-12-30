@@ -19,7 +19,7 @@ class Profile::OrdersController < ApplicationController
     redirect_to profile_path
   end
 
-  def destroy
+  def update
     order = Order.find(params[:id])
       order.order_items.each do |item|
         item.update(fulfilled: false)
