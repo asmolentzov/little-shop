@@ -16,33 +16,50 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    binding.pry
+
     user = User.find(params[:id])
-    if params[:upgrade]
-      User.find(params[:id]).update(:role => 1)
-      flash[:notice] = 'This user has been upgraded.'
-      redirect_to admin_merchant_path(user)
-      return
-    end
-    if user.enabled == true
-      user.update(:enabled => false)
-      flash[:notice] = "#{user.name} is now disabled"
-    elsif
-      user.enabled == false
-      user.update(:enabled => true)
-      flash[:notice] = "#{user.name} is now enabled"
+
+    if user.update(user_params)
+      flash[:success] = 'Profile Updated'
+      redirect_to admin_user_path(user.id)
+    else
+      @user = User.find(params[:id])
+      @errors = current_user.errors
+      render :edit
     end
 
-    if user.role == "merchant"
-      redirect_to merchants_path
-    else
-      redirect_to admin_users_path
-    end
+    # if params[:upgrade]
+    #   User.find(params[:id]).update(:role => 1)
+    #   flash[:notice] = 'This user has been upgraded.'
+    #   redirect_to admin_merchant_path(user)
+    #   return
+    # end
+    #
+    # if user.enabled == true
+    #   user.update(:enabled => false)
+    #   flash[:notice] = "#{user.name} is now disabled"
+    # elsif
+    #   user.enabled == false
+    #   user.update(:enabled => true)
+    #   flash[:notice] = "#{user.name} is now enabled"
+    # end
+    #
+    # if user.role == "merchant"
+    #   redirect_to merchants_path
+    # else
+    #   redirect_to admin_users_path
+    # end
 
   end
 
   def edit
     @user = User.find(params[:format])
+  end
+
+  private
+
+  def user_params
+      params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
   end
 
 end
