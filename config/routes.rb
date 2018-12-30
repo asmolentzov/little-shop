@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index, :show, :update]
     get '/edit', to: "users#edit"
+    patch '/enable', to: "users#enable"
     resources :orders, only: [:show, :update]
     resources :users, as: :merchants, only: [:index, :show, :update]
     patch '/merchant/upgrade', to: "users#upgrade"
