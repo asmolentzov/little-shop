@@ -361,27 +361,10 @@ RSpec.describe User, type: :model do
     end
     describe 'merchant_top_units_user' do
       it 'returns the user with the most units bought for the merchant' do
-        @merchant_2 = create(:merchant)
-        @merchant_3 = create(:merchant)
-
-        @item_30 = create(:item, inventory: 1, user: @merchant_2)
-        @item_31 = create(:item, inventory: 2, user: @merchant_2)
-        @item_32 = create(:item, inventory: 3, user: @merchant_3)
-        @item_33 = create(:item, inventory: 4, user: @merchant_3)
-
-        order_20 = create(:order, user: @user_7)
-        order_21 = create(:order, user: @user_7)
-
-        create(:fulfilled_order_item, order: order_20, item: @item_30, quantity: 100, order_price: 100)
-        create(:fulfilled_order_item, order: order_20, item: @item_31, quantity: 222, order_price: 200)
-        create(:fulfilled_order_item, order: order_21, item: @item_32, quantity: 3, order_price: 300)
-        create(:fulfilled_order_item, order: order_21, item: @item_33, quantity: 1, order_price: 400)
-
-
         expect(@merchant_1.merchant_top_units_user).to eq(@user_5)
       end
     end
-    xdescribe 'merchant_highest_spending_users' do
+    describe 'merchant_highest_spending_users' do
       it 'returns the merchants 3 highest spending users' do
         expect(@merchant_1.merchant_highest_spending_users).to eq([@user_7, @user_5, @user_6])
       end

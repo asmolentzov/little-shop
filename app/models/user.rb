@@ -107,17 +107,28 @@ class User < ApplicationRecord
   def merchant_top_cities
   end
   def merchant_top_order_user
+    #Order.joins(order_items: :item)
+    #.where("items.user_id = ?", self.id)
+    #.group(:user_id)
+    #.select("orders.*, COUNT(orders.id) AS orders_placed")
+    #.order("orders_placed DESC")
+    #.first.user
   end
   def merchant_top_units_user
-    merchant_items = self.items.map { |item| item.id }
-    User.joins(orders: :order_items)
-    .where("order_items.item_id IN (?)", (merchant_items))
+    User.joins(orders: [order_items: :item])
+    .where("items.user_id = ?", self.id)
     .group(:id)
     .select("users.*, SUM(order_items.quantity) AS units_purchased")
     .order("units_purchased DESC")
     .first
   end
   def merchant_highest_spending_users
+    User.joins(orders: [order_items: :item])
+    .where("items.user_id = ?", self.id)
+    .group(:id)
+    .select("users.*, SUM(order_items.quantity * order_items.order_cost) AS units_purchased")
+    .order("units_purchased DESC")
+    .first
   end
 
 end
