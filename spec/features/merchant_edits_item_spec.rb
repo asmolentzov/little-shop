@@ -46,5 +46,41 @@ describe 'As a registered merchant' do
       end
       expect(Item.find(@item.id).enabled).to eq(true)
     end
+    
+    it 'lets me edit all information' do
+      visit edit_dashboard_item_path(@item)
+      
+      new_name = "New Name!"
+      new_desc = "Cool"
+      new_img = "https://picsum.photos/200/300"
+      new_price = 400
+      new_inventory = 12
+      
+      fill_in :item_name, with: new_name
+      fill_in :item_description, with: new_desc
+      fill_in :item_image_link, with: new_img
+      fill_in :item_current_price, with: new_price
+      fill_in :item_inventory, with: new_inventory
+      click_button 'Update Item' 
+      
+      expect(current_path).to eq(dashboard_items_path)
+      expect(page).to have_content("Item ##{@item.id} has been updated")
+      
+      within "#item-#{@item.id}" do
+        expect(page).to have_content(new_name)
+        expect(page).to have_content(new_desc)
+        expect(page).to have_css("img[src='#{new_img}']")
+        expect(page).to have_content(new_price)
+        expect(page).to have_content(new_inventory)
+        expect(page).to have_link("Disable this item")
+      end
+      expect(Item.find(@item.id).enabled).to eq(true)
+    end
+    
+    it 'will have certain restrictions for editing information' do
+      visit edit_dashboard_item_path(@item)
+      
+      
+    end
   end
 end
