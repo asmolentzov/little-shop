@@ -123,6 +123,7 @@ class User < ApplicationRecord
     #.map(&:state)
   end
   def merchant_top_cities
+
   end
   def merchant_top_order_user
     User.joins(orders: [order_items: :item])
