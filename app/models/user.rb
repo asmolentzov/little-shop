@@ -103,10 +103,34 @@ class User < ApplicationRecord
     ((merchant_units_sold.to_f / inventory).round(2) * 100).to_i
   end
   def merchant_top_states
+    #User.joins(orders: [order_items: :item])
+
+    #merchant_items = self.items.map { |item| item.id }
+    #User.joins(orders: :order_items)
+    #.where("order_items.item_id IN (?)", (merchant_items))
+    #.group("orders.id")
+    #.select("users.state, count(orders.id) AS state_count")
+    #.order("state_count DESC")
+    #.limit(3)
+    #.map(&:state)
+
+
+    #.where("items.user_id = ?", self.id)
+    #.group(:state)
+    #.select("users.state, count(orders.id) AS state_count")
+    #.order("state_count DESC")
+    #.limit(3)
+    #.map(&:state)
   end
   def merchant_top_cities
   end
   def merchant_top_order_user
+    User.joins(orders: [order_items: :item])
+    .where("items.user_id = ?", self.id)
+    .group("orders.id")
+    .select("orders.user_id, SUM(order_items.quantity) AS units_purchased")
+    .order("units_purchased DESC")
+    .first
     #Order.joins(order_items: :item)
     #.where("items.user_id = ?", self.id)
     #.group(:user_id)
@@ -126,9 +150,9 @@ class User < ApplicationRecord
     User.joins(orders: [order_items: :item])
     .where("items.user_id = ?", self.id)
     .group(:id)
-    .select("users.*, SUM(order_items.quantity * order_items.order_cost) AS units_purchased")
+    .select("users.*, SUM(order_items.quantity * order_items.order_price) AS units_purchased")
     .order("units_purchased DESC")
-    .first
+    .limit(3)
   end
 
 end

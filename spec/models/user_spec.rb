@@ -344,7 +344,7 @@ RSpec.describe User, type: :model do
         expect(@merchant_1.merchant_percent_sold).to eq(17)
       end
     end
-    xdescribe 'merchant_top_states' do
+    describe 'merchant_top_states' do
       it 'returns the merchants top three states by orders shipped' do
         expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
       end
