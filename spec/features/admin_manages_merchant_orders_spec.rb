@@ -71,5 +71,37 @@ describe 'As an admin user' do
         expect(page).to_not have_link('Enable this item')
       end
     end
+    
+    it 'does not allow me to create a new item if required fields are missing' do
+      visit admin_merchant_items_path(@merchant)
+      
+      click_on('Add New Item')
+      
+      # Check for all fields blank
+      click_on('Create Item')
+
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("Description can't be blank")
+      expect(page).to have_content("Current price can't be blank")
+      expect(page).to have_content("Inventory is not a number")
+
+      # Check for negative inventory, fields filled in
+      fill_in :item_name, with: 'item_1'
+      fill_in :item_description, with: 'this is a great item_1'
+      fill_in :item_current_price, with: 3000
+      fill_in :item_inventory, with: -1
+      click_on('Create Item')
+
+      expect(page).to have_content('Inventory must be greater than or equal to 0')
+      expect(find_field("item[name]").value).to eq("item_1")
+      expect(find_field("item[description]").value).to eq("this is a great item_1")
+      expect(find_field("item[current_price]").value).to eq("3000")
+      
+      # Check for negative price
+      fill_in :item_current_price, with: -400
+      click_on 'Create Item'
+      
+      expect(page).to have_content('Current price must be greater than or equal to 0')
+    end
   end
 end
