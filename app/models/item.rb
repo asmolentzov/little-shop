@@ -12,9 +12,12 @@ class Item < ApplicationRecord
   before_validation :set_default_image
 
   def avg_fulfill_time
-    self.order_items.where(fulfilled: true)
-        .average("order_items.updated_at - order_items.created_at")
-        .to_i
+    results = ActiveRecord::Base.connection.execute("select avg(updated_at - created_at) as avg_f_time from order_items where item_id=#{self.id} and fulfilled='t'")
+    if results.present?
+      return results.first['avg_f_time']
+    else
+      return nil
+    end
   end
 
   def self.five_popular(var)
