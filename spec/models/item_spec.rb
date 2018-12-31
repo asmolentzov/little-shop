@@ -47,7 +47,7 @@ RSpec.describe Item, type: :model do
         order_item_3 = OrderItem.create(order_id: order_1.id, item_id: item_1.id,
                         quantity: 1, order_price: item_1.current_price, fulfilled: false, created_at: 2.days.ago)
 
-        expect(item_1.avg_fulfill_time).to eq(18)
+        expect(item_1.avg_fulfill_time.slice(0, 13)).to eq("18 days 12:00")
       end
     end
     describe '#five_popular()' do
