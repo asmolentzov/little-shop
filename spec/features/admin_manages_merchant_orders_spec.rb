@@ -103,5 +103,42 @@ describe 'As an admin user' do
       
       expect(page).to have_content('Current price must be greater than or equal to 0')
     end
+    
+    it 'allows me to edit all information on an item' do
+      visit admin_merchant_items_path(@merchant)
+      
+      within "#item-#{@item.id}" do
+        click_on 'Edit this item'
+      end
+      
+      expect(current_path).to eq(edit_admin_merchant_item_path(@merchant, @item))
+      expect(current_path).to eq("/admin/merchants/#{@merchant.id}/items/#{@item.id}/edit")
+      
+      new_name = "New Name!"
+      new_desc = "Cool"
+      new_img = "https://picsum.photos/200/300"
+      new_price = 400
+      new_inventory = 12
+      
+      fill_in :item_name, with: new_name
+      fill_in :item_description, with: new_desc
+      fill_in :item_image_link, with: new_img
+      fill_in :item_current_price, with: new_price
+      fill_in :item_inventory, with: new_inventory
+      click_button 'Update Item' 
+      
+      expect(current_path).to eq(admin_merchant_items_path(@merchant))
+      expect(page).to have_content("Item ##{@item.id} has been updated")
+      
+      within "#item-#{@item.id}" do
+        expect(page).to have_content(new_name)
+        expect(page).to have_content(new_desc)
+        expect(page).to have_css("img[src='#{new_img}']")
+        expect(page).to have_content(new_price)
+        expect(page).to have_content(new_inventory)
+        expect(page).to have_link("Disable this item")
+      end
+      expect(Item.find(@item.id).enabled).to eq(true)
+    end
   end
 end

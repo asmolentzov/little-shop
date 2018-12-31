@@ -23,6 +23,15 @@ class Admin::ItemsController < ApplicationController
     end
   end
   
+  def edit
+    @item = Item.find(params[:id])
+  end
+  
+  def update
+    item = Item.find(params[:id])
+    redirect_to admin_merchant_items_path(item.user)
+  end
+  
   private
   
   def item_params
