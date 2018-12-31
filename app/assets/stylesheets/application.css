@@ -28,6 +28,10 @@
    font-family: 'Ubuntu', sans-serif;
  }
 
+ .welcome {
+   text-align: center;
+ }
+
  .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;

@@ -13,9 +13,9 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     zip: '54321', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
     #Item belonging to Mercant
     item_1 = Item.create(name: 'IBM PCXT 5160', user: merchant, inventory: 3,
-    current_price: 399500, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'Yesterday in personal computing technology')
+    current_price: 399500, enabled: true, image_link: 'https://picsum.photos/g/200/300', description: 'Yesterday in personal computing technology')
     item_2 = Item.create(name: 'IBM PCXT 5161', user: merchant, inventory: 3,
-    current_price: 400000, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'The latest in personal computing technology')
+    current_price: 400000, enabled: true, image_link: 'https://picsum.photos/5472/3648?image=1083', description: 'The latest in personal computing technology')
 
     visit items_path
 
@@ -36,12 +36,11 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     within "#item-#{item_1.id}" do
       expect(page).to have_content(item_1.name)
-      expect(page).to have_css("img[src*='#{item_1.image_link}']")
       expect(page).to have_content(item_1.user.name)
+      expect(page).to have_css("img[src*='#{item_1.image_link}']")
       expect(page).to have_content(number_to_currency(item_1.current_price/100))
       expect(page).to have_content("Quantity: #{quantity_1}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_1)}")
-
       expect(page).to_not have_content(item_2.name)
     end
 
