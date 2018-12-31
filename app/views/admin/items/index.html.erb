@@ -25,7 +25,7 @@
     <p><%= item.inventory %></p>
     <p><%= item.current_price %></p>
 
-    <%= link_to 'Edit this item', edit_dashboard_item_path(item) %>
+    <%= link_to 'Edit this item', edit_admin_merchant_item_path(@merchant, item) %>
     <% if item.order_items.empty? %>
       <%= link_to 'Delete this item', dashboard_item_path(:id => item.id), method: :delete %>
     <% end %>

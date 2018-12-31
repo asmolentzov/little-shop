@@ -23,6 +23,33 @@ class Admin::ItemsController < ApplicationController
     end
   end
   
+  def edit
+    @item = Item.find(params[:id])
+  end
+  
+  def update
+    item = Item.find(params[:id])
+    if params[:item]
+      if item.update(item_params)
+        flash[:success] = "Item ##{item.id} has been updated"
+      else
+        @item = Item.find(params[:id])
+        @errors = item.errors
+        render :edit
+        return
+      end
+    else
+      if item.enabled?
+        item.update(:enabled => false)
+        flash[:success] = "#{item.name} is no longer for sale."
+      else
+        item.update(:enabled => true)
+        flash[:success] = "#{item.name} is now available for sale."
+      end
+    end
+    redirect_to admin_merchant_items_path(item.user)
+  end
+  
   private
   
   def item_params
