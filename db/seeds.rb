@@ -10,9 +10,9 @@ user_2 = User.create(name: 'Ken Hurt', street: '534 Clover Lane', city: 'Smithto
   zip: '99803', email: 'kennyboy@oal.com', password: 'letmein', role: 0, enabled: true)
 user_3 = User.create(name: 'Argellica Jones', street: '9 Slider Ave', city: 'Smithtown', state: 'PA',
   zip: '21155', email: 'Jonesey@aol.com', password: '123456789', role: 0, enabled: true)
-user_4 = User.create(name: 'Holden Butts', street: '5607 E County Rd.', city: 'Smithtown', state: 'PA',
-  zip: '21154', email: 'Butts1045@aol.com', password: 'abc123', role: 0, enabled: true)
-user_5 = User.create(name: 'Dick Pound', street: '3 Whatnot Circle', city: 'Perrysburg', state: 'OH',
+user_4 = User.create(name: 'Holden Burren', street: '5607 E County Rd.', city: 'Smithtown', state: 'PA',
+  zip: '21154', email: 'Burren1045@aol.com', password: 'abc123', role: 0, enabled: true)
+user_5 = User.create(name: 'Richard Pound', street: '3 Whatnot Circle', city: 'Perrysburg', state: 'OH',
   zip: '40078', email: 'dbird@aol.com', password: '123456', role: 0, enabled: true)
 user_6 = User.create(name: 'Florence Bagnor', street: '47 Main Circle', city: 'Rifle', state: 'CO',
   zip: '82578', email: 'baggy4@aol.com', password: 'birthday', role: 0, enabled: true)
