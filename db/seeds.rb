@@ -42,8 +42,8 @@ merch_6 = User.create(name: 'Donny Pound', street: '3 Whatnot Circle', city: 'Pe
 ### Admin Users ###
 admin_1 = User.create(name: 'Ruth Boring', street: '54 Ventura Rd.', city: 'Palo Alto', state: 'CA',
   zip: '35764', email: 'boring436@aol.com', password: 'admin1', role: 2, enabled: true)
-admin_2 = User.create(name: 'Steve Sharts', street: '220 N 400 W', city: 'Brigham', state: 'UT',
-  zip: '99784', email: 'sharts34@aol.com', password: 'admin2', role: 2, enabled: true)
+admin_2 = User.create(name: 'Steve Shirts', street: '220 N 400 W', city: 'Brigham', state: 'UT',
+  zip: '99784', email: 'shirts34@aol.com', password: 'admin2', role: 2, enabled: true)
 
 
 ### Merchant 1 Items ###
