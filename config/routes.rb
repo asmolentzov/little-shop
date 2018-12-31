@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
 
+
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
   resources :carts, only: [:create]
@@ -19,11 +20,14 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index, :show, :update, :edit] do
      patch '/enable', to: "users#enable"
+     patch '/upgrade', to: "users#upgrade"
     end
 
     resources :orders, only: [:show, :update]
-    resources :users, as: :merchants, only: [:index, :show, :update] do
-      patch '/upgrade', to: "users#upgrade"
+
+    resources :merchants, only: [:index, :show, :update] do
+     patch '/enable', to: "merchants#update"
+     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     end
 
   end
@@ -37,6 +41,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     resources :items, only: [:index, :edit, :update, :new, :create, :destroy]
     resources :orders, only: [:show]
+    resources :order_items, only: [:update]
     get '/', to: "users#show"
   end
 

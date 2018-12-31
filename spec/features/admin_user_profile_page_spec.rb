@@ -139,17 +139,17 @@ describe 'As an admin user' do
       old_street = 'Street One'
       old_city = 'City One'
       old_state = 'State1'
-      old_zip = 'ZIP1'
+      old_zip = '54321'
       old_email = 'email1@aol.com'
 
       user_1 = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
-        zip: old_zip, email: old_email, password: 'password1')
+        zip: 12345, email: old_email, password: 'password1')
 
       new_name = 'NEW NAME'
       new_street = 'New Street'
       new_city = 'NEW CITY'
       new_state = 'New State'
-      new_zip = 'zip2'
+      new_zip = '12345'
       new_email = 'email2@aol.com'
 
       admin = create(:admin)
@@ -188,7 +188,7 @@ describe 'As an admin user' do
 
     it 'does not allow admin to leave fields blank' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+        zip: '12345', email: 'email1@aol.com', password: 'password1')
 
       admin = create(:admin)
 

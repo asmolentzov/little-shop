@@ -2,7 +2,7 @@
   <% quantity = @cart.contents[item.id.to_s] %>
   <div id="item-<%= item.id %>">
     <p><%= item.name %></p>
-    <img src="<%= "#{item.image_link}" %> id="item-<%= item.id %>-img">
+    <%= image_tag(item.image_link, class:"thumbnails", id:"item-#{item.id}-img") %>
     <p><%= item.user.name %></p>
     <p><%= number_to_currency(item.current_price/100) %></p>
     <%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %>
@@ -20,7 +20,7 @@
   <% unless current_user %>
     <p>You must <%= link_to 'register', registration_path %> or <%= link_to 'log in', login_path %> to checkout.</p>
   <% end %>
-  
+
   <% if current_user %>
     <%= button_to "Check Out", profile_orders_path %>
   <% end %>

@@ -4,7 +4,7 @@ describe 'USER SHOW PAGE' do
   context 'As a registered user' do
     it 'shows user profile information' do
       user_1 = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
+        zip: '12345', email: 'email1@aol.com', password: 'password1', role: 0, enabled: true)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
@@ -24,7 +24,7 @@ describe 'USER SHOW PAGE' do
 
     it 'allows me to go to a form to edit my data that has all my data pre-entered' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+        zip: '12345', email: 'email1@aol.com', password: 'password1')
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
@@ -47,7 +47,7 @@ describe 'USER SHOW PAGE' do
       old_name = 'User One'
       old_city = 'City One'
       user = User.create(name: old_name, street: 'Street One', city: old_city, state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+        zip: '12345', email: 'email1@aol.com', password: 'password1')
 
         new_name = 'NEW NAME'
         new_city = 'NEW CITY'
@@ -76,7 +76,7 @@ describe 'USER SHOW PAGE' do
       old_street = 'Street One'
       old_city = 'City One'
       old_state = 'State1'
-      old_zip = 'ZIP1'
+      old_zip = '12345'
       old_email = 'email1@aol.com'
       user = User.create(name: old_name, street: old_street, city: old_city, state: old_state,
         zip: old_zip, email: old_email, password: 'password1')
@@ -85,7 +85,7 @@ describe 'USER SHOW PAGE' do
       new_street = 'New Street'
       new_city = 'NEW CITY'
       new_state = 'New State'
-      new_zip = 'zip2'
+      new_zip = '54321'
       new_email = 'email2@aol.com'
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -118,14 +118,14 @@ describe 'USER SHOW PAGE' do
 
     it 'does not allow me to leave fields blank' do
       user = User.create(name: 'User One', street: 'Street One', city: 'City One', state: 'State1',
-        zip: 'ZIP1', email: 'email1@aol.com', password: 'password1')
+        zip: '12345', email: 'email1@aol.com', password: 'password1')
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       visit profile_edit_path
 
       fill_in :user_name, with: ''
       click_button 'Submit'
-      
+
       user = User.find(user.id)
       expect(page).to have_content("Name can't be blank")
       expect(find_field("user[name]").value).to eq(user.name)
@@ -135,24 +135,24 @@ describe 'USER SHOW PAGE' do
       expect(find_field("user[zip]").value).to eq(user.zip)
       expect(find_field("user[email]").value).to eq(user.email)
       expect(find_field("user[password]").value).to eq(nil)
-      
+
       fill_in :user_street, with: ''
       fill_in :user_city, with: ''
       fill_in :user_state, with: ''
       fill_in :user_zip, with: ''
       click_button 'Submit'
 
-      user = User.find(user.id)      
+      user = User.find(user.id)
       expect(page).to have_content("Street can't be blank")
       expect(page).to have_content("City can't be blank")
       expect(page).to have_content("State can't be blank")
       expect(page).to have_content("Zip can't be blank")
     end
-    
+
     it 'does not allow me to update my email address to one that is already in use' do
       other_email = 'other@aol.com'
       create(:user, email: other_email)
-      
+
       email = 'email@aol.com'
       user = create(:user, email: email)
 
@@ -162,7 +162,7 @@ describe 'USER SHOW PAGE' do
 
       fill_in :user_email, with: other_email
       click_button 'Submit'
-      
+
       user = User.find(user.id)
 
       expect(page).to have_content('Email has already been taken')
@@ -216,7 +216,7 @@ describe 'USER SHOW PAGE' do
         expect(page).to have_content("Item count: 2")
         expect(page).to have_content("Grand total: $8.00")
       end
-    end 
+    end
     it 'should not see a link to upgrade' do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)

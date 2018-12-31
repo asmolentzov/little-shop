@@ -7,7 +7,9 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @user_role = @user.role
+    if @user.role == 'merchant'
+      redirect_to admin_merchant_path(@user)
+    end
     @orders = @user.orders
   end
 
@@ -29,7 +31,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def upgrade
-      user = User.find(params[:merchant_id])
+      user = User.find(params[:user_id])
       user.update(:role => 1)
       flash[:notice] = 'This user has been upgraded.'
       redirect_to admin_merchant_path(user)
@@ -45,16 +47,11 @@ class Admin::UsersController < ApplicationController
       user.update(:enabled => true)
       flash[:notice] = "#{user.name} is now enabled"
     end
-
-    if user.role == "merchant"
-      redirect_to merchants_path
-    else
-      redirect_to admin_users_path
-    end
+    redirect_to admin_users_path
   end
 
   def edit
-    @user = User.find(params[:id])
+      @user = User.find(params[:id])
   end
 
   private
@@ -62,5 +59,4 @@ class Admin::UsersController < ApplicationController
   def user_params
       params.require(:user).permit(:name, :street, :city, :state, :zip, :email, :password)
   end
-
 end

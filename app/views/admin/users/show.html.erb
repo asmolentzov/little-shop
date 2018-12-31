@@ -5,10 +5,9 @@
 <%= @user.zip %>
 <%= @user.email %>
 
-
-<% if @user_role == 'default' %>
   <%= link_to 'Edit Profile', edit_admin_user_path(@user.id)%>
-  <%= link_to 'Upgrade to Merchant', admin_merchant_upgrade_path(@user.id), method: :patch %>
+  <%= link_to 'Upgrade to Merchant', admin_user_upgrade_path(@user.id), method: :patch %>
+
 <h1> Orders </h1>
 <% @orders.each do |order| %>
   <div id="order-<%=order.id%>">
@@ -21,8 +20,4 @@
       <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
     </ul>
   </div>
-<% end %>
-</div>
-<% elsif @user_role == 'merchant' %>
-  <%= link_to 'My Items', dashboard_items_path %>
 <% end %>

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :require_merchant_user, only: [:show]
 
   def index
     if current_admin?
@@ -36,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def update
