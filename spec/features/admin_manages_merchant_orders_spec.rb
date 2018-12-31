@@ -228,7 +228,7 @@ describe 'As an admin user' do
       expect(page).to have_content(item_3.name)
     end
     
-    it 'should allow me to disable items' do
+    it 'should allow me to disable and enable items' do
       visit admin_merchant_items_path(@merchant)
 
       within("#item-#{@item.id}") do
@@ -238,7 +238,9 @@ describe 'As an admin user' do
 
       expect(current_path).to eq(admin_merchant_items_path(@merchant))
       expect(page).to have_content("#{@item.name} is no longer for sale.")
-
+      @item = Item.find(@item.id)
+      expect(@item.enabled).to eq(false)
+      
       within("#item-#{@item.id}") do
         expect(page).to have_content(@item.id)
         expect(page).to have_content('This item is disabled')
@@ -250,6 +252,29 @@ describe 'As an admin user' do
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Enable this item')
         expect(page).to_not have_link('Disable this item')
+        expect(page).to have_link('Delete this item')
+      end
+      
+      within("#item-#{@item.id}") do
+       click_on('Enable this item')
+      end
+      
+      expect(current_path).to eq(admin_merchant_items_path(@merchant))
+      expect(page).to have_content("#{@item.name} is now available for sale.")
+      @item = Item.find(@item.id)
+      expect(@item.enabled).to eq(true)
+      
+      within("#item-#{@item.id}") do
+        expect(page).to have_content(@item.id)
+        expect(page).to_not have_content('This item is disabled')
+        expect(page).to have_content('This item is enabled')
+        expect(page).to have_content(@item.name)
+        expect(page).to have_css("img[src*='#{@item.image_link}']")
+        expect(page).to have_content(@item.current_price)
+        expect(page).to have_content(@item.inventory)
+        expect(page).to have_link('Edit this item')
+        expect(page).to_not have_link('Enable this item')
+        expect(page).to have_link('Disable this item')
         expect(page).to have_link('Delete this item')
       end
     end

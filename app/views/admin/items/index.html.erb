@@ -31,10 +31,10 @@
     <% end %>
     <% if item.enabled %>
       <p>This item is enabled.</p>
-      <%= link_to 'Disable this item', dashboard_item_path(item), method: :put %>
+      <%= link_to 'Disable this item', admin_merchant_item_path(@merchant, item), method: :put %>
     <% else %>
       <p>This item is disabled.</p>
-      <%= link_to 'Enable this item', dashboard_item_path(item), method: :put %>
+      <%= link_to 'Enable this item', admin_merchant_item_path(@merchant, item), method: :put %>
     <% end %>
   </div>
 <% end  %>
