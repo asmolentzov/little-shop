@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- html, body{
+body{
      margin: 0;
      padding: 0;
      min-width: 100%;
@@ -22,11 +22,8 @@
      min-height: 100%;
      height: 100vh;
      max-height: 100%;
- }
-
- body {
-   font-family: 'Ubuntu', sans-serif;
- }
+     font-family: 'Ubuntu', sans-serif;
+   }
 
  .welcome {
    text-align: center;
@@ -39,8 +36,8 @@
 }
 
 .thumbnails {
-  max-width: 150px;
-  max-height: 150px;
+  max-height: 50px;
+  max-width: 50px;
 }
 
 .show-image {
@@ -53,7 +50,13 @@
   grid-row: 2 / span 7;
 }
 
-div.flex-container, div.nav-flex-container{
+div.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+div.nav-flex-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -63,9 +66,9 @@ div.nav-flex-container {
   justify-content: space-between;
 }
 
-div.flex-items, div.nav-flex-items {
-  flex: 0 1 auto;
-  border: 1px solid red;
+div.nav-flex-items {
+flex: 0 1 auto;
+border: 1px solid red;
 }
 
 div#nav {
@@ -82,4 +85,34 @@ div#cart-identity-nav ul, #user-functions ul {
 #cart-identity-nav ul li, #user-functions ul li {
   margin-left: 20px;
   margin-right: 20px;
+}
+
+div.stats {
+  display: flex;
+  flex-direction: row;
+}
+
+
+div.flex-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 25px;
+}
+
+div.item {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  word-wrap: normal;
+  width: 150px;
+  height: 300px;
+  border-color: black;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  border-top-style: dotted;
+  border-right-style: dotted;
+  margin: 10px;
 }
