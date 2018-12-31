@@ -13,9 +13,9 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
     #Item belonging to Mercant
     item_1 = Item.create(name: 'IBM PCXT 5160', user: merchant, inventory: 3,
-    current_price: 399500, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'Yesterday in personal computing technology')
+    current_price: 399500, enabled: true, image_link: 'https://picsum.photos/g/200/300', description: 'Yesterday in personal computing technology')
     item_2 = Item.create(name: 'IBM PCXT 5161', user: merchant, inventory: 3,
-    current_price: 400000, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'The latest in personal computing technology')
+    current_price: 400000, enabled: true, image_link: 'https://picsum.photos/5472/3648?image=1083', description: 'The latest in personal computing technology')
 
     visit items_path
 
@@ -36,12 +36,11 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     within "#item-#{item_1.id}" do
       expect(page).to have_content(item_1.name)
-      expect(page).to have_css("img[src*='#{item_1.image_link}']")
       expect(page).to have_content(item_1.user.name)
+      expect(page).to have_css("img[src*='#{item_1.image_link}']")
       expect(page).to have_content(number_to_currency(item_1.current_price/100))
       expect(page).to have_content("Quantity: #{quantity_1}")
       expect(page).to have_content("Subtotal: #{number_to_currency(subtotal_1)}")
-
       expect(page).to_not have_content(item_2.name)
     end
 
@@ -132,14 +131,14 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     expect(page).to_not have_content(item_3.description)
     expect(page).to have_content("Grand Total: $0.00")
   end
-  
+
   it 'allows registered users to check out' do
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    
+
     item_1 = create(:item)
     item_2 = create(:item)
-    
+
     visit items_path
     within "#item-#{item_1.id}" do
       click_on 'Add item'
@@ -147,14 +146,14 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_2.id}" do
       click_on 'Add item'
     end
-    
+
     visit cart_path
     click_on("Check Out")
-    
+
     order = Order.last
     expect(order.items).to eq([item_1, item_2])
     expect(order.status).to eq('pending')
-    
+
     expect(current_path).to eq(profile_path)
     expect(page).to have_content("Your order has been created!")
     expect(page).to have_content("Order: #{order.id}")
@@ -197,7 +196,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_2.id}" do
       click_on 'Add one'
     end
-    
+
     expect(page).to have_content("The merchant does not have enough inventory")
 
     within "#item-#{item_2.id}" do
