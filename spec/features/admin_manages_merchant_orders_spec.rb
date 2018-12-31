@@ -41,8 +41,8 @@ describe 'As an admin user' do
       
       click_on('Add New Item')
 
-      expect(current_path).to eq("admin/merchants/#{@merchant.id}/items/new")
-      expect(current_path).to eq(new_admin_item_path)
+      expect(current_path).to eq("/admin/merchants/#{@merchant.id}/items/new")
+      expect(current_path).to eq(new_admin_merchant_item_path(@merchant))
 
       fill_in :item_name, with: 'item_1'
       fill_in :item_description, with: 'this is a great item_1'
@@ -54,8 +54,10 @@ describe 'As an admin user' do
       expect(current_path).to eq(admin_merchant_items_path(@merchant))
       expect(page).to have_content('Your new item has been created')
 
-      item_1 = Item.all.first
-
+      item_1 = Item.last
+      expect(item_1.name).to eq('item_1')
+      expect(item_1.description).to eq('this is a great item_1')
+      
       within("#item-#{item_1.id}") do
         expect(page).to have_content(item_1.id)
         expect(page).to have_content(item_1.name)
