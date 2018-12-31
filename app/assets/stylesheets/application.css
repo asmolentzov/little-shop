@@ -22,6 +22,8 @@
      min-height: 100%;
      height: 100vh;
      max-height: 100%;
+     background-image: url("/assets/pattern.jpg");
+     background-repeat: round;
  }
 
  body {
@@ -64,10 +66,29 @@ div.cart-flex-items {
   flex-direction: row;
   justify-content: space-between;
   margin: 10px;
+  border: 1px solid blue;
+  padding: 5px;
+  background: #e6e9ef;
 }
 
-ul.cart-buttons {
+ul.cart-button-list, ul.cart-item-details {
   list-style-type: none;
+}
+
+.cart-buttons, .cart-detail-li{
+  margin: 10px;
+}
+
+.cart-buttons {
+  border-radius: 5px;
+}
+
+.cart-bottom {
+  text-align: center;
+  margin: 10px;
+  background: #e6e9ef;
+  width: 300px;
+  justify-content: center;
 }
 
 div.nav-flex-container {
@@ -76,12 +97,26 @@ div.nav-flex-container {
 
 div.flex-items, div.nav-flex-items {
   flex: 0 1 auto !important;
-  border: 1px solid red;
 }
 
 div.flex-items {
   flex-direction: row;
   max-width: 25%;
+  border: 1px solid red;
+  background: #e6e9ef;
+}
+
+div.nav-flex-items {
+  background-color: #7EE8FA;
+  border-radius: 10px;
+  font-weight: bold;
+  color: black;
+}
+
+#grand-total {
+  text-align: right;
+  margin: 20px;
+  background: #e6e9ef;
 }
 
 div#nav {

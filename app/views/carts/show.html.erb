@@ -2,29 +2,31 @@
   <% quantity = @cart.contents[item.id.to_s] %>
   <div class="cart-flex-items" id="item-<%= item.id %>">
     <%= image_tag(item.image_link, class:"thumbnails", id:"item-#{item.id}-img") %>
-    <ul>
-      <li>Item: <%= item.name %></li>
-      <li>Merchant: <%= item.user.name %></li>
-      <li>Price: <%= number_to_currency(item.current_price/100) %></li>
+    <ul class="cart-item-details">
+      <li class="cart-detail-li">Item: <%= item.name %></li>
+      <li class="cart-detail-li">Merchant: <%= item.user.name %></li>
+      <li class="cart-detail-li">Price: <%= number_to_currency(item.current_price/100) %></li>
     </ul>
-    <ul class="cart-buttons">
-      <%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %>
-      <%= button_to "Add one", cart_item_path(item, quantity: 1), method: :patch %>
-      <%= button_to "Remove one", cart_item_path(item, quantity: -1), method: :patch %>
+    <ul class="cart-button-list">
+      <li class="cart-buttons"><%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %></li>
+      <li class="cart-buttons"><%= button_to "Add one", cart_item_path(item, quantity: 1), method: :patch %></li>
+      <li class="cart-buttons"><%= button_to "Remove one", cart_item_path(item, quantity: -1), method: :patch %></li>
     </ul>
     <p>Quantity: <%= quantity %></p>
     <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
   </div>
 <% end  %>
-<p>Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
-  <% unless @cart.cart_count == 0 %>
-    <%= link_to "Empty Cart", cart_path, method: :delete %>
-  <% end %>
+<p id="grand-total">Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
+  <div class="cart-bottom">
+    <% unless @cart.cart_count == 0 %>
+      <%= link_to "Empty Cart", cart_path, method: :delete %>
+    <% end %>
 
-  <% unless current_user %>
-    <p>You must <%= link_to 'register', registration_path %> or <%= link_to 'log in', login_path %> to checkout.</p>
-  <% end %>
+    <% unless current_user %>
+      <p>You must <%= link_to 'register', registration_path %> or <%= link_to 'log in', login_path %> to checkout.</p>
+    <% end %>
 
-  <% if current_user %>
-    <%= button_to "Check Out", profile_orders_path %>
-  <% end %>
+    <% if current_user %>
+      <%= button_to "Check Out", profile_orders_path %>
+    <% end %>
+  </div>
