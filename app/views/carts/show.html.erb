@@ -1,13 +1,17 @@
 <% @cart_items.each do |item| %>
   <% quantity = @cart.contents[item.id.to_s] %>
-  <div id="item-<%= item.id %>">
-    <p><%= item.name %></p>
+  <div class="cart-flex-items" id="item-<%= item.id %>">
     <%= image_tag(item.image_link, class:"thumbnails", id:"item-#{item.id}-img") %>
-    <p><%= item.user.name %></p>
-    <p><%= number_to_currency(item.current_price/100) %></p>
-    <%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %>
-    <%= button_to "Add one", cart_item_path(item, quantity: 1), method: :patch %>
-    <%= button_to "Remove one", cart_item_path(item, quantity: -1), method: :patch %>
+    <ul>
+      <li>Item: <%= item.name %></li>
+      <li>Merchant: <%= item.user.name %></li>
+      <li>Price: <%= number_to_currency(item.current_price/100) %></li>
+    </ul>
+    <ul class="cart-buttons">
+      <%= button_to "Remove item", cart_item_path(item, quantity: nil), method: :patch %>
+      <%= button_to "Add one", cart_item_path(item, quantity: 1), method: :patch %>
+      <%= button_to "Remove one", cart_item_path(item, quantity: -1), method: :patch %>
+    </ul>
     <p>Quantity: <%= quantity %></p>
     <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
   </div>

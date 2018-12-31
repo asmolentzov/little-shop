@@ -54,9 +54,20 @@
 }
 
 div.flex-container, div.nav-flex-container{
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+div.cart-flex-items {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+ul.cart-buttons {
+  list-style-type: none;
 }
 
 div.nav-flex-container {
@@ -64,8 +75,13 @@ div.nav-flex-container {
 }
 
 div.flex-items, div.nav-flex-items {
-  flex: 0 1 auto;
+  flex: 0 1 auto !important;
   border: 1px solid red;
+}
+
+div.flex-items {
+  flex-direction: row;
+  max-width: 25%;
 }
 
 div#nav {
