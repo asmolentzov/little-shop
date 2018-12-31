@@ -50,6 +50,13 @@ class Admin::ItemsController < ApplicationController
     redirect_to admin_merchant_items_path(item.user)
   end
   
+  def destroy
+    item = Item.find(params[:id])
+    Item.delete(item)
+    flash[:notice] = "Item ##{item.id} has been deleted"
+    redirect_to admin_merchant_items_path(item.user)
+  end
+  
   private
   
   def item_params

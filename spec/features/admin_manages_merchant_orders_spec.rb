@@ -206,5 +206,26 @@ describe 'As an admin user' do
       end
       expect(disabled_item.enabled).to eq(false)
     end
+    
+    it 'should allow me to delete items' do
+      item_2 = create(:item, user: @merchant)
+      item_3 = create(:item, user: @merchant)
+      
+      visit admin_merchant_items_path(@merchant)
+      
+      expect(page).to have_content(@item.name)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
+      within "#item-#{@item.id}" do
+        click_on 'Delete this item'
+      end
+
+      expect(current_path).to eq(admin_merchant_items_path(@merchant))
+      expect(page).to have_content("Item ##{@item.id} has been deleted")
+      expect(page).to_not have_content(@item.name)
+      expect(page).to_not have_content(@item.description)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
+    end
   end
 end
