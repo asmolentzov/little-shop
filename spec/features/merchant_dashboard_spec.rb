@@ -128,7 +128,7 @@ describe 'as a merchant' do
       #expect(page).to have_content("User with the most orders: #{user_3.name}")
       #expect(page).to have_content("User buying the most items: #{user_5.name}")
       #expect(page).to have_content("Three highest spending users: #{user_7.name}, #{user_5.name}, #{user_6.name}")
-      expect(page).to have_content("Must uncomment tests above!")
+      expect(page).to have_content("Must uncomment tests above and make them work!")
     end
   end
 end

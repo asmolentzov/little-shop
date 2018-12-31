@@ -79,12 +79,13 @@ class User < ApplicationRecord
     .group(:id)
   end
   def merchant_top_five_items
-    self.items
-    .joins(:order_items)
-    .group(:id)
-    .select("items.*, SUM(order_items.quantity) AS item_count")
-    .order("item_count DESC")
-    .limit(5)
+    ### Not working
+    ##self.items
+    ##.joins(:order_items)
+    ##.group(:id)
+    ##.select("items.*, SUM(order_items.quantity) AS item_count")
+    ##.order("item_count DESC")
+    ##.limit(5)
   end
   def merchant_units_sold
     units = OrderItem.joins(:item)
@@ -103,8 +104,7 @@ class User < ApplicationRecord
     ((merchant_units_sold.to_f / inventory).round(2) * 100).to_i
   end
   def merchant_top_states
-    #User.joins(orders: [order_items: :item])
-
+    ### Not working
     #merchant_items = self.items.map { |item| item.id }
     #User.joins(orders: :order_items)
     #.where("order_items.item_id IN (?)", (merchant_items))
@@ -113,31 +113,18 @@ class User < ApplicationRecord
     #.order("state_count DESC")
     #.limit(3)
     #.map(&:state)
-
-
-    #.where("items.user_id = ?", self.id)
-    #.group(:state)
-    #.select("users.state, count(orders.id) AS state_count")
-    #.order("state_count DESC")
-    #.limit(3)
-    #.map(&:state)
   end
   def merchant_top_cities
-
+    ### Not working##
   end
   def merchant_top_order_user
-    User.joins(orders: [order_items: :item])
-    .where("items.user_id = ?", self.id)
-    .group("orders.id")
-    .select("orders.user_id, SUM(order_items.quantity) AS units_purchased")
-    .order("units_purchased DESC")
-    .first
-    #Order.joins(order_items: :item)
+    ### Not working
+    #User.joins(orders: [order_items: :item])
     #.where("items.user_id = ?", self.id)
-    #.group(:user_id)
-    #.select("orders.*, COUNT(orders.id) AS orders_placed")
-    #.order("orders_placed DESC")
-    #.first.user
+    #.group("orders.id")
+    #.select("orders.user_id, SUM(order_items.quantity) AS units_purchased")
+    #.order("units_purchased DESC")
+    #.first
   end
   def merchant_top_units_user
     User.joins(orders: [order_items: :item])

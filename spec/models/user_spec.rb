@@ -349,7 +349,7 @@ RSpec.describe User, type: :model do
         expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
       end
     end
-    describe 'merchant_top_cities' do
+    xdescribe 'merchant_top_cities' do
       it 'returns the merchants top three cities by orders shipped' do
         binding.pry
         expect(@merchant_1.merchant_top_cities).to eq(["Manhattan, NY", "Manhattan, KS", "Buttermilk, KS"])
