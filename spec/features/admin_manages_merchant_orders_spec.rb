@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'As an admin user' do
+  include ActionView::Helpers::NumberHelper
+  
   before(:each) do
     @merchant = create(:merchant)
     @item = create(:item, user: @merchant)
@@ -63,7 +65,7 @@ describe 'As an admin user' do
         expect(page).to have_content(item_1.name)
         expect(page).to have_css("img[src*='#{item_1.image_link}']")
         expect(page).to_not have_css("img[src*='https://picsum.photos/200/300?image=0']")
-        expect(page).to have_content(item_1.current_price)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100.0))
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -134,7 +136,7 @@ describe 'As an admin user' do
         expect(page).to have_content(new_name)
         expect(page).to have_content(new_desc)
         expect(page).to have_css("img[src='#{new_img}']")
-        expect(page).to have_content(new_price)
+        expect(page).to have_content(number_to_currency(new_price / 100.0))
         expect(page).to have_content(new_inventory)
         expect(page).to have_link("Disable this item")
       end
@@ -247,7 +249,7 @@ describe 'As an admin user' do
         expect(page).to_not have_content('This item is enabled')
         expect(page).to have_content(@item.name)
         expect(page).to have_css("img[src*='#{@item.image_link}']")
-        expect(page).to have_content(@item.current_price)
+        expect(page).to have_content(number_to_currency(@item.current_price / 100.0))
         expect(page).to have_content(@item.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Enable this item')
@@ -270,7 +272,7 @@ describe 'As an admin user' do
         expect(page).to have_content('This item is enabled')
         expect(page).to have_content(@item.name)
         expect(page).to have_css("img[src*='#{@item.image_link}']")
-        expect(page).to have_content(@item.current_price)
+        expect(page).to have_content(number_to_currency(@item.current_price / 100.0))
         expect(page).to have_content(@item.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to_not have_link('Enable this item')

@@ -1,3 +1,4 @@
+<h1>Merchant <%= @merchant.name %>'s Items</h1>
 <h3>Item Statistics:</h3>
 <ul id="top-five-items">
   <% @top_five_items.each do |item| %>
@@ -14,16 +15,16 @@
 
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>" class="flex-items">
-    <p><%= item.id %></p>
-    <p><%= link_to item.name, item_path(item) %></p>
+    <p>Item  #<%= item.id %></p>
+    <h3><%= link_to item.name, item_path(item) %></h3>
     <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
         <%= image_tag(item.image_link, class:"thumbnails") %>
       <% end %>
     </p>
-    <p><%= item.user.name %></p>
+    <p>Sold By: <%= item.user.name %></p>
     <p><%= item.description %></p>
-    <p><%= item.inventory %></p>
-    <p><%= item.current_price %></p>
+    <p>In Stock: <%= item.inventory %></p>
+    <p>Price: <%= number_to_currency(item.current_price / 100.0) %></p>
 
     <%= link_to 'Edit this item', edit_admin_merchant_item_path(@merchant, item) %>
     <% if item.order_items.empty? %>

@@ -1,3 +1,4 @@
+<h1>My Items</h1>
 <h3>Item Statistics:</h3>
 <ul id="top-five-items">
   <% @top_five_items.each do |item| %>
@@ -23,7 +24,7 @@
     <p>Sold By: <%= item.user.name %></p>
     <p><%= item.description %></p>
     <p>In Stock: <%= item.inventory %></p>
-    <p>Price: <%= number_to_currency(item.current_price / 100) %></p>
+    <p>Price: <%= number_to_currency(item.current_price / 100.0) %></p>
 
     <%= link_to 'Edit this item', edit_dashboard_item_path(item) %>
     <% if item.order_items.empty? %>
