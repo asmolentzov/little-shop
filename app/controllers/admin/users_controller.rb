@@ -29,14 +29,14 @@ class Admin::UsersController < ApplicationController
   end
 
   def upgrade
-      user = User.find(params[:format])
+      user = User.find(params[:merchant_id])
       user.update(:role => 1)
       flash[:notice] = 'This user has been upgraded.'
       redirect_to admin_merchant_path(user)
   end
 
   def enable
-    user = User.find(params[:format])
+      user = User.find(params[:user_id])
     if user.enabled == true
       user.update(:enabled => false)
       flash[:notice] = "#{user.name} is now disabled"
@@ -54,7 +54,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:format])
+    @user = User.find(params[:id])
   end
 
   private
