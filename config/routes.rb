@@ -17,12 +17,15 @@ Rails.application.routes.draw do
   resources :carts, only: [:create]
 
   namespace :admin do
-    resources :users, only: [:index, :show, :update]
-    patch 'user/enable', to: "users#enable"
-    get '/edit', to: "users#edit"
+    resources :users, only: [:index, :show, :update, :edit] do
+     patch '/enable', to: "users#enable"
+    end
+
     resources :orders, only: [:show, :update]
-    resources :users, as: :merchants, only: [:index, :show, :update]
-    patch '/merchant/upgrade', to: "users#upgrade"
+    resources :users, as: :merchants, only: [:index, :show, :update] do
+      patch '/upgrade', to: "users#upgrade"
+    end
+
   end
 
   namespace :profile do

@@ -1,5 +1,5 @@
 
-<%= form_for @user, :url => {:action => "update", :id => @user.id } do |f| %>
+<%= form_for @user do |f| %>
   <ul>
   <% if @errors %>
     <% @errors.full_messages.each do |error| %>
