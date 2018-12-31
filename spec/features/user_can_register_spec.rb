@@ -17,7 +17,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_street, with: "Street One"
         fill_in :user_city, with: "City One"
         fill_in :user_state, with: "State One"
-        fill_in :user_zip, with: "ZIP1"
+        fill_in :user_zip, with: "12345"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
         click_on 'Submit'
@@ -42,7 +42,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_street, with: "Street One"
         fill_in :user_city, with: "City One"
         fill_in :user_state, with: "State One"
-        fill_in :user_zip, with: "ZIP1"
+        fill_in :user_zip, with: "12345"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
         click_on 'Submit'
@@ -52,7 +52,7 @@ describe 'as a visitor, when I visit /' do
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
         expect(find_field("user[state]").value).to eq("State One")
-        expect(find_field("user[zip]").value).to eq("ZIP1")
+        expect(find_field("user[zip]").value).to eq("12345")
         expect(find_field("user[password]").value).to eq(nil)
         expect(find_field("user[email]").value).to eq(nil)
       end
@@ -69,7 +69,7 @@ describe 'as a visitor, when I visit /' do
         fill_in :user_street, with: "Street One"
         fill_in :user_city, with: "City One"
         fill_in :user_state, with: "State One"
-        fill_in :user_zip, with: "ZIP1"
+        fill_in :user_zip, with: "12345"
         fill_in :user_email, with: "email1@aol.com"
         fill_in :user_password, with: "password1"
         click_on 'Submit'
@@ -79,7 +79,7 @@ describe 'as a visitor, when I visit /' do
         expect(find_field("user[street]").value).to eq("Street One")
         expect(find_field("user[city]").value).to eq("City One")
         expect(find_field("user[state]").value).to eq("State One")
-        expect(find_field("user[zip]").value).to eq("ZIP1")
+        expect(find_field("user[zip]").value).to eq("12345")
         expect(find_field("user[password]").value).to eq(nil)
         expect(find_field("user[email]").value).to eq(nil)
       end
@@ -105,10 +105,10 @@ describe 'as a visitor, when I visit /' do
 
         expect(find_field("user[zip]").value).to eq("")
         expect(find_field("user[password]").value).to eq(nil)
-        
+
         visit registration_path
         click_on 'Submit'
-        
+
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Street can't be blank")
         expect(page).to have_content("City can't be blank")

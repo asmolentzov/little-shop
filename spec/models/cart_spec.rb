@@ -17,7 +17,7 @@ RSpec.describe Cart do
     describe '#grand_total' do
       it 'should return the grand total of all items and quantities' do
         merchant = User.create!(name: 'User Five', street: 'Street Five', city: 'City Five', state: 'State5',
-        zip: 'ZIP5', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
+        zip: 'ZIP51', email: 'email5@aol.com', password: 'password5', role: 1, enabled: true)
         #Item belonging to Mercant
         item_1 = Item.create!(name: 'IBM PCXT 5160', user: merchant, inventory: 3,
         current_price: 399500, enabled: true, image_link: 'ibm-pcxt5160.jpg', description: 'Yesterday in personal computing technology')
@@ -30,27 +30,27 @@ RSpec.describe Cart do
         expect(cart.grand_total).to eq(total)
       end
     end
-    
+
     describe '#cart_count' do
       it 'should return the count of items in the cart' do
         cart = Cart.new({})
         expect(cart.cart_count).to eq(0)
-        
+
         cart = Cart.new({'1' => 1})
         expect(cart.cart_count).to eq(1)
-        
+
         cart = Cart.new({'1' => 2, '2' => 1})
         expect(cart.cart_count).to eq(3)
       end
     end
-    
+
     describe '#empty' do
       it 'should empty the cart' do
         cart = Cart.new({'1' => 2, '2' => 1})
         expect(cart.cart_count).to eq(3)
-        
+
         cart.empty
-        
+
         expect(cart.cart_count).to eq(0)
       end
     end
