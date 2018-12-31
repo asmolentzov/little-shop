@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'as any user' do
+  include ActionView::Helpers::NumberHelper
+  
   context "when I visit /items and visit an item's show page" do
     it 'should see information about that item' do
       user_1 = User.create(name: "user_1", password: "test", street: "street",
@@ -23,7 +25,7 @@ describe 'as any user' do
       expect(page).to have_content(item_1.user.name)
       expect(page).to have_content(item_1.description)
       expect(page).to have_content(item_1.inventory)
-      expect(page).to have_content(item_1.current_price)
+      expect(page).to have_content(number_to_currency(item_1.current_price / 100.0))
       expect(page).to have_content(item_1.avg_fulfill_time)
       expect(page).to have_button("Add item")
     end
