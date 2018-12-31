@@ -12,11 +12,15 @@ class Admin::ItemsController < ApplicationController
   end
   
   def create
-    item = Item.new(item_params)
-    item.user_id = params[:merchant_id]
-    item.save
-    flash[:success] = "Your new item has been created"
-    redirect_to admin_merchant_items_path
+    @item = Item.new(item_params)
+    @item.user_id = params[:merchant_id]
+    if @item.save
+      flash[:success] = "Your new item has been created"
+      redirect_to admin_merchant_items_path
+    else
+      @errors = @item.errors 
+      render :new
+    end
   end
   
   private
