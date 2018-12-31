@@ -1,9 +1,12 @@
+<h1>All Items</h1>
 <h3>Item Statistics:</h3>
+<p>Most Popular Items:</p>
 <ul id="top-five-items">
   <% @top_five_items.each do |item| %>
   <li><%= item.name %></li>
   <% end %>
 </ul>
+<p>Least Popular Items:</p>
 <ul id="bottom-five-items">
   <% @bottom_five_items.each do |item| %>
   <li><%= item.name %></li>
@@ -12,15 +15,15 @@
 
 <% @items.each do |item| %>
   <div id="item-<%= item.id %>" class="flex-items">
-    <p><%= link_to item.name, item_path(item) %></p>
+    <h3><%= link_to item.name, item_path(item) %></h3>
     <p><%= link_to(item_path(item), id: "item-#{item.id}-img") do %>
         <%= image_tag(item.image_link, class:"thumbnails") %>
       <% end %>
     </p>
-    <p><%= item.user.name %></p>
+    <p>Sold By: <%= item.user.name %></p>
     <p><%= item.description %></p>
-    <p><%= item.inventory %></p>
-    <p><%= item.current_price %></p>
+    <p>In Stock: <%= item.inventory %></p>
+    <p>Price: <%= number_to_currency(item.current_price / 100) %></p>
     <% if current_default? || !(current_user) %>
       <%= button_to 'Add item', carts_path(item_id: item.id) %>
     <% end %>
