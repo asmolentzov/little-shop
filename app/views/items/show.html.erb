@@ -5,4 +5,6 @@
 <p>In Stock: <%= @item.inventory %></p>
 <p>Price: <%= number_to_currency(@item.current_price / 100.0) %></p>
 <p>Average time it takes merchant to fulfill this item: <%= @item.avg_fulfill_time %>
-<%= button_to "Add item", carts_path(item_id: @item.id) %>
+<% if current_default? || !(current_user) %>
+  <%= button_to "Add item", carts_path(item_id: @item.id) %>
+<% end %>
