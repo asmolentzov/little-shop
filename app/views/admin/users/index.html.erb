@@ -4,9 +4,9 @@
       <li><%= link_to user.name, admin_user_path(user) %></li>
       <li><%= user.created_at %></li>
       <% if user.enabled %>
-        <li><%= button_to 'disable', admin_user_path(user.id), method: :patch %></li>
+        <%= link_to 'disable', admin_user_enable_path(user.id), method: :patch %>
       <% else %>
-        <li><%= button_to 'enable', admin_user_path(user.id), method: :patch %></li>
+        <%= link_to 'enable', admin_user_enable_path(user.id), method: :patch %>
       <% end %>
     </ul>
   </div>

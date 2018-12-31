@@ -24,7 +24,7 @@ describe 'As an admin' do
     expect(page).to have_content(merchant_1.city)
     expect(page).to have_content(merchant_1.state)
     expect(page).to have_link(merchant_1.name)
-    expect(page).to have_button("disable")
+    expect(page).to have_link("Disable")
 
     expect(page).to_not have_content(merchant_2.name)
     expect(page).to_not have_content(merchant_2.city)
@@ -37,7 +37,7 @@ describe 'As an admin' do
     expect(page).to have_content(merchant_2.city)
     expect(page).to have_content(merchant_2.state)
     expect(page).to have_link(merchant_2.name)
-    expect(page).to have_button("enable")
+    expect(page).to have_link("Enable")
 
     expect(page).to_not have_content(merchant_1.name)
     expect(page).to_not have_content(merchant_1.city)
@@ -91,7 +91,7 @@ describe 'As an admin' do
 
     within "#merchant-#{merchant_2.id}" do
 
-    click_on "enable"
+    click_on "Enable"
 
     end
 
@@ -101,7 +101,7 @@ describe 'As an admin' do
 
     merchant = User.find(merchant_2.id)
 
-    expect(page).to have_button("disable")
+    expect(page).to have_link("Disable")
 
     expect(merchant.enabled).to be true
 
@@ -122,7 +122,7 @@ describe 'As an admin' do
 
     within "#merchant-#{merchant_2.id}" do
 
-    click_on "disable"
+    click_on "Disable"
 
     end
 
@@ -132,7 +132,7 @@ describe 'As an admin' do
 
     merchant = User.find(merchant_2.id)
 
-    expect(page).to have_button("enable")
+    expect(page).to have_link("Enable")
 
     expect(merchant.enabled).to be false
 

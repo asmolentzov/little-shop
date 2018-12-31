@@ -1,15 +1,15 @@
 class Admin::MerchantsController < ApplicationController
-  
+
   def show
     @user = User.find(params[:id])
-    if @user.role == 'default' 
+    if @user.role == 'default'
       redirect_to admin_user_path(@user)
     end
     @orders = @user.orders
   end
-  
+
   def update
-    user = User.find(params[:id])
+    user = User.find(params[:merchant_id])
 
     if user.enabled == true
       user.update(:enabled => false)

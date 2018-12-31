@@ -11,18 +11,25 @@ Rails.application.routes.draw do
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
   get '/merchants', as: :merchants, to: "users#index"
-  
+
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
   resources :carts, only: [:create]
 
   namespace :admin do
-    resources :users, only: [:index, :show, :update]
-    resources :orders, only: [:show, :update]
-    resources :merchants, only: [:index, :show, :update] do
-      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :update, :edit] do
+     patch '/enable', to: "users#enable"
+     patch '/upgrade', to: "users#upgrade"
     end
+
+    resources :orders, only: [:show, :update]
+
+    resources :merchants, only: [:index, :show, :update] do
+     patch '/enable', to: "merchants#update"
+     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
+
   end
 
   namespace :profile do
