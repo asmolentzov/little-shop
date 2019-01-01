@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'as a merchant user' do
+  include ActionView::Helpers::NumberHelper
+  
   context 'when I click on the add new item link' do
     it 'should see a link to add a new item. when I click it, I am taken to a new item page with a form where I can create a new item' do
       merch = create(:merchant)
@@ -33,7 +35,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_1.name)
         expect(page).to have_css("img[src*='#{item_1.image_link}']")
         expect(page).to_not have_css("img[src*='https://picsum.photos/200/300?image=0']")
-        expect(page).to have_content(item_1.current_price)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100))
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -70,7 +72,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_1.id)
         expect(page).to have_content(item_1.name)
         expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
-        expect(page).to have_content(item_1.current_price)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100))
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')

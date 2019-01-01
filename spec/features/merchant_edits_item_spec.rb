@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'As a registered merchant' do
+  include ActionView::Helpers::NumberHelper
+  
   describe 'when I want to edit an item' do
     before(:each) do
       @merchant = create(:merchant)
@@ -40,7 +42,7 @@ describe 'As a registered merchant' do
         expect(page).to have_content(new_name)
         expect(page).to have_content(@item.description)
         expect(page).to have_css("img[src='#{@item.image_link}']")
-        expect(page).to have_content(@item.current_price)
+        expect(page).to have_content(number_to_currency(@item.current_price / 100))
         expect(page).to have_content(@item.inventory)
         expect(page).to have_link("Disable this item")
       end
@@ -70,7 +72,7 @@ describe 'As a registered merchant' do
         expect(page).to have_content(new_name)
         expect(page).to have_content(new_desc)
         expect(page).to have_css("img[src='#{new_img}']")
-        expect(page).to have_content(new_price)
+        expect(page).to have_content(number_to_currency(new_price / 100))
         expect(page).to have_content(new_inventory)
         expect(page).to have_link("Disable this item")
       end

@@ -26,14 +26,14 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
           expect(page).to have_content(item_1.user.name)
           expect(page).to have_content(item_1.inventory)
-          expect(page).to have_content(item_1.current_price)
+          expect(page).to have_content("$#{item_1.current_price / 100}")
         end
 
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_link("#{item_2.name}")
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.inventory)
-        expect(page).to_not have_content(item_2.current_price)
+        expect(page).to_not have_content("$#{item_2.current_price / 100}")
 
         within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
@@ -41,7 +41,7 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
           expect(page).to have_content(item_3.user.name)
           expect(page).to have_content(item_3.inventory)
-          expect(page).to have_content(item_3.current_price)
+          expect(page).to have_content("$#{item_3.current_price / 100}")
         end
 
         page.find(:css, "#item-#{item_1.id}-img").click
@@ -74,13 +74,13 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
           expect(page).to have_content(item_1.user.name)
           expect(page).to have_content(item_1.inventory)
-          expect(page).to have_content(item_1.current_price)
+          expect(page).to have_content("$#{item_1.current_price / 100}")
         end
 
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_link("#{item_2.name}")
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
-        expect(page).to_not have_content(item_2.current_price)
+        expect(page).to_not have_content("$#{item_2.current_price / 100}")
 
         within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
@@ -88,7 +88,7 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
           expect(page).to have_content(item_3.user.name)
           expect(page).to have_content(item_3.inventory)
-          expect(page).to have_content(item_3.current_price)
+          expect(page).to have_content("$#{item_3.current_price / 100}")
         end
 
         page.find(:css, "#item-#{item_1.id}-img").click
@@ -121,14 +121,14 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
           expect(page).to have_content(item_1.user.name)
           expect(page).to have_content(item_1.inventory)
-          expect(page).to have_content(item_1.current_price)
+          expect(page).to have_content("$#{item_1.current_price / 100}")
         end
 
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_link("#{item_2.name}")
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.inventory)
-        expect(page).to_not have_content(item_2.current_price)
+        expect(page).to_not have_content("$#{item_2.current_price / 100}")
 
         within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
@@ -136,7 +136,7 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
           expect(page).to have_content(item_3.user.name)
           expect(page).to have_content(item_3.inventory)
-          expect(page).to have_content(item_3.current_price)
+          expect(page).to have_content("$#{item_3.current_price / 100}")
         end
 
         page.find(:css, "#item-#{item_1.id}-img").click
@@ -166,14 +166,14 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/g/200/300']")
           expect(page).to have_content(item_1.user.name)
           expect(page).to have_content(item_1.inventory)
-          expect(page).to have_content(item_1.current_price)
+          expect(page).to have_content("$#{item_1.current_price / 100}")
         end
 
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_link("#{item_2.name}")
         expect(page).to_not have_css("img[src*='https://picsum.photos/5472/3648?image=1083']")
         expect(page).to_not have_content(item_2.inventory)
-        expect(page).to_not have_content(item_2.current_price)
+        expect(page).to_not have_content("$#{item_2.current_price / 100}")
 
         within("#item-#{item_3.id}") do
           expect(page).to have_content(item_3.name)
@@ -181,7 +181,7 @@ describe 'as a visitor' do
           expect(page).to have_css("img[src*='https://picsum.photos/200/300?image=0']")
           expect(page).to have_content(item_3.user.name)
           expect(page).to have_content(item_3.inventory)
-          expect(page).to have_content(item_3.current_price)
+          expect(page).to have_content("$#{item_3.current_price / 100}")
         end
 
         page.find(:css, "#item-#{item_1.id}-img").click

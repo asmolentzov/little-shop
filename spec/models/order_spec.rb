@@ -79,6 +79,25 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'instance methods' do
+    it 'updates order status to fulfilled if all order items have been fulfilled' do
+      merchant = create(:merchant)
+      user = create(:user)
+
+      item_1 = create(:item, inventory: 6, user: merchant)
+      item_2 = create(:item, inventory: 3, user: merchant)
+
+      order = create(:order, user: user, status: "pending")
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 2, order: order)
+      order_item_2 = create(:fulfilled_order_item, item: item_2, quantity:1, order: order)
+
+      order.update_status_if_fulfilled
+      expect(Order.find(order.id).status).to eq('pending')
+
+      OrderItem.find(order_item_1.id).update(fulfilled: true)
+      order.update_status_if_fulfilled
+      expect(Order.find(order.id).status).to eq('fulfilled')
+    end
+
     it 'returns the quantity of items in an order' do
       order_1 = create(:fulfilled_order)
 
