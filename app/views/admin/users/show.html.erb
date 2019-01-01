@@ -1,23 +1,31 @@
-<%= @user.name %>
-<%= @user.street %>
-<%= @user.city %>
-<%= @user.state %>
-<%= @user.zip %>
-<%= @user.email %>
+<div class="user-box">
+  <ul class="user-info-list">
+    <li><%= @user.name %></li>
+    <li><%= @user.street %></li>
+    <li><%= @user.city %></li>
+    <li><%= @user.state %></li>
+    <li><%= @user.zip %></li>
+    <li><%= @user.email %></li>
+  </ul>
 
-  <%= link_to 'Edit Profile', edit_admin_user_path(@user.id)%>
-  <%= link_to 'Upgrade to Merchant', admin_user_upgrade_path(@user.id), method: :patch %>
+  <p><%= link_to 'Edit Profile', edit_admin_user_path(@user.id)%></p>
+  <p><%= link_to 'Upgrade to Merchant', admin_user_upgrade_path(@user.id), method: :patch %></p>
+</div>
 
-<h1> Orders </h1>
-<% @orders.each do |order| %>
-  <div id="order-<%=order.id%>">
-    <ul>
-      <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
-      <li><%= "Placed on: #{order.created_at} " %></li>
-      <li><%= "Last update: #{order.updated_at} " %></li>
-      <li><%= "Status: #{order.status} " %>
-      <li><%= "Item count: #{order.item_quantity} " %></li>
-      <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
-    </ul>
+<h1 class="orders-header"> Orders </h1>
+<div class="flex-container">
+  <div class="flex-items">
+    <% @orders.each do |order| %>
+      <div class="item" id="order-<%=order.id%>">
+        <ul>
+          <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
+          <li><%= "Placed on: #{order.created_at} " %></li>
+          <li><%= "Last update: #{order.updated_at} " %></li>
+          <li><%= "Status: #{order.status} " %>
+          <li><%= "Item count: #{order.item_quantity} " %></li>
+          <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
