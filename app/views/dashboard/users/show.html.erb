@@ -1,18 +1,24 @@
-<%= current_user.name %>
-<%= current_user.street %>
-<%= current_user.city %>
-<%= current_user.state %>
-<%= current_user.zip %>
-<%= current_user.email %>
+<div class="user">
+  <%= current_user.name %>
+  <%= current_user.street %>
+  <%= current_user.city %>
+  <%= current_user.state %>
+  <%= current_user.zip %>
+  <%= current_user.email %><br/><br/>
+  <%= link_to 'My Items', dashboard_items_path, id:"submit" %>
+</div>
 
-<%= link_to 'My Items', dashboard_items_path %>
-<% @merchant_pending_orders.each do |order| %>
-  <div id="pending-order-<%= order.id %>">
-    <ul>
-      <li><%= link_to "Order ##{order.id}", dashboard_order_path(order) %></li>
-      <li>Placed on: <%= order.created_at.strftime('%B %d, %Y') %></li>
-      <li>My items in order: <%= order.merchant_items_quantity(current_user.id) %></li>
-      <li>My items value: <%= number_to_currency(order.merchant_items_value(current_user.id) / 100) %></li>
-    </ul>
+<div class="flex-container">
+  <div class="flex-items">
+    <% @merchant_pending_orders.each do |order| %>
+      <div id="pending-order-<%= order.id %>">
+        <ul>
+          <li><%= link_to "Order ##{order.id}", dashboard_order_path(order) %></li>
+          <li>Placed on: <%= order.created_at.strftime('%B %d, %Y') %></li>
+          <li>My items in order: <%= order.merchant_items_quantity(current_user.id) %></li>
+          <li>My items value: <%= number_to_currency(order.merchant_items_value(current_user.id) / 100) %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

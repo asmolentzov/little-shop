@@ -2,8 +2,9 @@
 <div class="flex-container">
   <div class="flex-items">
     <% @users.each do |user| %>
-      <div class="item" id="user-links-<%=user.id%>">
-        <ul>
+      <div class="item user-item" id="user-links-<%=user.id%>">
+        <ul class="user-list">
+          <li><%= image_tag('/assets/screetch.jpg', class:"zach") %></li>
           <li><%= link_to user.name, admin_user_path(user) %></li>
           <li><%= user.created_at %></li>
           <% if user.enabled %>

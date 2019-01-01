@@ -18,7 +18,7 @@
   </div>
 <% end  %>
 
-<p id="grand-total">Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
+<p class="item-stats">Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
   <div class="cart-bottom">
     <% unless @cart.cart_count == 0 %>
       <%= link_to "Empty Cart", cart_path, method: :delete %>

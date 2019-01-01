@@ -1,9 +1,11 @@
 <%= form_for @user do |f| %>
   <ul>
   <% if @errors %>
-    <% @errors.full_messages.each do |error| %>
-      <li><%= error %></li>
-    <% end %>
+    <div class="flash">
+      <% @errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </div>
   <% end %>
   </ul>
   <ul class="registration-list">
@@ -23,6 +25,6 @@
     <li><%= f.password_field :password %></li>
     <li><%= f.label :password_confirmation %></li>
     <li><%= f.password_field :password_confirmation %></li>
-    <li><%= f.submit 'Submit' %></li>
+    <li><%= f.submit 'Submit', id:"submit" %></li>
   </ul>
 <% end %>

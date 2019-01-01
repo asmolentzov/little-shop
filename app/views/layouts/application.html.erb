@@ -53,12 +53,15 @@
       <div>
         <h1 class="title">Little Electronics Shop</h1>
       </div>
-    </div>
-    <% if flash.any? %>
-      <% flash.each do |key, value| %>
-        <%= value %>
+      <% if flash.any? %>
+        <div class="flash">
+          <% flash.each do |key, value| %>
+            <%= value %>
+          <% end %>
+        </div>
       <% end %>
-    <% end %>
+    </div>
+
     <div class="main">
 
         <%= yield %>

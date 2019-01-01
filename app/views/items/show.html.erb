@@ -1,10 +1,13 @@
-<h1><%= @item.name %></h1>
-<p><%= image_tag(@item.image_link, class:"show-image") %></p>
-<p>Sold By: <%= @item.user.name %></p>
-<p><%= @item.description %></p>
-<p>In Stock: <%= @item.inventory %></p>
-<p>Price: <%= number_to_currency(@item.current_price / 100.0) %></p>
-<p>Average time it takes merchant to fulfill this item: <%= @item.avg_fulfill_time %>
-<% if current_default? || !(current_user) %>
-  <%= button_to "Add item", carts_path(item_id: @item.id) %>
-<% end %>
+<h1 class="item-name"><%= @item.name %></h1>
+
+<div class="item-show">
+  <p><%= image_tag(@item.image_link, class:"show-image") %></p>
+  <p>Sold By: <%= @item.user.name %></p>
+  <p><%= @item.description %></p>
+  <p>In Stock: <%= @item.inventory %></p>
+  <p>Price: <%= number_to_currency(@item.current_price / 100.0) %></p>
+  <p>Average time it takes merchant to fulfill this item: <%= @item.avg_fulfill_time %>
+  <% if current_default? || !(current_user) %>
+    <%= button_to "Add item", carts_path(item_id: @item.id), id:"submit" %>
+  <% end %>
+</div>

@@ -60,8 +60,9 @@
 <div class="flex-container">
   <div class="flex-items">
     <% @merchants.each do |merchant| %>
-     <div class="item" id="merchant-<%= merchant.id %>">
-       <ul>
+     <div class="item merchant-item" id="merchant-<%= merchant.id %>">
+       <ul class="merchant-list">
+          <li><%= image_tag('/assets/zach.jpeg', class:"zach") %></li>
           <li><%= merchant.name %></li>
           <li><%= merchant.city %></li>
           <li><%= merchant.state %></li>

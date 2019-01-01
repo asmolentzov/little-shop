@@ -1,21 +1,26 @@
-<%= current_user.name %>
-<%= current_user.street %>
-<%= current_user.city %>
-<%= current_user.state %>
-<%= current_user.zip %>
-<%= current_user.email %>
+<div class="user">
+  <%= current_user.name %>
+  <%= current_user.street %>
+  <%= current_user.city %>
+  <%= current_user.state %>
+  <%= current_user.zip %>
+  <%= current_user.email %><br/><br/>
+  <%= link_to 'Edit Profile', profile_edit_path, id:"submit" %>
+</div>
 
-<%= link_to 'Edit Profile', profile_edit_path %>
-
-<% @orders.each do |order| %>
-  <div id="order-<%=order.id%>">
-    <ul>
-      <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
-      <li><%= "Placed on: #{order.created_at} " %></li>
-      <li><%= "Last update: #{order.updated_at} " %></li>
-      <li><%= "Status: #{order.status} " %>
-      <li><%= "Item count: #{order.item_quantity} " %></li>
-      <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
-    </ul>
+<div class="flex-container">
+  <div class="flex-items">
+    <% @orders.each do |order| %>
+      <div class="order" id="order-<%=order.id%>">
+        <ul>
+          <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
+          <li><%= "Placed on: #{order.created_at} " %></li>
+          <li><%= "Last update: #{order.updated_at} " %></li>
+          <li><%= "Status: #{order.status} " %>
+          <li><%= "Item count: #{order.item_quantity} " %></li>
+          <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
