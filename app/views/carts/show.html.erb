@@ -1,3 +1,4 @@
+
 <% @cart_items.each do |item| %>
   <% quantity = @cart.contents[item.id.to_s] %>
   <div class="cart-flex-items" id="item-<%= item.id %>">
@@ -16,6 +17,7 @@
     <p>Subtotal: <%= number_to_currency(quantity * (item.current_price/100)) %></p>
   </div>
 <% end  %>
+
 <p id="grand-total">Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
   <div class="cart-bottom">
     <% unless @cart.cart_count == 0 %>
