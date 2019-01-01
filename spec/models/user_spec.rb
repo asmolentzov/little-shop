@@ -271,38 +271,38 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, order: order_1, item: @item_2, quantity: 2, order_price: 200)
 
       #User_2 orders - Manhattan, KS -- ANOTHER Manhattan, KS
-      order_2 = create(:order, user: @user_2)
+      order_2 = create(:fulfilled_order, user: @user_2)
         create(:fulfilled_order_item, order: order_2, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_2, item: @item_2, quantity: 2, order_price: 300)
-      order_3 = create(:order, user: @user_2)
+      order_3 = create(:fulfilled_order, user: @user_2)
         create(:fulfilled_order_item, order: order_3, item: @item_3, quantity: 3, order_price: 300)
-      order_4 = create(:order, user: @user_2)
+      order_4 = create(:fulfilled_order, user: @user_2)
         create(:fulfilled_order_item, order: order_4, item: @item_4, quantity: 1, order_price: 400)
 
       #User_3 orders - Manhattan, NY -- Top shipped-to city, 2nd state
-      order_5 = create(:order, user: @user_3)
+      order_5 = create(:fulfilled_order, user: @user_3)
         create(:fulfilled_order_item, order: order_5, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_5, item: @item_2, quantity: 2, order_price: 200)
-      order_6 = create(:order, user: @user_3)
+      order_6 = create(:fulfilled_order, user: @user_3)
         create(:fulfilled_order_item, order: order_6, item: @item_3, quantity: 3, order_price: 300)
-      order_7 = create(:order, user: @user_3)
+      order_7 = create(:fulfilled_order, user: @user_3)
         create(:fulfilled_order_item, order: order_7, item: @item_4, quantity: 1, order_price: 400)
-      order_8 = create(:order, user: @user_3)
+      order_8 = create(:fulfilled_order, user: @user_3)
         create(:fulfilled_order_item, order: order_8, item: @item_5, quantity: 2, order_price: 500)
-      order_9 = create(:order, user: @user_3)
+      order_9 = create(:fulfilled_order, user: @user_3)
         create(:fulfilled_order_item, order: order_9, item: @item_6, quantity: 3, order_price: 600)
 
       #User_4 orders - Buttermilk, KS -- 3rd shipped to city
-      order_10 = create(:order, user: @user_4)
+      order_10 = create(:fulfilled_order, user: @user_4)
         create(:fulfilled_order_item, order: order_10, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_10, item: @item_2, quantity: 2, order_price: 200)
-      order_11 = create(:order, user: @user_4)
+      order_11 = create(:fulfilled_order, user: @user_4)
         create(:fulfilled_order_item, order: order_11, item: @item_3, quantity: 2, order_price: 300)
-      order_12 = create(:order, user: @user_4)
+      order_12 = create(:fulfilled_order, user: @user_4)
         create(:fulfilled_order_item, order: order_12, item: @item_4, quantity: 1, order_price: 400)
 
       #User_5 orders - Brigham, UT
-      order_13 = create(:order, user: @user_5)
+      order_13 = create(:fulfilled_order, user: @user_5)
         create(:fulfilled_order_item, order: order_13, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_13, item: @item_2, quantity: 2, order_price: 200)
         create(:fulfilled_order_item, order: order_13, item: @item_3, quantity: 3, order_price: 300)
@@ -313,14 +313,14 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, order: order_13, item: @item_8, quantity: 1, order_price: 57500)
 
       #User_6 orders - Austin, NV -- 3rd shipped-to state
-      order_14 = create(:order, user: @user_6)
+      order_14 = create(:fulfilled_order, user: @user_6)
         create(:fulfilled_order_item, order: order_14, item: @item_1, quantity: 2, order_price: 100)
         create(:fulfilled_order_item, order: order_14, item: @item_2, quantity: 2, order_price: 200)
-      order_15 = create(:order, user: @user_6)
+      order_15 = create(:fulfilled_order, user: @user_6)
         create(:fulfilled_order_item, order: order_15, item: @item_7, quantity: 3, order_price: 12200)
 
       #User_7 orders - Smackover, AK
-      order_16 = create(:order, user: @user_7)
+      order_16 = create(:fulfilled_order, user: @user_7)
         create(:fulfilled_order_item, order: order_16, item: @item_8, quantity: 2, order_price: 57500)
     end
 
