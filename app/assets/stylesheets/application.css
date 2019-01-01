@@ -35,8 +35,14 @@ body{
    background: #e6e9ef;
  }
 
- .hello{
+ .hello {
    background-color: #7EE8FA;
+ }
+
+ .orders-header, .user-box {
+   text-align: center;
+   background-color: #e6e9ef;
+   padding: 10px;
  }
 
  .grid-container {
@@ -107,7 +113,8 @@ div.cart-flex-items {
 }
 
 ul.cart-button-list, ul.cart-item-details,
-ul.registration-list, ul.login-list  {
+ul.registration-list, ul.login-list,
+ul.user-info-list, ul.edit-list  {
   list-style-type: none;
 }
 
@@ -133,14 +140,14 @@ ul.registration-list, ul.login-list  {
   background: #e6e9ef;
 }
 
-ul.registration-list, ul.login-list {
+ul.registration-list, ul.login-list, ul.edit-list {
   background: #e6e9ef;
   width: 200px;
   padding: 30px;
   border-radius: 10px;
 }
 
-ul.registration-list li, ul.login-list li {
+ul.registration-list li, ul.login-list li, ul.edit-list li {
   padding: 5px;
 }
 
