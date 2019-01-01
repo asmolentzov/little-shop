@@ -170,7 +170,6 @@ div#cart-identity-nav ul, #user-functions ul {
 div.stats {
   display: flex;
   flex-direction: row;
-  background: #e6e9ef;
   height: 200px;
 }
 
