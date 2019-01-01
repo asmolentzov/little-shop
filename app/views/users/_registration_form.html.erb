@@ -1,4 +1,4 @@
-<%= form_for @user do |f| %>  
+<%= form_for @user do |f| %>
   <ul>
   <% if @errors %>
     <% @errors.full_messages.each do |error| %>
@@ -6,21 +6,23 @@
     <% end %>
   <% end %>
   </ul>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.label :street %>
-  <%= f.text_field :street %>
-  <%= f.label :city %>
-  <%= f.text_field :city %>
-  <%= f.label :state %>
-  <%= f.text_field :state %>
-  <%= f.label :zip %>
-  <%= f.text_field :zip %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-  <%= f.submit 'Submit' %>
+  <ul class="registration-list">
+    <li><%= f.label :name %></li>
+    <li><%= f.text_field :name %></li>
+    <li><%= f.label :street %></li>
+    <li><%= f.text_field :street %></li>
+    <li><%= f.label :city %></li>
+    <li><%= f.text_field :city %></li>
+    <li><%= f.label :state %></li>
+    <li><%= f.text_field :state %></li>
+    <li><%= f.label :zip %></li>
+    <li><%= f.text_field :zip %></li>
+    <li><%= f.label :email %></li>
+    <li><%= f.text_field :email %></li>
+    <li><%= f.label :password %></li>
+    <li><%= f.password_field :password %></li>
+    <li><%= f.label :password_confirmation %></li>
+    <li><%= f.password_field :password_confirmation %></li>
+    <li><%= f.submit 'Submit' %></li>
+  </ul>
 <% end %>
