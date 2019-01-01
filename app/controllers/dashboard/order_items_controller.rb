@@ -9,6 +9,7 @@ class Dashboard::OrderItemsController < ApplicationController
     Item.find(item.id).update(inventory: (original_qty - order_item.quantity))
     OrderItem.find(order_item.id).update(fulfilled: true)
     flash[:success] = "Order item ##{order_item.id} has been fulfilled!"
+    order.update_status_if_fulfilled
     redirect_to dashboard_order_path(order)
   end
 

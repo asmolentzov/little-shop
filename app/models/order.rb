@@ -25,6 +25,15 @@ class Order < ApplicationRecord
     .group(:id)
   end
 
+  def update_status_if_fulfilled
+    pending_order_items = OrderItem
+      .where("order_id = ?", self.id)
+      .where("fulfilled = false")
+    if pending_order_items == []
+      Order.find(self.id).update(status: "fulfilled")
+    end
+  end
+
   def item_quantity
     OrderItem.where(order_id: id).sum(:quantity)
   end

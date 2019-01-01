@@ -148,5 +148,34 @@ describe 'As a merchant' do
         expect(page).to have_css('p.cannot_fulfill')
       end
     end
+    it 'I fulfill the final item in the order, and the order status changes to Complete' do
+      merchant = create(:merchant)
+      other_merchant = create(:merchant)
+      user = create(:user)
+
+      item_1 = create(:item, inventory: 6, user: merchant)
+      item_2 = create(:item, inventory: 3, user: merchant)
+      item_3 = create(:item, user: other_merchant)
+
+      order = create(:order, user: user)
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 1, order: order)
+      order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 2, order: order)
+      order_item_3 = create(:fulfilled_order_item, item: item_3, quantity:1, order: order)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit dashboard_order_path(order)
+      within("#item-#{item_1.id}") do
+        click_on('Fulfill')
+      end
+      ##Fulfillitng only one of two outstanding order items should not complete the order
+      expect(Order.find(order.id).status).to eq('pending')
+
+      within("#item-#{item_2.id}") do
+        click_on('Fulfill')
+      end
+      ##The order should be completed only on completing both order items
+      expect(Order.find(order.id).status).to eq('fulfilled')
+    end
   end
 end
