@@ -109,7 +109,6 @@ class User < ApplicationRecord
   end
   
   def merchant_top_states
-    ### Not working
     merchant_items = self.items.map(&:id)
     merchant_order_ids = User.joins(orders: :order_items)
     .where("order_items.item_id IN (?)", merchant_items)
@@ -126,8 +125,22 @@ class User < ApplicationRecord
   end
   
   def merchant_top_cities
-    ### Not working##
+    merchant_items = self.items.map(&:id)
+    merchant_order_ids = User.joins(orders: :order_items)
+    .where("order_items.item_id IN (?)", merchant_items)
+    .where("orders.status = ?", 1)
+    .select("orders.*").map(&:id)
+    
+    User.joins(:orders)
+    .where("orders.id IN (?)", merchant_order_ids)
+    .group(:city)
+    .group(:state)
+    .select("users.city, users.state, count(orders.id) AS city_count")
+    .order("city_count DESC")
+    .limit(3)
+    .map { |user| "#{user.city}, #{user.state}" }
   end
+  
   def merchant_top_order_user
     ### Not working
     #User.joins(orders: [order_items: :item])

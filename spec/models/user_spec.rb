@@ -322,6 +322,15 @@ RSpec.describe User, type: :model do
       #User_7 orders - Smackover, AK
       order_16 = create(:fulfilled_order, user: @user_7)
         create(:fulfilled_order_item, order: order_16, item: @item_8, quantity: 2, order_price: 57500)
+        
+      # Adds another merchant to ensure methods are filtering
+      @merchant_2 = create(:merchant)
+      item_1 = create(:item, user: @merchant_2)
+      customer = create(:user)
+      15.times do
+        order = create(:fulfilled_order, user: customer)
+        create(:fulfilled_order_item, item: item_1, order: order)
+      end
     end
 
     describe 'merchant_top_five_items' do
@@ -346,19 +355,12 @@ RSpec.describe User, type: :model do
     end
     describe 'merchant_top_states' do
       it 'returns the merchants top three states by orders shipped' do
-        merchant_2 = create(:merchant)
-        item_1 = create(:item, user: merchant_2)
-        customer = create(:user)
-        15.times do
-          order = create(:fulfilled_order, user: customer)
-          create(:fulfilled_order_item, item: item_1, order: order)
-        end
+
         expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
       end
     end
-    xdescribe 'merchant_top_cities' do
+    describe 'merchant_top_cities' do
       it 'returns the merchants top three cities by orders shipped' do
-        binding.pry
         expect(@merchant_1.merchant_top_cities).to eq(["Manhattan, NY", "Manhattan, KS", "Buttermilk, KS"])
       end
     end
