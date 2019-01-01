@@ -38,7 +38,7 @@
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "Items", items_path %></li>
               <li><%= link_to "Merchants", merchants_path %></li>
-              <% if current_user %>
+              <% if current_default? %>
                 <li><%= link_to "Orders", profile_orders_path %></li>
               <% end %>
               <% if current_merchant? %>
