@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'as a merchant' do
+  include ActionView::Helpers::NumberHelper
+  
   context 'when i visit my dashboard' do
     it 'sees a link to my items' do
       merchant_1 = User.create(name: 'Argellica Jones', street: '9 Slider Ave', city: 'Smithtown', state: 'PA',
@@ -17,7 +19,7 @@ describe 'as a merchant' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_1)
 
-      visit '/dashboard'
+      visit dashboard_path
 
       expect(page).to have_link("My Items")
       expect(page).to_not have_link("Edit Profile")
@@ -26,17 +28,23 @@ describe 'as a merchant' do
       click_on "My Items"
 
       expect(current_path).to eq("/dashboard/items")
+      expect(current_path).to eq(dashboard_items_path)
+      
+      within "#item-#{item_1.id}" do
+        expect(page).to have_content(item_1.name)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100))
+        expect(page).to have_content(item_1.description)
+      end
+      
+      within "#item-#{item_2.id}" do
+        expect(page).to have_content(item_2.name)
+        expect(page).to have_content(number_to_currency(item_2.current_price / 100))
+        expect(page).to have_content(item_2.description)
+      end
 
-      expect(page).to have_content(item_1.name)
-      expect(page).to have_content(item_1.current_price)
-      expect(page).to have_content(item_1.description)
-      expect(page).to have_content(item_2.name)
-      expect(page).to have_content(item_2.current_price)
-      expect(page).to have_content(item_2.description)
       expect(page).to_not have_content(item_3.name)
-      expect(page).to_not have_content(item_3.current_price)
+      expect(page).to_not have_content(number_to_currency(item_3.current_price / 100))
       expect(page).to_not have_content(item_3.description)
-
     end
   end
 end

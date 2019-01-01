@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'as a merchant user' do
+  include ActionView::Helpers::NumberHelper
+  
   context 'when I visit /dashboard/items' do
     it 'should see a link to add an item, and I see each item I have, along with information for each item' do
       merch1 = create(:merchant)
@@ -17,7 +19,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_1.id)
         expect(page).to have_content(item_1.name)
         expect(page).to have_css("img[src*='#{item_1.image_link}']")
-        expect(page).to have_content(item_1.current_price)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100))
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -28,7 +30,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_2.id)
         expect(page).to have_content(item_2.name)
         expect(page).to have_css("img[src*='#{item_2.image_link}']")
-        expect(page).to have_content(item_2.current_price)
+        expect(page).to have_content(number_to_currency(item_2.current_price / 100))
         expect(page).to have_content(item_2.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -38,7 +40,7 @@ describe 'as a merchant user' do
       expect(page).to_not have_content(item_3.id)
       expect(page).to_not have_content(item_3.name)
       expect(page).to_not have_css("img[src*='#{item_3.image_link}']")
-      expect(page).to_not have_content(item_3.current_price)
+      expect(page).to_not have_content(number_to_currency(item_3.current_price / 100))
     end
     it 'should see a link to delete the item if no user has ordered the item' do
       merch = create(:merchant)
@@ -54,7 +56,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_1.id)
         expect(page).to have_content(item_1.name)
         expect(page).to have_css("img[src*='#{item_1.image_link}']")
-        expect(page).to have_content(item_1.current_price)
+        expect(page).to have_content(number_to_currency(item_1.current_price / 100))
         expect(page).to have_content(item_1.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -66,7 +68,7 @@ describe 'as a merchant user' do
         expect(page).to have_content(item_2.id)
         expect(page).to have_content(item_2.name)
         expect(page).to have_css("img[src*='#{item_2.image_link}']")
-        expect(page).to have_content(item_2.current_price)
+        expect(page).to have_content(number_to_currency(item_2.current_price / 100))
         expect(page).to have_content(item_2.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Disable this item')
@@ -132,7 +134,7 @@ describe 'as a merchant user' do
         expect(page).to_not have_content('This item is enabled')
         expect(page).to have_content(item_2.name)
         expect(page).to have_css("img[src*='#{item_2.image_link}']")
-        expect(page).to have_content(item_2.current_price)
+        expect(page).to have_content(number_to_currency(item_2.current_price / 100))
         expect(page).to have_content(item_2.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to have_link('Enable this item')
@@ -170,7 +172,7 @@ describe 'as a merchant user' do
         expect(page).to have_content('This item is enabled')
         expect(page).to have_content(item_2.name)
         expect(page).to have_css("img[src*='#{item_2.image_link}']")
-        expect(page).to have_content(item_2.current_price)
+        expect(page).to have_content(number_to_currency(item_2.current_price / 100))
         expect(page).to have_content(item_2.inventory)
         expect(page).to have_link('Edit this item')
         expect(page).to_not have_link('Enable this item')
