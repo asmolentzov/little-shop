@@ -1,9 +1,10 @@
-<%= @user.name %>
-<%= @user.street %>
-<%= @user.city %>
-<%= @user.state %>
-<%= @user.zip %>
-<%= @user.email %>
+<div class="user">
+  <%= @user.name %>
+  <%= @user.street %>
+  <%= @user.city %>
+  <%= @user.state %>
+  <%= @user.zip %>
+  <%= @user.email %>
 
-<%= link_to 'My Items', admin_merchant_items_path(@user) %>
-
+  <%= link_to 'My Items', admin_merchant_items_path(@user) %>
+</div>
