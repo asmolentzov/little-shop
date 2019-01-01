@@ -266,7 +266,7 @@ RSpec.describe User, type: :model do
       @user_7 = create(:user, city: 'Smackover', state: 'AK')
 
       #User_1 orders - Manhattan, KS -- 2nd shipped to city, 1st state
-      order_1 = create(:order, user: @user_1)
+      order_1 = create(:fulfilled_order, user: @user_1)
         create(:fulfilled_order_item, order: order_1, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_1, item: @item_2, quantity: 2, order_price: 200)
 
@@ -324,9 +324,9 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, order: order_16, item: @item_8, quantity: 2, order_price: 57500)
     end
 
-    xdescribe 'merchant_top_five_items' do
+    describe 'merchant_top_five_items' do
       it 'returns the merchants top five items sold by quantity' do
-        expect(@merchant_1.merchant_top_five_items).to eq([@item_3, @item_2, @item_1, @item_6, @item_5])
+        expect(@merchant_1.merchant_top_five_items).to eq([@item_2, @item_3, @item_1, @item_6, @item_5])
       end
     end
     describe 'merchant_units_sold' do
@@ -344,8 +344,15 @@ RSpec.describe User, type: :model do
         expect(@merchant_1.merchant_percent_sold).to eq(17)
       end
     end
-    xdescribe 'merchant_top_states' do
+    describe 'merchant_top_states' do
       it 'returns the merchants top three states by orders shipped' do
+        merchant_2 = create(:merchant)
+        item_1 = create(:item, user: merchant_2)
+        customer = create(:user)
+        15.times do
+          order = create(:fulfilled_order, user: customer)
+          create(:fulfilled_order_item, item: item_1, order: order)
+        end
         expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
       end
     end

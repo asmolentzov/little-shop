@@ -78,42 +78,53 @@ class User < ApplicationRecord
     .where(status: :pending)
     .group(:id)
   end
+  
   def merchant_top_five_items
-    ### Not working
-    ##self.items
-    ##.joins(:order_items)
-    ##.group(:id)
-    ##.select("items.*, SUM(order_items.quantity) AS item_count")
-    ##.order("item_count DESC")
-    ##.limit(5)
+    self.items
+    .joins(:order_items)
+    .where("order_items.fulfilled = ?", true)
+    .group(:id)
+    .select("items.*, SUM(order_items.quantity) AS item_count")
+    .order("item_count DESC")
+    .limit(5)
   end
+  
   def merchant_units_sold
     units = OrderItem.joins(:item)
     .where("items.user_id = ?", self.id)
     .sum(:quantity)
     units ? units : 0
   end
+  
   def merchant_units_inventory
     units = Item.where("items.user_id = ?", self.id)
     .sum(:inventory)
     units ? units : 0
   end
+  
   def merchant_percent_sold
     inventory = merchant_units_inventory
     return 0 if inventory == 0
     ((merchant_units_sold.to_f / inventory).round(2) * 100).to_i
   end
+  
   def merchant_top_states
     ### Not working
-    #merchant_items = self.items.map { |item| item.id }
-    #User.joins(orders: :order_items)
-    #.where("order_items.item_id IN (?)", (merchant_items))
-    #.group("orders.id")
-    #.select("users.state, count(orders.id) AS state_count")
-    #.order("state_count DESC")
-    #.limit(3)
-    #.map(&:state)
+    merchant_items = self.items.map(&:id)
+    merchant_order_ids = User.joins(orders: :order_items)
+    .where("order_items.item_id IN (?)", merchant_items)
+    .where("orders.status = ?", 1)
+    .select("orders.*").map(&:id)
+    
+    User.joins(:orders)
+    .where("orders.id IN (?)", merchant_order_ids)
+    .group(:state)
+    .select("users.state, count(orders.id) AS state_count")
+    .order("state_count DESC")
+    .limit(3)
+    .map(&:state)
   end
+  
   def merchant_top_cities
     ### Not working##
   end
