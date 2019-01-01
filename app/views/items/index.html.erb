@@ -1,17 +1,21 @@
+<h3 class="item-stats-h3">Item Statistics:</h3>
 <div class="stats">
-  <h3>Item Statistics:</h3>
-  <p>Top 5 Popular Items</p>
-  <ul id="top-five-items">
-    <% @top_five_items.each do |item| %>
-      <li><%= item.name %></li>
-    <% end %>
-  </ul>
-  <p>Bottom 5 Popular Items</p>
-  <ul id="bottom-five-items">
-    <% @bottom_five_items.each do |item| %>
-      <li><%= item.name %></li>
-    <% end %>
-  </ul>
+  <div class="stat-item">
+    <p>Top 5 Popular Items</p>
+    <ul id="top-five-items">
+      <% @top_five_items.each do |item| %>
+        <li><%= item.name %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="stat-item">
+    <p>Bottom 5 Popular Items</p>
+    <ul id="bottom-five-items">
+      <% @bottom_five_items.each do |item| %>
+        <li><%= item.name %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
 <div class="flex-container">

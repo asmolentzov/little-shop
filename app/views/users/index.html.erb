@@ -1,47 +1,54 @@
 <div class="stats" id="statistics">
-  <div class="stat-item">Top Merchants by Quantity:
+  <div class="stat-item">
+    <h3>Top Merchants by Quantity:</h3>
     <% @top_merchants_by_quantity.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Top Merchants by Price:
+  <div class="stat-item">
+    <h3>Top Merchants by Price:</h3>
     <% @top_merchants_by_price.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Merchants with Fastest Fulfillment Times:
+  <div class="stat-item">
+    <h3>Merchants with Fastest Fulfillment Times:</h3>
     <% @top_merchants_by_time.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Merchants with Slowest Fulfillment Times:
+  <div class="stat-item">
+    <h3>Merchants with Slowest Fulfillment Times:</h3>
     <% @bottom_merchants_by_time.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Top 3 States with Most Orders:
+  <div class="stat-item">
+    <h3>Top 3 States with Most Orders:</h3>
     <% @top_states.each do |state| %>
     <ul>
       <li><%= state %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Top 3 Cities with Most Orders:
+  <div class="stat-item">
+    <h3>Top 3 Cities with Most Orders:</h3>
     <% @top_cities.each do |city, state| %>
     <ul>
       <li><%= city %>, <%= state %></li>
     </ul>
     <% end %>
   </div>
-  <div class="stat-item">Biggest Orders by Quantity of Items:
+  <div class="stat-item">
+    <h3>Biggest Orders by Quantity of Items:</h3>
     <% @biggest_orders.each do |order| %>
     <ul>
       <li>Order #<%= order.id %></li>

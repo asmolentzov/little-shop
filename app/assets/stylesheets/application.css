@@ -26,8 +26,23 @@ body{
      background-repeat: round;
  }
 
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('PressStart2P.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
  body {
-   font-family: 'Ubuntu', sans-serif;
+   font-family: 'PressStart2P', 'Ubuntu';
+ }
+
+ ul, div.stat-item h3 {
+   font-size: .75em;
+ }
+
+ div.item p {
+  font-size: .65em;
  }
 
  .welcome {
@@ -96,8 +111,9 @@ div.flex-items {
 
 div.nav-flex-items {
   flex: 0 1 auto;
-  background-color: #7EE8FA;
+  background: linear-gradient(#7EE8FA, #e6e9ef);
   border-radius: 10px;
+  border: 2px solid black;
   font-weight: bold;
   color: black;
 }
@@ -109,7 +125,7 @@ div.cart-flex-items {
   margin: 10px;
   border: 1px solid blue;
   padding: 5px;
-  background: #e6e9ef;
+  background: linear-gradient(#e6e9ef, #7EE8FA);
 }
 
 ul.cart-button-list, ul.cart-item-details,
@@ -170,9 +186,19 @@ div#cart-identity-nav ul, #user-functions ul {
 div.stats {
   display: flex;
   flex-direction: row;
-  height: 200px;
+  justify-content: center;
+  height: 250px;
 }
 
+.item-stats-h3 {
+  text-align: center;
+  background: #e6e9ef;
+  height: 20px;
+  width: 33%;
+  margin-left: 34%;
+  border: 2px solid black;
+  padding: 5px;
+}
 
 div.flex-items {
   display: flex;
@@ -188,14 +214,15 @@ div.stat-item {
   flex-direction: column;
   text-align: center;
   word-wrap: normal;
-  width: 150px;
+  width: 250px;
   height: 250px;
-  border: 1px solid black;
-  background: #e6e9ef;
+  border: 2px solid black;
+  background: linear-gradient(#e6e9ef, #7EE8FA);
+  margin: 10px;
 }
 
 div.item {
-  font-size: 12px;
+  font-size: .65em;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -208,5 +235,21 @@ div.item {
   border-top-style: dotted;
   border-right-style: dotted;
   margin: 10px;
-  background: #e6e9ef;
+  justify-content: space-evenly;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: linear-gradient(#e6e9ef, #7EE8FA);
+}
+
+h1.title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: linear-gradient(#eef207, #7EE8FA);
+  width: 75%;
+  height: 60px;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding-top: 20px;
+  margin-left: 12.5%;
 }
