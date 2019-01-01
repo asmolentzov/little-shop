@@ -101,7 +101,8 @@ div.cart-flex-items {
   background: #e6e9ef;
 }
 
-ul.cart-button-list, ul.cart-item-details, ul.registration-list {
+ul.cart-button-list, ul.cart-item-details,
+ul.registration-list, ul.login-list  {
   list-style-type: none;
 }
 
@@ -127,14 +128,14 @@ ul.cart-button-list, ul.cart-item-details, ul.registration-list {
   background: #e6e9ef;
 }
 
-ul.registration-list {
+ul.registration-list, ul.login-list {
   background: #e6e9ef;
   width: 200px;
   padding: 30px;
   border-radius: 10px;
 }
 
-ul.registration-list li {
+ul.registration-list li, ul.login-list li {
   padding: 5px;
 }
 
