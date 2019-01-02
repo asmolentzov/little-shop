@@ -35,6 +35,7 @@ RSpec.describe User, type: :model do
         expect(User.enabled_merchants).to eq([user_1, user_3])
       end
     end
+
     describe '.default_users' do
       it 'returns all default users' do
         #Default Users
@@ -43,7 +44,7 @@ RSpec.describe User, type: :model do
         user_3 = create(:user)
         user_4 = create(:user)
         user_5 = create(:merchant)
-        user_5 = create(:admin)
+        user_6 = create(:admin)
 
         expect(User.default_users).to eq([user_1, user_2, user_3, user_4])
       end
@@ -80,6 +81,7 @@ RSpec.describe User, type: :model do
         expect(User.merchants_by_quantity).to eq([merchant_1, merchant_4, merchant_2])
       end
     end
+
     describe '.merchants_by_price' do
       it 'should return top three merchants by total price of items sold' do
         merchant_1 = create(:merchant)
@@ -111,6 +113,7 @@ RSpec.describe User, type: :model do
         expect(User.merchants_by_price).to eq([merchant_5, merchant_2, merchant_1])
       end
     end
+
     describe '.merchants_by_time' do
       it 'should return merchants sorted by average fulfillment time ascending' do
         merchant_1 = create(:merchant)
@@ -139,6 +142,7 @@ RSpec.describe User, type: :model do
         expect(User.merchants_by_time).to eq(sorted_merchants)
       end
     end
+
     describe '.top_states' do
       it 'should return the top three states where any orders were shipped' do
         user_1 = create(:user, state: 'CO')
@@ -173,6 +177,7 @@ RSpec.describe User, type: :model do
         expect(User.top_states).to eq(states)
       end
     end
+
     describe '.top_cities' do
       it 'should return the top three cities with the most orders shipped' do
         user_1 = create(:user, city: 'Springfield', state: 'CO')
@@ -213,4 +218,203 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#merchant_pending_orders' do
+    it 'returns all pending orders for a merchant' do
+      merchant = create(:merchant)
+
+      order_1 = create(:order)
+      item_1 = create(:item, user: merchant)
+      create(:unfulfilled_order_item, order: order_1, item: item_1)
+      create(:unfulfilled_order_item, order: order_1)
+
+      order_2 = create(:order)
+      create(:unfulfilled_order_item, order: order_2)
+
+      order_3 = create(:order)
+      item_2 = create(:item, user: merchant)
+      item_4 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_3, item: item_2)
+      create(:fulfilled_order_item, order: order_3, item: item_4)
+
+      order_4 = create(:fulfilled_order)
+      item_3 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_4, item: item_3)
+
+      expect(merchant.merchant_pending_orders).to eq([order_1, order_3])
+    end
+  end
+  
+  describe '#merchant_order_ids' do
+    it 'returns all the fulfilled order ids associated with a merchant' do
+      merchant = create(:merchant)
+      
+      order_1 = create(:fulfilled_order)
+      item_1 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_1, item: item_1)
+
+      order_2 = create(:cancelled_order)
+      create(:fulfilled_order_item, order: order_2)
+
+      order_3 = create(:order)
+      item_2 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_3, item: item_2)
+
+      order_4 = create(:fulfilled_order)
+      item_3 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_4, item: item_3)
+      
+      expect(merchant.merchant_order_ids).to eq([order_1.id, order_4.id])
+    end
+  end
+
+  describe 'merchant statistics instance methods' do
+    before(:each) do
+      @merchant_1 = create(:merchant)
+
+      #All items belong to merchant_1. Total inventory = 300
+      @item_1 = create(:item, inventory: 1, user: @merchant_1)
+      @item_2 = create(:item, inventory: 2, user: @merchant_1)
+      @item_3 = create(:item, inventory: 3, user: @merchant_1)
+      @item_4 = create(:item, inventory: 4, user: @merchant_1)
+      @item_5 = create(:item, inventory: 50, user: @merchant_1)
+      @item_6 = create(:item, inventory: 60, user: @merchant_1)
+      @item_7 = create(:item, inventory: 70, user: @merchant_1)
+      @item_8 = create(:item, inventory: 110, user: @merchant_1)
+      #Users from 6 states & 6 cities. Identical city names from two states.
+      @user_1 = create(:user, city: 'Manhattan', state: 'KS')
+      @user_2 = create(:user, city: 'Manhattan', state: 'KS')
+      @user_3 = create(:user, city: 'Manhattan', state: 'NY')
+      @user_4 = create(:user, city: 'Buttermilk', state: 'KS')
+      @user_5 = create(:user, city: 'Brigham', state: 'UT')
+      @user_6 = create(:user, city: 'Austin', state: 'NV')
+      @user_7 = create(:user, city: 'Smackover', state: 'AK')
+
+      #User_1 orders - Manhattan, KS -- 2nd shipped to city, 1st state
+      order_1 = create(:fulfilled_order, user: @user_1)
+        create(:fulfilled_order_item, order: order_1, item: @item_1, quantity: 1, order_price: 100)
+        create(:fulfilled_order_item, order: order_1, item: @item_2, quantity: 2, order_price: 200)
+        15.times do
+          temp_item = create(:item, user: @merchant_1, inventory: 1)
+          create(:unfulfilled_order_item, order: order_1, quantity: 10, item: temp_item)
+        end
+
+      #User_2 orders - Manhattan, KS -- ANOTHER Manhattan, KS
+      order_2 = create(:fulfilled_order, user: @user_2)
+        create(:fulfilled_order_item, order: order_2, item: @item_1, quantity: 1, order_price: 100)
+        create(:fulfilled_order_item, order: order_2, item: @item_2, quantity: 2, order_price: 300)
+      order_3 = create(:fulfilled_order, user: @user_2)
+        create(:fulfilled_order_item, order: order_3, item: @item_3, quantity: 3, order_price: 300)
+      order_4 = create(:fulfilled_order, user: @user_2)
+        create(:fulfilled_order_item, order: order_4, item: @item_4, quantity: 1, order_price: 400)
+
+      #User_3 orders - Manhattan, NY -- Top shipped-to city, 2nd state
+      order_5 = create(:fulfilled_order, user: @user_3)
+        create(:fulfilled_order_item, order: order_5, item: @item_1, quantity: 1, order_price: 100)
+        create(:fulfilled_order_item, order: order_5, item: @item_2, quantity: 2, order_price: 200)
+      order_6 = create(:fulfilled_order, user: @user_3)
+        create(:fulfilled_order_item, order: order_6, item: @item_3, quantity: 3, order_price: 300)
+      order_7 = create(:fulfilled_order, user: @user_3)
+        create(:fulfilled_order_item, order: order_7, item: @item_4, quantity: 1, order_price: 400)
+      order_8 = create(:fulfilled_order, user: @user_3)
+        create(:fulfilled_order_item, order: order_8, item: @item_5, quantity: 2, order_price: 500)
+      order_9 = create(:fulfilled_order, user: @user_3)
+        create(:fulfilled_order_item, order: order_9, item: @item_6, quantity: 3, order_price: 600)
+
+      #User_4 orders - Buttermilk, KS -- 3rd shipped to city
+      order_10 = create(:fulfilled_order, user: @user_4)
+        create(:fulfilled_order_item, order: order_10, item: @item_1, quantity: 1, order_price: 100)
+        create(:fulfilled_order_item, order: order_10, item: @item_2, quantity: 2, order_price: 200)
+      order_11 = create(:fulfilled_order, user: @user_4)
+        create(:fulfilled_order_item, order: order_11, item: @item_3, quantity: 2, order_price: 300)
+      order_12 = create(:fulfilled_order, user: @user_4)
+        create(:fulfilled_order_item, order: order_12, item: @item_4, quantity: 1, order_price: 400)
+
+      #User_5 orders - Brigham, UT
+      order_13 = create(:fulfilled_order, user: @user_5)
+        create(:fulfilled_order_item, order: order_13, item: @item_1, quantity: 1, order_price: 100)
+        create(:fulfilled_order_item, order: order_13, item: @item_2, quantity: 2, order_price: 200)
+        create(:fulfilled_order_item, order: order_13, item: @item_3, quantity: 3, order_price: 300)
+        create(:fulfilled_order_item, order: order_13, item: @item_4, quantity: 1, order_price: 400)
+        create(:fulfilled_order_item, order: order_13, item: @item_5, quantity: 3, order_price: 550)
+        create(:fulfilled_order_item, order: order_13, item: @item_6, quantity: 3, order_price: 650)
+        create(:fulfilled_order_item, order: order_13, item: @item_7, quantity: 1, order_price: 13467)
+        create(:fulfilled_order_item, order: order_13, item: @item_8, quantity: 1, order_price: 57500)
+
+      #User_6 orders - Austin, NV -- 3rd shipped-to state
+      order_14 = create(:fulfilled_order, user: @user_6)
+        create(:fulfilled_order_item, order: order_14, item: @item_1, quantity: 2, order_price: 100)
+        create(:fulfilled_order_item, order: order_14, item: @item_2, quantity: 2, order_price: 200)
+      order_15 = create(:fulfilled_order, user: @user_6)
+        create(:fulfilled_order_item, order: order_15, item: @item_7, quantity: 3, order_price: 12200)
+
+      #User_7 orders - Smackover, AK
+      order_16 = create(:fulfilled_order, user: @user_7)
+        create(:fulfilled_order_item, order: order_16, item: @item_8, quantity: 2, order_price: 57500)
+        
+      # Adds another merchant to ensure methods are filtering
+      @merchant_2 = create(:merchant)
+      item_1 = create(:item, user: @merchant_2)
+      customer = create(:user)
+      15.times do
+        order = create(:fulfilled_order, user: customer)
+        create(:fulfilled_order_item, item: item_1, order: order)
+      end
+    end
+
+    describe 'merchant_top_five_items' do
+      it 'returns the merchants top five items sold by quantity' do
+        expect(@merchant_1.merchant_top_five_items).to eq([@item_2, @item_3, @item_1, @item_6, @item_5])
+      end
+    end
+    describe 'merchant_units_sold' do
+      it 'returns the total units the merchant has sold' do
+        expect(@merchant_1.merchant_units_sold).to eq(52)
+      end
+    end
+    describe 'merchant_units_inventory' do
+      it 'returns the number of units of all items the merchant has in inventory' do
+        expect(@merchant_1.merchant_units_inventory).to eq(315)
+      end
+    end
+    describe 'merchant_percent_sold' do
+      it 'returns the percentage of unit sales over inventory' do
+        expect(@merchant_1.merchant_percent_sold).to eq(17)
+      end
+    end
+    describe 'merchant_top_states' do
+      it 'returns the merchants top three states by orders shipped' do
+        15.times do
+          pending_order = create(:order, user: @user_1)
+          create(:fulfilled_order_item, order: pending_order, item: @item_1)
+        end
+        expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
+      end
+    end
+    describe 'merchant_top_cities' do
+      it 'returns the merchants top three cities by orders shipped' do
+        15.times do
+          pending_order = create(:order, user: @user_1)
+          create(:fulfilled_order_item, order: pending_order, item: @item_1)
+        end
+        expect(@merchant_1.merchant_top_cities).to eq(["Manhattan, NY", "Manhattan, KS", "Buttermilk, KS"])
+      end
+    end
+    describe 'merchant_top_order_user' do
+      it 'returns the user with the most orders for the merchant' do
+        expect(@merchant_1.merchant_top_order_user).to eq(@user_3)
+      end
+    end
+    describe 'merchant_top_units_user' do
+      it 'returns the user with the most units bought for the merchant' do
+        expect(@merchant_1.merchant_top_units_user).to eq(@user_5)
+      end
+    end
+    describe 'merchant_highest_spending_users' do
+      it 'returns the merchants 3 highest spending users' do
+        expect(@merchant_1.merchant_highest_spending_users).to eq([@user_7, @user_5, @user_6])
+      end
+    end
+  end
+
 end
