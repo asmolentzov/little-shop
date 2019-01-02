@@ -60,7 +60,7 @@ describe 'as any user' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
       visit items_path
-
+    
       expect(page).to have_content('Item Statistics')
 
       within('#top-five-items') do
