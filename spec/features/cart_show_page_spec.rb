@@ -190,7 +190,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     visit cart_path
 
     within  "#item-#{item_3.id}" do
-      click_on 'Remove item'
+      click_on 'Remove one'
     end
 
     expect(page).to have_content("Cart: 2")
