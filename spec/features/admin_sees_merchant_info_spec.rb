@@ -165,6 +165,7 @@ describe 'As an admin' do
     end
 
     expect(current_path).to eq(admin_user_path(merchant_2.id))
+    
     expect(page).to have_content("#{merchant_2.name} has been downgraded to a regular user")
 
     click_on "Log Out"
