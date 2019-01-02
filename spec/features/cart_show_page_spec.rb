@@ -22,10 +22,13 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     within "#item-#{item_1.id}" do
       click_button('Add item')
     end
+    expect(page).to have_content("Cart: 1")
     within "#item-#{item_2.id}" do
       click_button('Add item')
       click_button('Add item')
     end
+
+    expect(page).to have_content("Cart: 3")
 
     quantity_1 = 1
     quantity_2 = 2
@@ -33,6 +36,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     subtotal_2 = (item_2.current_price * quantity_2)/100
 
     visit cart_path
+
 
     within "#item-#{item_1.id}" do
       expect(page).to have_content(item_1.name)
@@ -170,7 +174,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant, inventory: 2)
     item_2 = create(:item, user: merchant, inventory: 1)
-    item_3 = create(:item, user: merchant)
+    item_3 = create(:item, user: merchant, inventory: 1)
 
     visit items_path
     within "#item-#{item_1.id}" do
@@ -189,6 +193,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
       click_on 'Remove item'
     end
 
+    expect(page).to have_content("Cart: 2")
     expect(page).to have_content(item_2.name)
     expect(page).to have_content(item_1.name)
     expect(page).to_not have_content(item_3.name)
