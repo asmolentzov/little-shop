@@ -19,8 +19,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index, :show, :update, :edit] do
-     patch '/enable', to: "users#enable"
-     patch '/upgrade', to: "users#upgrade"
+      patch '/enable', to: "users#enable"
+      patch '/upgrade', to: "users#upgrade"
     end
 
     resources :orders, only: [:show, :update]
@@ -30,7 +30,6 @@ Rails.application.routes.draw do
      patch '/downgrade', to: "merchants#downgrade"
      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     end
-
   end
 
   namespace :profile do
