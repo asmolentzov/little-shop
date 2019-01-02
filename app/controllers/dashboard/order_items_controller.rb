@@ -1,5 +1,4 @@
 class Dashboard::OrderItemsController < ApplicationController
-  before_action :require_merchant_user
 
   def update
     order_item = OrderItem.find(params[:id])
@@ -10,7 +9,11 @@ class Dashboard::OrderItemsController < ApplicationController
     OrderItem.find(order_item.id).update(fulfilled: true)
     flash[:success] = "Order item ##{order_item.id} has been fulfilled!"
     order.update_status_if_fulfilled
-    redirect_to dashboard_order_path(order)
+    if current_merchant?
+      redirect_to dashboard_order_path(order)
+    elsif current_admin?
+      redirect_to admin_merchant_order_path(order_item.item.user, order)
+    end
   end
 
 end

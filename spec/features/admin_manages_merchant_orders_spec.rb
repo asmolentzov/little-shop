@@ -280,5 +280,76 @@ describe 'As an admin user' do
         expect(page).to have_link('Delete this item')
       end
     end
+    
+    it 'should show me a fulfill button if I have enough inventory, and a red error message if I do not' do
+      admin = create(:admin)
+      merchant = create(:merchant)
+      user = create(:user)
+      item_1 = create(:item, inventory: 6, user: merchant)
+      item_2 = create(:item, inventory: 3, user: merchant)
+      order_1 = create(:order, user: user)
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 3, order: order_1)
+      order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 4, order: order_1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_merchant_order_path(merchant, order_1)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to have_link('Fulfill')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+        click_on('Fulfill')
+      end
+
+      expect(page).to have_content("Order item ##{order_item_1.id} has been fulfilled!")
+
+      merchant = User.find(merchant.id)
+
+      expect(merchant.items.where(id: item_1.id).first.inventory).to be(3)
+
+      within("#item-#{item_1.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Already Fulfilled!')
+        expect(page).to_not have_content('Cannot Fulfill!')
+        expect(page).to_not have_css('p.cannot_fulfill')
+      end
+
+      within("#item-#{item_2.id}") do
+        expect(page).to_not have_link('Fulfill')
+        expect(page).to have_content('Cannot Fulfill!')
+        expect(page).to have_css('p.cannot_fulfill')
+      end
+    end
+    it 'I fulfill the final item in the order, and the order status changes to Complete' do
+      admin = create(:admin)
+      merchant = create(:merchant)
+      other_merchant = create(:merchant)
+      user = create(:user)
+
+      item_1 = create(:item, inventory: 6, user: merchant)
+      item_2 = create(:item, inventory: 3, user: merchant)
+      item_3 = create(:item, user: other_merchant)
+
+      order = create(:order, user: user)
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 1, order: order)
+      order_item_2 = create(:unfulfilled_order_item, item: item_2, quantity: 2, order: order)
+      order_item_3 = create(:fulfilled_order_item, item: item_3, quantity:1, order: order)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit admin_merchant_order_path(merchant, order)
+      within("#item-#{item_1.id}") do
+        click_on('Fulfill')
+      end
+      ##Fulfillitng only one of two outstanding order items should not complete the order
+      expect(Order.find(order.id).status).to eq('pending')
+
+      within("#item-#{item_2.id}") do
+        click_on('Fulfill')
+      end
+      ##The order should be completed only on completing both order items
+      expect(Order.find(order.id).status).to eq('fulfilled')
+    end
   end
 end
