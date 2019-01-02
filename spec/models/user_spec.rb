@@ -269,6 +269,10 @@ RSpec.describe User, type: :model do
       order_1 = create(:fulfilled_order, user: @user_1)
         create(:fulfilled_order_item, order: order_1, item: @item_1, quantity: 1, order_price: 100)
         create(:fulfilled_order_item, order: order_1, item: @item_2, quantity: 2, order_price: 200)
+        15.times do
+          temp_item = create(:item, user: @merchant_1, inventory: 1)
+          create(:unfulfilled_order_item, order: order_1, quantity: 10, item: temp_item)
+        end
 
       #User_2 orders - Manhattan, KS -- ANOTHER Manhattan, KS
       order_2 = create(:fulfilled_order, user: @user_2)
@@ -345,7 +349,7 @@ RSpec.describe User, type: :model do
     end
     describe 'merchant_units_inventory' do
       it 'returns the number of units of all items the merchant has in inventory' do
-        expect(@merchant_1.merchant_units_inventory).to eq(300)
+        expect(@merchant_1.merchant_units_inventory).to eq(315)
       end
     end
     describe 'merchant_percent_sold' do
@@ -355,12 +359,19 @@ RSpec.describe User, type: :model do
     end
     describe 'merchant_top_states' do
       it 'returns the merchants top three states by orders shipped' do
-
+        15.times do
+          pending_order = create(:order, user: @user_1)
+          create(:fulfilled_order_item, order: pending_order, item: @item_1)
+        end
         expect(@merchant_1.merchant_top_states).to eq(["KS", "NY", "NV"])
       end
     end
     describe 'merchant_top_cities' do
       it 'returns the merchants top three cities by orders shipped' do
+        15.times do
+          pending_order = create(:order, user: @user_1)
+          create(:fulfilled_order_item, order: pending_order, item: @item_1)
+        end
         expect(@merchant_1.merchant_top_cities).to eq(["Manhattan, NY", "Manhattan, KS", "Buttermilk, KS"])
       end
     end

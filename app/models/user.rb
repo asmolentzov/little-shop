@@ -92,6 +92,7 @@ class User < ApplicationRecord
   def merchant_units_sold
     units = OrderItem.joins(:item)
     .where("items.user_id = ?", self.id)
+    .where(fulfilled: true)
     .sum(:quantity)
     units ? units : 0
   end
@@ -160,6 +161,7 @@ class User < ApplicationRecord
   def merchant_top_units_user
     User.joins(orders: [order_items: :item])
     .where("items.user_id = ?", self.id)
+    .where("order_items.fulfilled = ?", true)
     .group(:id)
     .select("users.*, SUM(order_items.quantity) AS units_purchased")
     .order("units_purchased DESC")
@@ -168,6 +170,7 @@ class User < ApplicationRecord
   def merchant_highest_spending_users
     User.joins(orders: [order_items: :item])
     .where("items.user_id = ?", self.id)
+    .where("order_items.fulfilled = ?", true)
     .group(:id)
     .select("users.*, SUM(order_items.quantity * order_items.order_price) AS units_purchased")
     .order("units_purchased DESC")
