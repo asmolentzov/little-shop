@@ -56,66 +56,64 @@ describe 'As a visitor to the app' do
     it 'should see number of items in cart' do
       item_1 = create(:item)
       item_2 = create(:item)
-      
+
       visit items_path
 
       within "#nav" do
-        expect(page).to have_content("Cart: 0") 
+        expect(page).to have_content("Cart: 0")
       end
-      
+
       within "#item-#{item_1.id}" do
         click_button('Add item')
       end
-      
+
       within "#nav" do
-        expect(page).to have_content("Cart: 1") 
+        expect(page).to have_content("Cart: 1")
       end
-      
+
       within "#item-#{item_2.id}" do
         click_button('Add item')
         click_button('Add item')
       end
-      
+
       within "#nav" do
-        expect(page).to have_content("Cart: 3") 
+        expect(page).to have_content("Cart: 3")
       end
     end
     it 'should not be able to navigate to any profile path' do
       visit root_path
-      
+
       within "#nav" do
         expect(page).to_not have_content("Profile")
       end
-      
+
       visit profile_path
-      
+
       expect(page.status_code).to eq(404)
       expect(page).to have_content("The page you were looking for doesn't exist")
       
-      visit profile_orders_path
-      expect(page.status_code).to eq(404)
     end
     it 'should not be able to navigate to any dashboard path' do
       visit root_path
-      
+
       within "#nav" do
         expect(page).to_not have_content("Dashboard")
       end
-      
+
       visit dashboard_path
-      
+
       expect(page.status_code).to eq(404)
       expect(page).to have_content("The page you were looking for doesn't exist")
     end
     it 'should not be able to navigate to any admin path' do
       visit root_path
-      
+
       within "#nav" do
         expect(page).to_not have_content("All Users")
       end
-      
+
       visit admin_users_path
-      
+
       expect(page.status_code).to eq(404)
       expect(page).to have_content("The page you were looking for doesn't exist")
     end

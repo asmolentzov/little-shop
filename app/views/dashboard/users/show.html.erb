@@ -11,7 +11,7 @@
 <div class="flex-container">
   <div class="flex-items">
     <% @merchant_pending_orders.each do |order| %>
-      <div id="pending-order-<%= order.id %>">
+      <div class="order" id="pending-order-<%= order.id %>">
         <ul>
           <li><%= link_to "Order ##{order.id}", dashboard_order_path(order) %></li>
           <li>Placed on: <%= order.created_at.strftime('%B %d, %Y') %></li>
@@ -21,38 +21,52 @@
       </div>
     <% end %>
   </div>
-  <div id="statistics">    
-    <%= "MERCHANT STATISTICS" %>
-    <p>Top 5 items by quantity: 
-      <ul>
-        <% @merchant_top_five_items.each do |item| %>
-        <li><%= item.name %></li>
-        <% end %>
-      </ul>
-    </p>
-    <p><%= "Sold #{@merchant_units_sold} items, which is #{@merchant_percent_sold}% of your total inventory" %></p>
-    <p>Top 3 shipment states:
-      <ul>
-        <% @merchant_top_states.each do|state| %>
-          <li><%= state %></li>
-        <% end %>  
-      </ul>
-    </p>
-    <p>Top 3 shipment cities: 
-      <ul>
-        <% @merchant_top_cities.each do |city| %>
-          <li><%= city %></li>
-        <% end %>
-      </ul>
-    </p>
-    <p><%= "User with the most orders: #{@merchant_top_order_user.name if @merchant_top_order_user}" %></p>
-    <p><%= "User buying the most items: #{@merchant_top_units_user.name if @merchant_top_units_user}" %></p>
-    <p>Three highest spending users:
-      <ul>
-        <% @merchant_highest_spending_users.each do |user| %>
-          <li><%= user.name %></li>
-        <% end %>
-      </ul>
-    </p>
+  <div id="statistics">
+    <h3 class="item-stats">MERCHANT STATISTICS</h3>
+    <div class="stats" id="statistics">
+      <div class="stat-item">
+        <p>Top 5 items by quantity:
+          <ul>
+            <% @merchant_top_five_items.each do |item| %>
+            <li><%= item.name %></li>
+            <% end %>
+          </ul>
+        </p>
+      </div>
+      <div class="stat-item">
+        <p><%= "Sold #{@merchant_units_sold} items, which is #{@merchant_percent_sold}% of your total inventory" %></p>
+        <p>Top 3 shipment states:
+          <ul>
+            <% @merchant_top_states.each do|state| %>
+              <li><%= state %></li>
+            <% end %>
+          </ul>
+        </p>
+      </div>
+      <div class="stat-item">
+        <p>Top 3 shipment cities:
+          <ul>
+            <% @merchant_top_cities.each do |city| %>
+              <li><%= city %></li>
+            <% end %>
+          </ul>
+        </p>
+      </div>
+      <div class="stat-item">
+        <p><%= "User with the most orders: #{@merchant_top_order_user.name if @merchant_top_order_user}" %></p>
+      </div>
+      <div class="stat-item">
+        <p><%= "User buying the most items: #{@merchant_top_units_user.name if @merchant_top_units_user}" %></p>
+      </div>
+      <div class="stat-item">
+        <p>Three highest spending users:
+          <ul>
+            <% @merchant_highest_spending_users.each do |user| %>
+              <li><%= user.name %></li>
+            <% end %>
+          </ul>
+        </p>
+      </div>
+    <div>
   </div>
 </div>
