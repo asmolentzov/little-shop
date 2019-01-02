@@ -8,8 +8,8 @@ class UsersController < ApplicationController
     end
     @top_merchants_by_quantity = User.merchants_by_quantity
     @top_merchants_by_price = User.merchants_by_price
-    @top_merchants_by_time = User.merchants_by_time[0..2]
-    @bottom_merchants_by_time = User.merchants_by_time.reverse[0..2]
+    @top_merchants_by_time = User.top_merchants_by_time
+    @bottom_merchants_by_time = User.bottom_merchants_by_time
     @top_states = User.top_states
     @top_cities = User.top_cities
     @biggest_orders = Order.biggest_orders

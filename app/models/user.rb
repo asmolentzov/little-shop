@@ -41,13 +41,24 @@ class User < ApplicationRecord
     .limit(3)
   end
 
-  def self.merchants_by_time
+  def self.top_merchants_by_time
     joins(items: :order_items)
     .where(enabled: true)
     .where("order_items.fulfilled = ?", true)
     .group(:id)
     .select("users.*, avg(order_items.updated_at - order_items.created_at) AS average_f_time")
     .order("average_f_time ASC")
+    .limit(3)
+  end
+  
+  def self.bottom_merchants_by_time
+    joins(items: :order_items)
+    .where(enabled: true)
+    .where("order_items.fulfilled = ?", true)
+    .group(:id)
+    .select("users.*, avg(order_items.updated_at - order_items.created_at) AS average_f_time")
+    .order("average_f_time DESC")
+    .limit(3)
   end
 
   def self.top_states

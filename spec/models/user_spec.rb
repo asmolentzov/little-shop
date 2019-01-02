@@ -114,8 +114,8 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '.merchants_by_time' do
-      it 'should return merchants sorted by average fulfillment time ascending' do
+    describe '.top_merchants_by_time' do
+      it 'should return the top three merchants sorted by average fulfillment time' do
         merchant_1 = create(:merchant)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
         create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
@@ -137,9 +137,38 @@ RSpec.describe User, type: :model do
         create(:fulfilled_order_item, item: create(:item, user: merchant_5), created_at: 1.minute.ago)
 
 
-        sorted_merchants = [merchant_2, merchant_1, merchant_3, merchant_4]
+        sorted_merchants = [merchant_2, merchant_1, merchant_3]
 
-        expect(User.merchants_by_time).to eq(sorted_merchants)
+        expect(User.top_merchants_by_time).to eq(sorted_merchants)
+      end
+    end
+    
+    describe '.bottom_merchants_by_time' do
+      it 'should return the bottom three merchants sorted by average fulfillment time' do
+        merchant_1 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.day.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.hour.ago)
+        create(:unfulfilled_order_item, item: create(:item, user: merchant_1), created_at: 1.minute.ago)
+
+        merchant_2 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_2), created_at: 2.hours.ago)
+
+        merchant_3 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 2.days.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_3), created_at: 3.days.ago)
+
+        merchant_4 = create(:merchant)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_4), created_at: 4.days.ago)
+
+        merchant_5 = create(:merchant, enabled: false)
+        create(:fulfilled_order_item, item: create(:item, user: merchant_5), created_at: 1.minute.ago)
+
+
+        sorted_merchants = [merchant_4, merchant_3, merchant_1]
+
+        expect(User.bottom_merchants_by_time).to eq(sorted_merchants)
       end
     end
 

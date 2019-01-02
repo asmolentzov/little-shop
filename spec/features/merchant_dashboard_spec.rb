@@ -129,7 +129,7 @@ describe 'as a merchant' do
       visit dashboard_path
       expect(page).to have_content("MERCHANT STATISTICS")
 
-      within "#statistics" do
+      within ".stats" do
         expect(page).to have_content("Top 5 items by quantity:\n#{item_2.name} #{item_3.name} #{item_1.name} #{item_6.name} #{item_5.name}")
         expect(page).to have_content("Sold 52 items, which is 17% of your total inventory")
         expect(page).to have_content("Top 3 shipment states:\nKS NY NV")
