@@ -139,7 +139,7 @@ RSpec.describe "When a user visitor visits their cart show page with items in ca
 
     merchant = create(:merchant)
     item_1 = create(:item, user: merchant, inventory: 2)
-    item_2 = create(:item, user: merchant)
+    item_2 = create(:item, user: merchant, inventory: 1)
     item_3 = create(:item, user: merchant)
 
     visit items_path
