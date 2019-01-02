@@ -142,14 +142,21 @@ class User < ApplicationRecord
   end
   
   def merchant_top_order_user
-    ### Not working
-    #User.joins(orders: [order_items: :item])
-    #.where("items.user_id = ?", self.id)
-    #.group("orders.id")
-    #.select("orders.user_id, SUM(order_items.quantity) AS units_purchased")
-    #.order("units_purchased DESC")
-    #.first
+    merchant_items = self.items.map(&:id)
+    merchant_order_ids = User.joins(orders: :order_items)
+    .where("order_items.item_id IN (?)", merchant_items)
+    .where("orders.status = ?", 1)
+    .select("orders.*").map(&:id)
+    
+    User.joins(:orders)
+    .where("orders.id IN (?)", merchant_order_ids)
+    .where("orders.status = ?", 1)
+    .group(:id)
+    .select("users.*, COUNT(orders.id) AS orders_placed")
+    .order("orders_placed DESC")
+    .first
   end
+  
   def merchant_top_units_user
     User.joins(orders: [order_items: :item])
     .where("items.user_id = ?", self.id)

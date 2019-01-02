@@ -364,7 +364,7 @@ RSpec.describe User, type: :model do
         expect(@merchant_1.merchant_top_cities).to eq(["Manhattan, NY", "Manhattan, KS", "Buttermilk, KS"])
       end
     end
-    xdescribe 'merchant_top_order_user' do
+    describe 'merchant_top_order_user' do
       it 'returns the user with the most orders for the merchant' do
         expect(@merchant_1.merchant_top_order_user).to eq(@user_3)
       end

@@ -20,12 +20,39 @@
       </ul>
     </div>
   <% end %>
-  <%= "MERCHANT STATISTICS" %>
-  <%= "Top 5 items by quantity: #{@merchant_top_five_items}" %>
-  <%= "Sold #{@merchant_units_sold} items, which is #{@merchant_percent_sold}% of your total inventory" %>
-  <%= "Top 3 shipment states: #{@merchant_top_states}" %>
-  <%= "Top 3 shipment cities: #{@merchant_top_cities}" %>
-  <%= "User with the most orders: #{@merchant_top_order_user}" %>
-  <%= "User buying the most items: #{@merchant_top_units_user}" %>
-  <%= "Three highest spending users: #{@merchant_highest_spending_users}" %>
+  <div id="statistics">    
+    <%= "MERCHANT STATISTICS" %>
+    <p>Top 5 items by quantity: 
+      <ul>
+        <% @merchant_top_five_items.each do |item| %>
+        <li><%= item.name %></li>
+        <% end %>
+      </ul>
+    </p>
+    <p><%= "Sold #{@merchant_units_sold} items, which is #{@merchant_percent_sold}% of your total inventory" %></p>
+    <p>Top 3 shipment states:
+      <ul>
+        <% @merchant_top_states.each do|state| %>
+          <li><%= state %></li>
+        <% end %>  
+      </ul>
+    </p>
+    <p>Top 3 shipment cities: 
+      <ul>
+        <% @merchant_top_cities.each do |city| %>
+          <li><%= city %></li>
+        <% end %>
+      </ul>
+    </p>
+    <p><%= "User with the most orders: #{@merchant_top_order_user.name if @merchant_top_order_user}" %></p>
+    <p><%= "User buying the most items: #{@merchant_top_units_user.name if @merchant_top_units_user}" %></p>
+    <p>Three highest spending users:
+      <ul>
+        <% @merchant_highest_spending_users.each do |user| %>
+          <li><%= user.name %></li>
+        <% end %>
+      </ul>
+    </p>
+  </div>
+  
 <% end %>
