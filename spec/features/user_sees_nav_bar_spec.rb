@@ -31,28 +31,28 @@ describe 'nav' do
     it 'should see number of items in cart' do
       item_1 = create(:item)
       item_2 = create(:item)
-      
+
       visit items_path
 
       within "#nav" do
-        expect(page).to have_content("Cart: 0") 
+        expect(page).to have_content("Cart: 0")
       end
-      
+
       within "#item-#{item_1.id}" do
         click_button('Add item')
       end
-      
+
       within "#nav" do
-        expect(page).to have_content("Cart: 1") 
+        expect(page).to have_content("Cart: 1")
       end
-      
+
       within "#item-#{item_2.id}" do
         click_button('Add item')
         click_button('Add item')
       end
-      
+
       within "#nav" do
-        expect(page).to have_content("Cart: 3") 
+        expect(page).to have_content("Cart: 3")
       end
     end
 
@@ -64,12 +64,6 @@ describe 'nav' do
       end
 
       expect(current_path).to eq(profile_path)
-
-      within "#nav" do
-        click_link 'Orders'
-      end
-
-      expect(current_path).to eq(profile_orders_path)
 
       within "#nav" do
         click_link 'Log Out'
@@ -96,27 +90,27 @@ describe 'nav' do
         expect(page).to have_content("Logged in as #{@user.name}")
       end
     end
-    
+
     it 'should not be able to navigate to any dashboard path' do
       visit root_path
-      
+
       within "#nav" do
         expect(page).to_not have_content("Dashboard")
       end
-      
+
       visit dashboard_path
-      
+
       expect(page.status_code).to eq(404)
     end
     it 'should not be able to navigate to any admin path' do
       visit root_path
-      
+
       within "#nav" do
         expect(page).to_not have_content("All Users")
       end
-      
+
       visit admin_users_path
-      
+
       expect(page.status_code).to eq(404)
     end
   end

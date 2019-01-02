@@ -20,6 +20,9 @@
 
 <p class="item-stats">Grand Total: <%= number_to_currency(@cart.grand_total/100) %></p>
   <div class="cart-bottom">
+    <% if @cart.cart_count == 0 %>
+      <p>Your cart is empty!</p>
+    <% end %>
     <% unless @cart.cart_count == 0 %>
       <%= link_to "Empty Cart", cart_path, method: :delete %>
     <% end %>
