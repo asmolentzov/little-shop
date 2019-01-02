@@ -424,3 +424,14 @@ div.item-show {
   margin-left: 9%;
   paddig-top: 10px;
 }
+
+.order-user {
+  width: 75%;
+  height: 200px;
+  margin-left: 12.5%;
+  padding-top: 25px;
+  background: linear-gradient(#e6e9ef, #7EE8FA);
+  border-radius: 10px;
+  border: 2px solid black;
+  text-align: center;
+}
