@@ -34,8 +34,8 @@ describe 'As an admin user' do
       visit admin_user_path(user_1)
 
       expect(page).to have_content("Order: #{order_1.id}")
-      expect(page).to have_content("Placed on: #{order_1.created_at}")
-      expect(page).to have_content("Last update: #{order_1.updated_at}")
+      expect(page).to have_content("Placed on: #{order_1.created_at.strftime('%B %d, %Y')}")
+      expect(page).to have_content("Last update: #{order_1.updated_at.strftime('%B %d, %Y')}")
       expect(page).to have_content("Status: #{order_1.status}")
 
     end

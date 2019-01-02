@@ -25,22 +25,22 @@ describe 'ADMIN USER INDEX PAGE' do
 
       within "#user-links-#{user_1.id}" do
         expect(page).to have_link(user_1.name)
-        expect(page).to have_content(user_1.created_at)
+        expect(page).to have_content(user_1.created_at.strftime('%B %d, %Y'))
         expect(page).to have_link("disable")
       end
       within "#user-links-#{user_2.id}" do
         expect(page).to have_link(user_2.name)
-        expect(page).to have_content(user_1.created_at)
+        expect(page).to have_content(user_1.created_at.strftime('%B %d, %Y'))
         expect(page).to have_link("disable")
       end
       within "#user-links-#{user_3.id}" do
         expect(page).to have_link(user_3.name)
-        expect(page).to have_content(user_1.created_at)
+        expect(page).to have_content(user_1.created_at.strftime('%B %d, %Y'))
         expect(page).to have_link("enable")
       end
       within "#user-links-#{user_4.id}" do
         expect(page).to have_link(user_4.name)
-        expect(page).to have_content(user_1.created_at)
+        expect(page).to have_content(user_1.created_at.strftime('%B %d, %Y'))
         expect(page).to have_link("disable")
       end
     end

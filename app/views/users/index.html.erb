@@ -66,7 +66,7 @@
           <li><%= merchant.name %></li>
           <li><%= merchant.city %></li>
           <li><%= merchant.state %></li>
-          <li><%= merchant.created_at %></li>
+          <li>Created on: <%= merchant.created_at.strftime('%B %d, %Y') %></li>
             <% if current_admin? %>
             <%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %>
             <%= link_to "Downgrade", admin_merchant_downgrade_path(merchant.id), method: :patch %>
