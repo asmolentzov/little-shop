@@ -4,9 +4,9 @@
     <title>LittleShop</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <link rel="stylesheet" type="text/css" href="reset.css">
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/latest/normalize.css" title="css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+    <%= stylesheet_link_tag "https://necolas.github.io/normalize.css/latest/normalize.css", media: "all" %>
+
+    <%= font_path("https://fonts.googleapis.com/css?family=Ubuntu:400,700") %>
     <%= javascript_include_tag 'application' %>
   </head>
 
