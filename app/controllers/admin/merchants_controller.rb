@@ -22,4 +22,12 @@ class Admin::MerchantsController < ApplicationController
 
     redirect_to merchants_path
   end
+
+  def downgrade
+    user = User.find(params[:merchant_id])
+    user.update(:role => 0)
+    flash[:notice] = "#{user.name} has been downgraded to a regular user"
+    redirect_to admin_user_path(user)
+  end
+
 end
