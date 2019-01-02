@@ -62,13 +62,14 @@
     <% @merchants.each do |merchant| %>
      <div class="item merchant-item" id="merchant-<%= merchant.id %>">
        <ul class="merchant-list">
-          <li><%= image_tag('/assets/zach.jpeg', class:"zach") %></li>
+          <li><%= image_tag(('zach.jpg'), class:"zach") %></li>
           <li><%= merchant.name %></li>
           <li><%= merchant.city %></li>
           <li><%= merchant.state %></li>
           <li><%= merchant.created_at %></li>
             <% if current_admin? %>
             <%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %>
+            <%= link_to "Downgrade", admin_merchant_downgrade_path(merchant.id), method: :patch %>
               <% if merchant.enabled %>
                <%= link_to "Disable", admin_merchant_enable_path(merchant.id), method: :patch %>
               <% else  %>
