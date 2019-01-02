@@ -69,6 +69,7 @@
           <li><%= merchant.created_at %></li>
             <% if current_admin? %>
             <%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %>
+            <%= link_to("Downgrade", admin_merchant_downgrade_path(merchant.id), method: :patch) %>
               <% if merchant.enabled %>
                <%= link_to "Disable", admin_merchant_enable_path(merchant.id), method: :patch %>
               <% else  %>
