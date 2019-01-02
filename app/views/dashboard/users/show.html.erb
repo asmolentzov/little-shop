@@ -11,7 +11,7 @@
 <div class="flex-container">
   <div class="flex-items">
     <% @merchant_pending_orders.each do |order| %>
-      <div id="pending-order-<%= order.id %>">
+      <div class="order" id="pending-order-<%= order.id %>">
         <ul>
           <li><%= link_to "Order ##{order.id}", dashboard_order_path(order) %></li>
           <li>Placed on: <%= order.created_at.strftime('%B %d, %Y') %></li>
