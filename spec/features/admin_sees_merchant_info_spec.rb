@@ -139,7 +139,7 @@ describe 'As an admin' do
     end
   end
 
-  it 'can downgrade a merchant' do
+  it 'can downgrade a merchant to a regular user' do
     merchant_2 = User.create(name: 'Holden Butts', street: '5607 E County Rd.', city: 'bifftown', state: 'CO',
         zip: '21154', email: 'Butts1045@aol.com', password: 'abc123', role: 1, enabled: true)
 
@@ -165,7 +165,7 @@ describe 'As an admin' do
     end
 
     expect(current_path).to eq(admin_user_path(merchant_2.id))
-    
+
     expect(page).to have_content("#{merchant_2.name} has been downgraded to a regular user")
 
     click_on "Log Out"
@@ -180,8 +180,10 @@ describe 'As an admin' do
     click_on "Log In"
     end
 
-    expect(current_path).to eq(profile_path)
+    updated_user = User.find(merchant_2.id)
+    expect(updated_user.role).to eq('default')
 
+    expect(current_path).to eq(profile_path)
     expect(page).to_not have_link("downgrade")
   end
 end
