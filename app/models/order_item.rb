@@ -8,4 +8,9 @@ class OrderItem < ApplicationRecord
   def subtotal
     quantity * order_price
   end
+
+  def cancel
+    update(fulfilled: false)
+  end
+  
 end

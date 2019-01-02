@@ -50,9 +50,54 @@ RSpec.describe Order, type: :model do
         expect(Order.biggest_orders).to eq(orders)
       end
     end
+
+    describe '.merchant_pending_orders' do
+      it 'should return all the pending orders for a merchant where they have items' do
+        merchant = create(:merchant)
+
+        order_1 = create(:order)
+        item_1 = create(:item, user: merchant)
+        create(:unfulfilled_order_item, order: order_1, item: item_1)
+        create(:unfulfilled_order_item, order: order_1)
+
+        order_2 = create(:order)
+        create(:unfulfilled_order_item, order: order_2)
+
+        order_3 = create(:order)
+        item_2 = create(:item, user: merchant)
+        item_4 = create(:item, user: merchant)
+        create(:fulfilled_order_item, order: order_3, item: item_2)
+        create(:fulfilled_order_item, order: order_3, item: item_4)
+
+        order_4 = create(:fulfilled_order)
+        item_3 = create(:item, user: merchant)
+        create(:fulfilled_order_item, order: order_4, item: item_3)
+
+        expect(Order.merchant_pending_orders(merchant.id)).to eq([order_1, order_3])
+      end
+    end
   end
 
   describe 'instance methods' do
+    it 'updates order status to fulfilled if all order items have been fulfilled' do
+      merchant = create(:merchant)
+      user = create(:user)
+
+      item_1 = create(:item, inventory: 6, user: merchant)
+      item_2 = create(:item, inventory: 3, user: merchant)
+
+      order = create(:order, user: user, status: "pending")
+      order_item_1 = create(:unfulfilled_order_item, item: item_1, quantity: 2, order: order)
+      order_item_2 = create(:fulfilled_order_item, item: item_2, quantity:1, order: order)
+
+      order.update_status_if_fulfilled
+      expect(Order.find(order.id).status).to eq('pending')
+
+      OrderItem.find(order_item_1.id).update(fulfilled: true)
+      order.update_status_if_fulfilled
+      expect(Order.find(order.id).status).to eq('fulfilled')
+    end
+
     it 'returns the quantity of items in an order' do
       order_1 = create(:fulfilled_order)
 
@@ -123,6 +168,23 @@ RSpec.describe Order, type: :model do
       expect(order_2.merchant_items_value(merchant.id)).to eq(0)
       expect(order_3.merchant_items_value(merchant.id)).to eq(total_2)
     end
-  end
 
+    describe '#merchant_items_with_quantity' do
+      it 'returns the items in an order that belong to the specified merchant, the order_item, and the quantity' do
+        merchant = create(:merchant)
+        item_1 = create(:item, user: merchant)
+        item_2 = create(:item, user: merchant)
+
+        item_3 = create(:item)
+        item_4 = create(:item, user: merchant)
+
+        order = create(:order)
+        order_item_1 = create(:fulfilled_order_item, order: order, item: item_1, quantity: 2)
+        order_item_2 = create(:unfulfilled_order_item, order: order, item: item_2, quantity: 1)
+        order_item_3 = create(:fulfilled_order_item, order: order, item: item_3)
+
+        expect(order.merchant_items_with_quantity(merchant.id)).to eq([[order_item_1, item_1, 2], [order_item_2, item_2, 1]])
+      end
+    end
+  end
 end

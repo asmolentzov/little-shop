@@ -1,20 +1,31 @@
-
-<%= "Order: #{@order.id} " %>
-<%= "Placed on: #{@order.created_at} " %>
-<%= "Last update: #{@order.updated_at} " %>
-<%= "Status: #{@order.status} " %>
+<div class="order-show">
+  <ul>
+    <li><%= "Order: #{@order.id} " %></li>
+    <li><%= "Placed on: #{@order.created_at} " %></li>
+    <li><%= "Last update: #{@order.updated_at} " %></li>
+    <li><%= "Status: #{@order.status} " %></li>
+    <li><% if @order.status == "pending" %></li>
+    <li><%= link_to "Cancel Order", profile_order_path(@order.id), method: :put %></li>
+    <li><% end %></li>
+  </ul>
+</div>
 
 <% @order.order_items.each do |order_item| %>
-  <div id="order-item-<%=order_item.id%>">
-    <%= "Item: #{order_item.item.name}" %>
-    <%= "Description: #{order_item.item.description}" %>
-    <%= "Thumbnail: #{order_item.item.image_link}" %>
+  <div class="cart-flex-items" id="order-item-<%=order_item.id%>">
     <%= image_tag(order_item.item.image_link, class:"thumbnails") %>
-    <%= "Quantity: #{order_item.quantity}" %>
-    <%= "Order Price: #{order_item.order_price}" %>
-    <%= "Subtotal: #{number_to_currency(order_item.subtotal/100)}" %>
+    <ul class="cart-item-details">
+      <li><%= "Item: #{order_item.item.name}" %></li>
+      <li><%= "Description: #{order_item.item.description}" %></li>
+    </ul>
+    <ul class="cart-item-details">
+      <li><%= "Quantity: #{order_item.quantity}" %></li>
+      <li><%= "Order Price: #{order_item.order_price}" %></li>
+      <li><%= "Subtotal: #{number_to_currency(order_item.subtotal/100)}" %></li>
+    </ul>
   </div>
 <% end %>
 
-<%= "Total items in order: #{@order.item_quantity} " %>
-<%= "Grand total: #{number_to_currency(@order.grand_total/100)} " %>
+<div class="user">
+  <%= "Total items in order: #{@order.item_quantity} " %>
+  <%= "Grand total: #{number_to_currency(@order.grand_total/100)} " %>
+</div>

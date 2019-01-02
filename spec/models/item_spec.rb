@@ -10,13 +10,26 @@ RSpec.describe Item, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name)}
     it { should validate_presence_of(:image_link)}
-    it { should validate_presence_of(:inventory)}
     it { should validate_presence_of(:description)}
-    it { should validate_presence_of(:enabled)}
-    it { should validate_presence_of(:current_price)}
+    it { should validate_inclusion_of(:enabled).in_array([true, false])}
+    it { should validate_numericality_of(:inventory).only_integer.is_greater_than_or_equal_to(0)}
+    it { should validate_numericality_of(:current_price).only_integer.is_greater_than_or_equal_to(0)}
     it { should validate_presence_of(:user_id)}
   end
 
+  describe 'class methods' do
+    describe '.enabled_items' do
+      it 'should return all enabled items' do
+        merch = create(:merchant)
+        user = create(:user)
+        item_1 = create(:item, user: merch)
+        item_2 = create(:item, user: merch)
+        item_3 = create(:disabled_item, user: merch)
+
+        expect(Item.enabled_items).to eq([item_1, item_2])
+      end
+    end
+  end
   describe 'instance methods' do
     describe '#avg_fulfill_time' do
       it 'should return the average time it took for an item to be fulfilled' do
@@ -34,7 +47,7 @@ RSpec.describe Item, type: :model do
         order_item_3 = OrderItem.create(order_id: order_1.id, item_id: item_1.id,
                         quantity: 1, order_price: item_1.current_price, fulfilled: false, created_at: 2.days.ago)
 
-        expect(item_1.avg_fulfill_time).to eq(18)
+        expect(item_1.avg_fulfill_time.slice(0, 13)).to eq("18 days 12:00")
       end
     end
     describe '#five_popular()' do
@@ -77,6 +90,13 @@ RSpec.describe Item, type: :model do
         expect(Item.five_popular('asc')).to include(item_2)
         expect(Item.five_popular('asc')).to_not include(item_1)
         expect(Item.five_popular('asc')).to_not include(item_3)
+      end
+    end
+    describe '#set_default_image' do
+      it 'sets a default image path before saving if one is not present' do
+        user = create(:merchant)
+        item = user.items.create(name: 'apple1', image_link: '', inventory: 3, description: 'apple one', current_price: 200, enabled: true)
+        expect(item.image_link).to eq('https://picsum.photos/200/300?image=0')
       end
     end
   end

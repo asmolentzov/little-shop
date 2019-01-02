@@ -1,69 +1,82 @@
-<div id="statistics">
-  Statistics!
-  <p>Top Merchants by Quantity: 
+<div class="stats" id="statistics">
+  <div class="stat-item">
+    <h3>Top Merchants by Quantity:</h3>
     <% @top_merchants_by_quantity.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Top Merchants by Price: 
+  </div>
+  <div class="stat-item">
+    <h3>Top Merchants by Price:</h3>
     <% @top_merchants_by_price.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Merchants with Fastest Fulfillment Times:
+  </div>
+  <div class="stat-item">
+    <h3>Merchants with Fastest Fulfillment Times:</h3>
     <% @top_merchants_by_time.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Merchants with Slowest Fulfillment Times:
+  </div>
+  <div class="stat-item">
+    <h3>Merchants with Slowest Fulfillment Times:</h3>
     <% @bottom_merchants_by_time.each do |merchant| %>
     <ul>
       <li><%= merchant.name %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Top 3 States with Most Orders:
+  </div>
+  <div class="stat-item">
+    <h3>Top 3 States with Most Orders:</h3>
     <% @top_states.each do |state| %>
     <ul>
       <li><%= state %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Top 3 Cities with Most Orders:
+  </div>
+  <div class="stat-item">
+    <h3>Top 3 Cities with Most Orders:</h3>
     <% @top_cities.each do |city, state| %>
     <ul>
       <li><%= city %>, <%= state %></li>
     </ul>
     <% end %>
-  </p>
-  <p>Biggest Orders by Quantity of Items:
+  </div>
+  <div class="stat-item">
+    <h3>Biggest Orders by Quantity of Items:</h3>
     <% @biggest_orders.each do |order| %>
     <ul>
       <li>Order #<%= order.id %></li>
     </ul>
     <% end %>
-  </p>
+  </div>
 </div>
 
-<% @merchants.each do |merchant| %>
-    <ul id="merchant-<%= merchant.id %>">
-      <li><%= merchant.name %></li>
-      <li><%= merchant.city %></li>
-      <li><%= merchant.state %></li>
-      <li><%= merchant.created_at %></li>
-        <% if current_admin? %>
-        <li><%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %></li>
-          <% if merchant.enabled %>
-          <li><%= button_to "disable", admin_merchant_path(merchant.id), method: :patch %></li>
-          <% else  %>
-          <li><%= button_to "enable", admin_merchant_path(merchant.id), method: :patch %></li>
-          <% end %>
-        <% end %>
-    </ul>
-<% end %>
+<div class="flex-container">
+  <div class="flex-items">
+    <% @merchants.each do |merchant| %>
+     <div class="item merchant-item" id="merchant-<%= merchant.id %>">
+       <ul class="merchant-list">
+          <li><%= image_tag('/assets/zach.jpeg', class:"zach") %></li>
+          <li><%= merchant.name %></li>
+          <li><%= merchant.city %></li>
+          <li><%= merchant.state %></li>
+          <li><%= merchant.created_at %></li>
+            <% if current_admin? %>
+            <%= link_to("#{merchant.name}", admin_merchant_path(merchant.id)) %>
+              <% if merchant.enabled %>
+               <%= link_to "Disable", admin_merchant_enable_path(merchant.id), method: :patch %>
+              <% else  %>
+              <%= link_to "Enable", admin_merchant_enable_path(merchant.id), method: :patch %>
+              <% end %>
+            <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

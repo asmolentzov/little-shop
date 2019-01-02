@@ -58,7 +58,7 @@ describe 'as a merchant user' do
         click_link "Order ##{order_1.id}"
       end
       
-      expect(current_path).to eq(dashboard_orders_path(order_1))
+      expect(current_path).to eq(dashboard_order_path(order_1))
       expect(current_path).to eq("/dashboard/orders/#{order_1.id}")
       
       visit dashboard_path
@@ -75,7 +75,7 @@ describe 'as a merchant user' do
         click_link "Order ##{order_3.id}"
       end
       
-      expect(current_path).to eq(dashboard_orders_path(order_3))
+      expect(current_path).to eq(dashboard_order_path(order_3))
       
       
     end

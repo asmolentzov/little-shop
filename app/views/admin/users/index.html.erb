@@ -1,13 +1,19 @@
-<% @users.each do |user| %>
-  <div id="user-links-<%=user.id%>">
-    <ul>
-      <li><%= link_to user.name, admin_user_path(user) %></li>
-      <li><%= user.created_at %></li>
-      <% if user.enabled %>
-        <li><%= button_to 'disable', admin_user_path(user.id), method: :patch %></li>
-      <% else %>
-        <li><%= button_to 'enable', admin_user_path(user.id), method: :patch %></li>
-      <% end %>
-    </ul>
+
+<div class="flex-container">
+  <div class="flex-items">
+    <% @users.each do |user| %>
+      <div class="item user-item" id="user-links-<%=user.id%>">
+        <ul class="user-list">
+          <li><%= image_tag('/assets/screetch.jpg', class:"zach") %></li>
+          <li><%= link_to user.name, admin_user_path(user) %></li>
+          <li><%= user.created_at %></li>
+          <% if user.enabled %>
+            <%= link_to 'disable', admin_user_enable_path(user.id), method: :patch %>
+          <% else %>
+            <%= link_to 'enable', admin_user_enable_path(user.id), method: :patch %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

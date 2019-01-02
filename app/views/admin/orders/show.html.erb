@@ -1,0 +1,31 @@
+<div class="order">
+  <ul>
+    <li><%= "Order: #{@order.id} " %></li>
+    <li><%= "Placed on: #{@order.created_at} " %></li>
+    <li><%= "Last update: #{@order.updated_at} " %></li>
+    <li><%= "Status: #{@order.status} " %></li>
+    <li><% if @order.status == "pending" %></li>
+    <li><%= link_to "Cancel Order", admin_order_path(@order.id), method: :put %></li>
+    <li><% end %></li>
+  </ul>
+</div>
+
+<% @order.order_items.each do |order_item| %>
+  <div class="cart-flex-items" id="order-item-<%=order_item.id%>">
+    <%= image_tag(order_item.item.image_link, class:"thumbnails") %>
+    <ul class="cart-item-details">
+      <li><%= "Item: #{order_item.item.name}" %></li>
+      <li><%= "Description: #{order_item.item.description}" %></li>
+    </ul>
+    <ul class="cart-item-details">
+      <li><%= "Quantity: #{order_item.quantity}" %></li>
+      <li><%= "Order Price: #{order_item.order_price}" %></li>
+      <li><%= "Subtotal: #{number_to_currency(order_item.subtotal/100)}" %></li>
+    </ul>
+  </div>
+<% end %>
+
+<div class="user">
+  <%= "Total items in order: #{@order.item_quantity} " %>
+  <%= "Grand total: #{number_to_currency(@order.grand_total/100)} " %>
+</div>

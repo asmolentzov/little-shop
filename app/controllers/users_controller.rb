@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :require_merchant_user, only: [:show]
 
   def index
     if current_admin?
@@ -14,18 +13,6 @@ class UsersController < ApplicationController
     @top_states = User.top_states
     @top_cities = User.top_cities
     @biggest_orders = Order.biggest_orders
-  end
-
-  def show
-    @merchant_pending_orders = current_user.merchant_pending_orders
-    @merchant_top_five_items = current_user.merchant_top_five_items
-    @merchant_units_sold = current_user.merchant_units_sold
-    @merchant_percent_sold = current_user.merchant_percent_sold
-    @merchant_top_states = current_user.merchant_top_states
-    @merchant_top_cities = current_user.merchant_top_cities
-    @merchant_top_order_user = current_user.merchant_top_order_user
-    @merchant_top_units_user = current_user.merchant_top_units_user
-    @merchant_highest_spending_users = current_user.merchant_highest_spending_users
   end
 
   def new
@@ -48,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+
   end
 
   def update

@@ -23,18 +23,18 @@ class CartsController < ApplicationController
     redirect_to cart_path
   end
 
-  def update_quantity
+
+  def update
     id = params[:format]
     if Item.find(id).inventory > params[:quantity].to_i
-    @cart.contents[id] += params[:quantity].to_i
+      @cart.contents[id] += params[:quantity].to_i
     else
       flash[:notice] = "The merchant does not have enough inventory"
     end
 
     if params[:quantity] == nil || @cart.contents[id] == 0
-    @cart.contents.except!(id)
+      @cart.contents.except!(id)
     end
     redirect_to cart_path
   end
-
 end

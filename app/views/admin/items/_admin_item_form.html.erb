@@ -1,0 +1,24 @@
+<%= form_for [:admin, :merchant, @item] do |f| %>
+  <ul>
+  <% if @errors %>
+    <div class="flash">
+      <% @errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </div>
+  <% end %>
+  </ul>
+  <ul class="registration-list">
+    <li><%= f.label :name %></li>
+    <li><%= f.text_field :name %></li>
+    <li><%= f.label :description %></li>
+    <li><%= f.text_field :description %></li>
+    <li><%= f.label :image_link %></li>
+    <li><%= f.text_field :image_link %></li>
+    <li><%= f.label :price_in_cents %></li>
+    <li><%= f.number_field :current_price %></li>
+    <li><%= f.label :inventory %></li>
+    <li><%= f.number_field :inventory %></li>
+    <li><%= f.submit %></li>
+  </ul>
+<% end %>

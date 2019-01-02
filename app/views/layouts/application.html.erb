@@ -4,6 +4,7 @@
     <title>LittleShop</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
+    <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/latest/normalize.css" title="css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <%= javascript_include_tag 'application' %>
@@ -13,7 +14,7 @@
     <div class="yield" id="nav">
       <div id="hello-message">
         <% if current_user %>
-          <p>Logged in as <%= current_user.name %></p>
+          <p class="hello">Logged in as <%= current_user.name %></p>
         <% end %>
       </div>
         <div class="nav-flex-container">
@@ -38,7 +39,7 @@
               <li><%= link_to "Home", root_path %></li>
               <li><%= link_to "Items", items_path %></li>
               <li><%= link_to "Merchants", merchants_path %></li>
-              <% if current_user %>
+              <% if current_default? %>
                 <li><%= link_to "Orders", profile_orders_path %></li>
               <% end %>
               <% if current_merchant? %>
@@ -49,16 +50,22 @@
             </ul>
           </div>
       </div>
-    </div>
-    <% if flash.any? %>
-      <% flash.each do |key, value| %>
-        <%= value %>
-      <% end %>
-    <% end %>
-    <div class="main">
-      <div class-="flex-container">
-        <%= yield %>
+      <div>
+        <h1 class="title">Little Electronics Shop</h1>
       </div>
+      <% if flash.any? %>
+        <div class="flash">
+          <% flash.each do |key, value| %>
+            <%= value %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="main">
+
+        <%= yield %>
+
     </div>
   </body>
 </html>

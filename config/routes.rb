@@ -5,33 +5,43 @@ Rails.application.routes.draw do
 
   get '/cart', to: "carts#show"
   delete '/cart', to: "carts#destroy"
-  patch '/cart/item', to: "carts#update_quantity"
+  patch '/cart/item', to: "carts#update"
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   get '/register', as: :registration, to: "users#new"
   delete '/logout', to: "sessions#destroy"
-
-
   get '/merchants', as: :merchants, to: "users#index"
-  get '/dashboard', as: :dashboard, to: "users#show"
-  get '/dashboard/items', to: "items#index"
-  get '/dashboard/orders/:id', as: :dashboard_orders, to: "orders#show"
-  put '/dashboard/item', to: "items#update"
-  delete '/dashboard/item', to: "items#destroy"
+
 
   resources :items, only: [:index, :show]
   resources :users, only: [:create, :update]
   resources :carts, only: [:create]
 
   namespace :admin do
-    resources :users, only: [:index, :show, :update]
-    resources :users, as: :merchants, only: [:index, :show, :update]
+    resources :users, only: [:index, :show, :update, :edit] do
+      patch '/enable', to: "users#enable"
+      patch '/upgrade', to: "users#upgrade"
+    end
+
+    resources :orders, only: [:show, :update]
+
+    resources :merchants, only: [:index, :show, :update] do
+      patch '/enable', to: "merchants#update"
+      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
   end
 
   namespace :profile do
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show, :create, :update]
     get '/', to: "users#show"
     get '/edit', to: "users#edit"
+  end
+
+  namespace :dashboard do
+    resources :items, only: [:index, :edit, :update, :new, :create, :destroy]
+    resources :orders, only: [:show]
+    resources :order_items, only: [:update]
+    get '/', to: "users#show"
   end
 
 end
