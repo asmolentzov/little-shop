@@ -242,6 +242,29 @@ RSpec.describe User, type: :model do
       expect(merchant.merchant_pending_orders).to eq([order_1, order_3])
     end
   end
+  
+  describe '#merchant_order_ids' do
+    it 'returns all the fulfilled order ids associated with a merchant' do
+      merchant = create(:merchant)
+      
+      order_1 = create(:fulfilled_order)
+      item_1 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_1, item: item_1)
+
+      order_2 = create(:cancelled_order)
+      create(:fulfilled_order_item, order: order_2)
+
+      order_3 = create(:order)
+      item_2 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_3, item: item_2)
+
+      order_4 = create(:fulfilled_order)
+      item_3 = create(:item, user: merchant)
+      create(:fulfilled_order_item, order: order_4, item: item_3)
+      
+      expect(merchant.merchant_order_ids).to eq([order_1.id, order_4.id])
+    end
+  end
 
   describe 'merchant statistics instance methods' do
     before(:each) do

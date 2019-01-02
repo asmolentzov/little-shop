@@ -109,13 +109,7 @@ class User < ApplicationRecord
     ((merchant_units_sold.to_f / inventory).round(2) * 100).to_i
   end
   
-  def merchant_top_states
-    merchant_items = self.items.map(&:id)
-    merchant_order_ids = User.joins(orders: :order_items)
-    .where("order_items.item_id IN (?)", merchant_items)
-    .where("orders.status = ?", 1)
-    .select("orders.*").map(&:id)
-    
+  def merchant_top_states  
     User.joins(:orders)
     .where("orders.id IN (?)", merchant_order_ids)
     .group(:state)
@@ -126,12 +120,6 @@ class User < ApplicationRecord
   end
   
   def merchant_top_cities
-    merchant_items = self.items.map(&:id)
-    merchant_order_ids = User.joins(orders: :order_items)
-    .where("order_items.item_id IN (?)", merchant_items)
-    .where("orders.status = ?", 1)
-    .select("orders.*").map(&:id)
-    
     User.joins(:orders)
     .where("orders.id IN (?)", merchant_order_ids)
     .group(:city)
@@ -143,12 +131,6 @@ class User < ApplicationRecord
   end
   
   def merchant_top_order_user
-    merchant_items = self.items.map(&:id)
-    merchant_order_ids = User.joins(orders: :order_items)
-    .where("order_items.item_id IN (?)", merchant_items)
-    .where("orders.status = ?", 1)
-    .select("orders.*").map(&:id)
-    
     User.joins(:orders)
     .where("orders.id IN (?)", merchant_order_ids)
     .where("orders.status = ?", 1)
@@ -167,6 +149,7 @@ class User < ApplicationRecord
     .order("units_purchased DESC")
     .first
   end
+  
   def merchant_highest_spending_users
     User.joins(orders: [order_items: :item])
     .where("items.user_id = ?", self.id)
@@ -176,5 +159,10 @@ class User < ApplicationRecord
     .order("units_purchased DESC")
     .limit(3)
   end
-
+  
+  def merchant_order_ids
+    self.items.joins(:orders)
+    .where("orders.status = ?", 1)
+    .select("orders.*").map(&:id)
+  end
 end
