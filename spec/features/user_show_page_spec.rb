@@ -194,24 +194,24 @@ describe 'USER SHOW PAGE' do
 
       within "#order-#{order_1.id}" do
         expect(page).to have_link("Order: #{order_1.id}")
-        expect(page).to have_content("Placed on: #{order_1.created_at}")
-        expect(page).to have_content("Last update: #{order_1.updated_at}")
+        expect(page).to have_content("Placed on: #{order_1.created_at.strftime('%B %d, %Y')}")
+        expect(page).to have_content("Last update: #{order_1.updated_at.strftime('%B %d, %Y')}")
         expect(page).to have_content("Status: #{order_1.status}")
         expect(page).to have_content("Item count: 1")
         expect(page).to have_content("Grand total: $1.00")
       end
       within "#order-#{order_2.id}" do
         expect(page).to have_link("Order: #{order_2.id}")
-        expect(page).to have_content("Placed on: #{order_2.created_at}")
-        expect(page).to have_content("Last update: #{order_2.updated_at}")
+        expect(page).to have_content("Placed on: #{order_2.created_at.strftime('%B %d, %Y')}")
+        expect(page).to have_content("Last update: #{order_2.updated_at.strftime('%B %d, %Y')}")
         expect(page).to have_content("Status: #{order_2.status}")
         expect(page).to have_content("Item count: 3")
         expect(page).to have_content("Grand total: $8.00")
       end
       within "#order-#{order_3.id}" do
         expect(page).to have_link("Order: #{order_3.id}")
-        expect(page).to have_content("Placed on: #{order_3.created_at}")
-        expect(page).to have_content("Last update: #{order_3.updated_at}")
+        expect(page).to have_content("Placed on: #{order_3.created_at.strftime('%B %d, %Y')}")
+        expect(page).to have_content("Last update: #{order_3.updated_at.strftime('%B %d, %Y')}")
         expect(page).to have_content("Status: #{order_3.status}")
         expect(page).to have_content("Item count: 2")
         expect(page).to have_content("Grand total: $8.00")
