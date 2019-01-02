@@ -26,9 +26,10 @@ Rails.application.routes.draw do
     resources :orders, only: [:show, :update]
 
     resources :merchants, only: [:index, :show, :update] do
-     patch '/enable', to: "merchants#update"
-     patch '/downgrade', to: "merchants#downgrade"
-     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+      patch '/enable', to: "merchants#update"
+      patch '/downgrade', to: "merchants#downgrade"
+      resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+      resources :orders, only: [:show, :update]
     end
   end
 

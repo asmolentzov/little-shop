@@ -6,6 +6,7 @@ class Admin::MerchantsController < ApplicationController
       redirect_to admin_user_path(@user)
     end
     @orders = @user.orders
+    @merchant_pending_orders = @user.merchant_pending_orders
   end
 
   def update
