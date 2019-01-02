@@ -14,8 +14,8 @@
       <div class="order" id="order-<%=order.id%>">
         <ul>
           <li><%= link_to "Order: #{order.id} ", profile_order_path(order.id) %></li>
-          <li><%= "Placed on: #{order.created_at} " %></li>
-          <li><%= "Last update: #{order.updated_at} " %></li>
+          <li><%= "Placed on: #{order.created_at.strftime('%B %d, %Y')} " %></li>
+          <li><%= "Last update: #{order.updated_at.strftime('%B %d, %Y')} " %></li>
           <li><%= "Status: #{order.status} " %>
           <li><%= "Item count: #{order.item_quantity} " %></li>
           <li><%= "Grand total: #{number_to_currency(order.grand_total/100)} " %></li>

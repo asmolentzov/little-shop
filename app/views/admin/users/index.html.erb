@@ -6,7 +6,7 @@
         <ul class="user-list">
           <li><%= image_tag('screetch.jpg', class:"zach") %></li>
           <li><%= link_to user.name, admin_user_path(user) %></li>
-          <li><%= user.created_at %></li>
+          <li>Created on: <%= user.created_at.strftime('%B %d, %Y') %></li>
           <% if user.enabled %>
             <%= link_to 'disable', admin_user_enable_path(user.id), method: :patch %>
           <% else %>

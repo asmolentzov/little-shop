@@ -17,15 +17,15 @@ describe 'as a visitor' do
       expect(page).to have_content(user_1.name)
       expect(page).to have_content(user_1.city)
       expect(page).to have_content(user_1.state)
-      expect(page).to have_content(user_1.created_at)
+      expect(page).to have_content(user_1.created_at.strftime('%B %d, %Y'))
       expect(page).to_not have_content(user_2.name)
       expect(page).to_not have_content(user_2.city)
       expect(page).to_not have_content(user_2.state)
-      expect(page).to_not have_content(user_2.created_at)
+      expect(page).to_not have_content(user_2.created_at.strftime('%B %d, %Y'))
       expect(page).to have_content(user_3.name)
       expect(page).to have_content(user_3.city)
       expect(page).to have_content(user_3.state)
-      expect(page).to have_content(user_3.created_at)
+      expect(page).to have_content(user_3.created_at.strftime('%B %d, %Y'))
     end
 
     it 'should show an area with statistics showing top merchants by price and quantity' do
