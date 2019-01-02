@@ -26,7 +26,7 @@ class CartsController < ApplicationController
 
   def update
     id = params[:format]
-    if Item.find(id).inventory > params[:quantity].to_i
+    if Item.find(id).inventory > @cart.contents[id].to_i
       @cart.contents[id] += params[:quantity].to_i
     else
       flash[:notice] = "The merchant does not have enough inventory"

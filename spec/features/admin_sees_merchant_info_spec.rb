@@ -138,4 +138,49 @@ describe 'As an admin' do
 
     end
   end
+
+  it 'can downgrade a merchant' do
+    merchant_2 = User.create(name: 'Holden Butts', street: '5607 E County Rd.', city: 'bifftown', state: 'CO',
+        zip: '21154', email: 'Butts1045@aol.com', password: 'abc123', role: 1, enabled: true)
+
+
+    admin = User.create(name: "user_1", password: "test", street: "street", city: "city", state: "CO", zip: "80219", email: "email", role: 2, enabled: true)
+
+    visit root_path
+
+    click_on "Log In"
+    fill_in :email, with: "#{admin.email}"
+    fill_in :password, with: "#{admin.password}"
+
+    within ".login-list" do
+    click_on "Log In"
+    end
+
+    visit merchants_path
+
+    within "#merchant-#{merchant_2.id}" do
+
+    click_on "Downgrade"
+
+    end
+
+    expect(current_path).to eq(admin_user_path(merchant_2.id))
+    expect(page).to have_content("#{merchant_2.name} has been downgraded to a regular user")
+
+    click_on "Log Out"
+
+    visit root_path
+
+    click_on "Log In"
+    fill_in :email, with: "#{merchant_2.email}"
+    fill_in :password, with: "#{merchant_2.password}"
+
+    within ".login-list" do
+    click_on "Log In"
+    end
+
+    expect(current_path).to eq(profile_path)
+
+    expect(page).to_not have_link("downgrade")
+  end
 end
