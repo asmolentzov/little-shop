@@ -14,7 +14,7 @@
     <% @merchant_pending_orders.each do |order| %>
       <div id="pending-order-<%= order.id %>">
         <ul>
-          <li><%= link_to "Order ##{order.id}", admin_order_path(order) %></li>
+          <li><%= link_to "Order ##{order.id}", admin_merchant_order_path(order) %></li>
           <li>Placed on: <%= order.created_at.strftime('%B %d, %Y') %></li>
           <li>My items in order: <%= order.merchant_items_quantity(current_user.id) %></li>
           <li>My items value: <%= number_to_currency(order.merchant_items_value(current_user.id) / 100) %></li>
